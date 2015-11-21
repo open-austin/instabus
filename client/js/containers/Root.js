@@ -6,18 +6,18 @@ import DevTools from './DevTools';
 
 
 export default class Root extends Component {
-    render() {
-        return (
-            <Provider store={this.props.store}>
-                <div>
-                    <AppContainer />
-                    <DevTools />
-                </div>
-            </Provider>
-        );
-    }
+  render() {
+    return (
+      <Provider store={this.props.store}>
+        <div>
+          <AppContainer />
+          <DevTools />
+        </div>
+      </Provider>
+    );
+  }
 }
 
 Root.propTypes = {
-    store: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
 };

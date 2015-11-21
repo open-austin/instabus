@@ -4,12 +4,12 @@ import Lol from '../components/Lol';
 
 
 export default class AppContainer extends Component {
-    render() {
-        return (
-            <div>
-                "Hi"
-                <Lol />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        "Hi"
+        <Lol />
+      </div>
+    );
+  }
 }

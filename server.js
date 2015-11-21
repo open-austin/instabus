@@ -17,16 +17,16 @@ app.use(webpackHotMiddleware(compiler));
 app.use('/static', express.static('client'));
 
 app.use(function(req, res) {
-    res.sendFile(path.join(__dirname, 'client', 'index.html'));
+  res.sendFile(path.join(__dirname, 'client', 'index.html'));
 });
 
 
 var server = http.createServer(app);
 server.listen(PORT, function(error) {
-    if (error) {
-        console.error(error);
-    }
-    else {
-        console.info('==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.', PORT, PORT);
-    }
+  if (error) {
+    console.error(error);
+  }
+  else {
+    console.info('==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.', PORT, PORT);
+  }
 });

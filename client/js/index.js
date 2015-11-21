@@ -9,6 +9,6 @@ const store = configureStore();
 window.store = store;
 
 render(
-    <Root store={store} />,
-    document.querySelector('#app')
+  <Root store={store} />,
+  document.querySelector('#app')
 );

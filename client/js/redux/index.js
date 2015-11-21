@@ -2,16 +2,16 @@ import {combineReducers} from 'redux';
 
 
 function ui(state = {}, action = {}) {
-    return state;
+  return state;
 }
 
 function data(state = {}, action = {}) {
-    return state;
+  return state;
 }
 
 const rootReducer = combineReducers({
-    ui,
-    data,
+  ui,
+  data,
 });
 
 export default rootReducer;
