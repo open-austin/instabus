@@ -1,7 +1,7 @@
 {
-  "name": "dieverson",
-  "version": "1.0.0",
-  "description": ":cat2:",
+  "name": "Instabus",
+  "version": "0.0.1",
+  "description": ":bus:",
   "main": "index.js",
   "scripts": {
     "lint": "eslint client",
