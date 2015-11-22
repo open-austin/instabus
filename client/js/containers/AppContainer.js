@@ -5,6 +5,7 @@ import * as uiActions from '../redux/ui';
 
 import About from '../components/About';
 import App from '../components/App';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default class AppContainer extends Component {
   render() {
@@ -19,6 +20,7 @@ export default class AppContainer extends Component {
       <div>
         <button type="button" onClick={() => this.props.setPage('App')}>Instabus</button>
         <button type="button" onClick={() => this.props.setPage('About')}>About</button>
+        <ErrorMessage />
         {renderedElement}
       </div>
     );
@@ -27,7 +29,7 @@ export default class AppContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    page: state.ui.page,
+    page: state.getIn(['ui', 'page']),
   };
 }
 

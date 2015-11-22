@@ -1,4 +1,6 @@
-export default {
+import Immutable from 'immutable';
+
+const state = {
   data: {
     tripsForLocation: [],
     agencies: {},
@@ -14,7 +16,7 @@ export default {
     route: null,
     stop: null,
     vehicle: null,
-    error: null,
+    errorMessage: null,
     userLocation: [28.058091, -82.417872],
     tripsForLocation: {
       loading: false,
@@ -22,3 +24,5 @@ export default {
     },
   },
 };
+
+export default Immutable.fromJS(state);
