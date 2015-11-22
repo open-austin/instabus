@@ -1,9 +1,6 @@
 import {combineReducers} from 'redux';
 
-
-function ui(state = {}, action = {}) {
-  return state;
-}
+import ui from './ui';
 
 function data(state = {}, action = {}) {
   return state;

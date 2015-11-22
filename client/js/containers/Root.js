@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Provider} from 'react-redux';
 
-import AppContainer from './App';
+import AppContainer from './AppContainer';
 import DevTools from './DevTools';
 
 
