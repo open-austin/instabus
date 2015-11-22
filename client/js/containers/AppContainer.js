@@ -7,13 +7,6 @@ import About from '../components/About';
 import App from '../components/App';
 
 export default class AppContainer extends Component {
-  togglePage() {
-    if (this.props.page === 'App') {
-      this.props.setPage('About');
-    } else {
-      this.props.setPage('App');
-    }
-  }
   render() {
     let renderedElement;
     if (this.props.page === 'About') {
@@ -24,7 +17,8 @@ export default class AppContainer extends Component {
 
     return (
       <div>
-        <button type="button" onClick={this.togglePage.bind(this)}>About</button>
+        <button type="button" onClick={() => this.props.setPage('App')}>Instabus</button>
+        <button type="button" onClick={() => this.props.setPage('About')}>About</button>
         {renderedElement}
       </div>
     );

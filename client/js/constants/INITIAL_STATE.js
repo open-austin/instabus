@@ -1,10 +1,24 @@
 export default {
-  data: {},
+  data: {
+    tripsForLocation: [],
+    agencies: {},
+    routes: {},
+    situations: {},
+    stops: {},
+    trips: {},
+  },
   ui: {
     page: 'App',
     tab: 'arrivals',
-    route: '',
-    stop: '',
-    vehicle: '',
+    agency: null,
+    route: null,
+    stop: null,
+    vehicle: null,
+    error: null,
+    userLocation: [28.058091, -82.417872],
+    tripsForLocation: {
+      loading: false,
+      tripIDs: [],
+    },
   },
 };
