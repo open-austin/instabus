@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 const state = {
   data: {
     tripsForLocation: [],
+    stopsForLocation: [],
     agencies: {},
     routes: {},
     situations: {},

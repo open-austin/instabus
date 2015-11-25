@@ -18,6 +18,7 @@ export default class AppContainer extends Component {
 
     return (
       <div>
+        {this.props.errorMessage}
         <button type="button" onClick={() => this.props.setPage('App')}>Instabus</button>
         <button type="button" onClick={() => this.props.setPage('About')}>About</button>
         <ErrorMessage />
@@ -30,6 +31,7 @@ export default class AppContainer extends Component {
 function mapStateToProps(state) {
   return {
     page: state.getIn(['ui', 'page']),
+    errorMessage: state.getIn(['ui', 'errorMessage']),
   };
 }
 
@@ -40,6 +42,7 @@ const mapDispatchToProps = {
 AppContainer.propTypes = {
   page: PropTypes.string,
   setPage: PropTypes.func,
+  errorMessage: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
