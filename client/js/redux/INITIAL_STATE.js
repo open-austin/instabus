@@ -11,8 +11,8 @@ const state = {
     trips: {},
   },
   ui: {
-    page: 'App',
-    tab: 'arrivals',
+    page: 'Nearby',
+    tab: 'All',
     agency: null,
     route: null,
     stop: null,

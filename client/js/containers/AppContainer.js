@@ -8,24 +8,36 @@ import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
 import Filters from '../components/Filters';
 import Toolbar from '../components/Toolbar';
-import Arrivals from '../components/Arrivals';
+import Nearby from '../components/Nearby';
+import Routes from '../components/Routes';
+import Popular from '../components/Popular';
 
 export default class AppContainer extends Component {
   render() {
     let renderedElement;
     if (this.props.page === 'About') {
       renderedElement = <About />;
+    } else if (this.props.page === 'Nearby') {
+      renderedElement = <Nearby />;
+    } else if (this.props.page === 'Routes') {
+      renderedElement = <Routes />;
+    } else if (this.props.page === 'Popular') {
+      renderedElement = <Popular />;
     } else {
-      renderedElement = <Arrivals />;
+      renderedElement = <div>404</div>;
     }
 
     return (
       <div className="container-scroll-area">
         <Header />
         <Filters />
-        <ErrorMessage errorMessage={this.props.errorMessage} />
         {renderedElement}
-        <Toolbar />
+        <Toolbar
+          currentPage={this.props.page}
+          setPage={this.props.setPage}
+          items={['Nearby', 'Routes', 'Popular', 'About']}
+        />
+        <ErrorMessage errorMessage={this.props.errorMessage} />
       </div>
     );
   }

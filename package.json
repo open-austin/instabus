@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint client",
+    "watch:js": "webpack -d --watch --progress",
     "watch:css": "node-sass client/sass/main.scss --output dist --watch --source-map true --include-path node_modules/normalize.css",
     "serve": "node server",
-    "start": "npm run serve & npm run watch:css"
+    "start": "npm run serve & npm run watch:js & npm run watch:css"
   },
   "author": "Dust.bin",
   "license": "ISC",
