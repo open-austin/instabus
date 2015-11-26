@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint client",
-    "watch:js": "webpack -d --watch --progress",
+    "watch:css": "node-sass client/sass/main.scss --output dist --watch --source-map true --include-path node_modules/normalize.css",
     "serve": "node server",
-    "start": "npm run serve & npm run watch:js"
+    "start": "npm run serve & npm run watch:css"
   },
   "author": "Dust.bin",
   "license": "ISC",
@@ -40,6 +40,8 @@
     "history": "1.13.0",
     "immutable": "^3.7.5",
     "moment-timezone": "^0.4.1",
+    "node-sass": "^3.4.2",
+    "normalize.css": "^3.0.3",
     "paginator": "0.0.2",
     "query-string": "^3.0.0",
     "react-transform-hmr": "^1.0.0",

@@ -4,8 +4,11 @@ import {connect} from 'react-redux';
 import * as uiActions from '../redux/ui';
 
 import About from '../components/About';
-import App from '../components/App';
 import ErrorMessage from '../components/ErrorMessage';
+import Header from '../components/Header';
+import Filters from '../components/Filters';
+import Toolbar from '../components/Toolbar';
+import Arrivals from '../components/Arrivals';
 
 export default class AppContainer extends Component {
   render() {
@@ -13,16 +16,16 @@ export default class AppContainer extends Component {
     if (this.props.page === 'About') {
       renderedElement = <About />;
     } else {
-      renderedElement = <App />;
+      renderedElement = <Arrivals />;
     }
 
     return (
-      <div>
-        {this.props.errorMessage}
-        <button type="button" onClick={() => this.props.setPage('App')}>Instabus</button>
-        <button type="button" onClick={() => this.props.setPage('About')}>About</button>
-        <ErrorMessage />
+      <div className="container-scroll-area">
+        <Header />
+        <Filters />
+        <ErrorMessage errorMessage={this.props.errorMessage} />
         {renderedElement}
+        <Toolbar />
       </div>
     );
   }
