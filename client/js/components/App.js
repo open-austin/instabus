@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import TripsForLocation from './TripsForLocation';
+
 export default class App extends Component {
   render() {
     return (
       <div>
         <div>App View Area</div>
+        <TripsForLocation />
       </div>
     );
   }
@@ -13,7 +16,7 @@ export default class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    tab: state.ui.tab,
+    tab: state.getIn(['ui', 'tab']),
   };
 }
 

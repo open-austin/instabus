@@ -1,0 +1,1328 @@
+{
+  "code": 200,
+  "currentTime": 1448491947188,
+  "data": {
+    "limitExceeded": false,
+    "list": [
+      {}
+    ],
+    "outOfRange": false,
+    "references": {
+      "agencies": [
+        {
+          "disclaimer": "",
+          "id": "Hillsborough Area Regional Transit",
+          "lang": "en",
+          "name": "Hillsborough Area Regional Transit",
+          "phone": "813-254-4278",
+          "privateService": false,
+          "timezone": "America/New_York",
+          "url": "http://www.gohart.org"
+        }
+      ],
+      "routes": [
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_18",
+          "longName": "30th Street",
+          "shortName": "18",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_1",
+          "longName": "Florida Avenue",
+          "shortName": "1",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_2",
+          "longName": "Nebraska Avenue",
+          "shortName": "2",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_4",
+          "longName": "Palma Ceia-South Tampa",
+          "shortName": "4",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_5",
+          "longName": "40th Street",
+          "shortName": "5",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_6",
+          "longName": "56th Street",
+          "shortName": "6",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_7",
+          "longName": "West Tampa - Citrus Park",
+          "shortName": "7",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_8",
+          "longName": "Progress Village/Brandon",
+          "shortName": "8",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_9",
+          "longName": "15th Street",
+          "shortName": "9",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_10",
+          "longName": "Cypress Street",
+          "shortName": "10",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_12",
+          "longName": "22nd Street",
+          "shortName": "12",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_14",
+          "longName": "Armenia Avenue",
+          "shortName": "14",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_19",
+          "longName": "Port Tampa",
+          "shortName": "19",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_20",
+          "longName": "Pasco - Lutz Express",
+          "shortName": "20",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_21",
+          "longName": "56th Street LX",
+          "shortName": "21",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_22",
+          "longName": "Dover - Brandon Express",
+          "shortName": "22",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_27",
+          "longName": "Riverview-Fishhawk-Brandon LX",
+          "shortName": "27",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_28",
+          "longName": "East County Express",
+          "shortName": "28",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_30",
+          "longName": "Town 'N Country",
+          "shortName": "30",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_46",
+          "longName": "Downtown To Dover Rd",
+          "shortName": "46",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_47",
+          "longName": "Southshore LX",
+          "shortName": "47",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_51",
+          "longName": "New Tampa - Pasco Express",
+          "shortName": "51",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_61",
+          "longName": "Northwest LX",
+          "shortName": "61",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "3C2D90",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_96",
+          "longName": "In-Towner",
+          "shortName": "96",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "A81534",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_200",
+          "longName": "Clearwater Express",
+          "shortName": "200",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "2EB135",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_400",
+          "longName": "Metrorapid North-South",
+          "shortName": "400",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_41",
+          "longName": "Sligh Avenue",
+          "shortName": "41",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_57",
+          "longName": "UATC - Temple Terrace - Netp@Rk",
+          "shortName": "57",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        },
+        {
+          "agencyId": "Hillsborough Area Regional Transit",
+          "color": "09346D",
+          "description": "",
+          "id": "Hillsborough Area Regional Transit_45",
+          "longName": "UATC - Westshore Plaza - Rome Ave",
+          "shortName": "45",
+          "textColor": "FFFFFF",
+          "type": 3,
+          "url": "http://www.gohart.org/Pages/maps-schedules.aspx"
+        }
+      ],
+      "situations": [],
+      "stops": [
+        {
+          "code": "6968",
+          "direction": "",
+          "id": "Hillsborough Area Regional Transit_6968",
+          "lat": 27.954758,
+          "locationType": 0,
+          "lon": -82.458284,
+          "name": "Marion Transit Center",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_1",
+            "Hillsborough Area Regional Transit_2",
+            "Hillsborough Area Regional Transit_4",
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_7",
+            "Hillsborough Area Regional Transit_8",
+            "Hillsborough Area Regional Transit_9",
+            "Hillsborough Area Regional Transit_10",
+            "Hillsborough Area Regional Transit_12",
+            "Hillsborough Area Regional Transit_14",
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_19",
+            "Hillsborough Area Regional Transit_20",
+            "Hillsborough Area Regional Transit_21",
+            "Hillsborough Area Regional Transit_22",
+            "Hillsborough Area Regional Transit_27",
+            "Hillsborough Area Regional Transit_28",
+            "Hillsborough Area Regional Transit_30",
+            "Hillsborough Area Regional Transit_46",
+            "Hillsborough Area Regional Transit_47",
+            "Hillsborough Area Regional Transit_51",
+            "Hillsborough Area Regional Transit_61",
+            "Hillsborough Area Regional Transit_96",
+            "Hillsborough Area Regional Transit_200",
+            "Hillsborough Area Regional Transit_400"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4244",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4244",
+          "lat": 27.958208,
+          "locationType": 0,
+          "lon": -82.45869,
+          "name": "Marion St @ Estelle St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_1",
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4021",
+          "direction": "W",
+          "id": "Hillsborough Area Regional Transit_4021",
+          "lat": 27.959575,
+          "locationType": 0,
+          "lon": -82.459303,
+          "name": "Henderson Av @ Florida Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_1",
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "551",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_551",
+          "lat": 27.962103,
+          "locationType": 0,
+          "lon": -82.459369,
+          "name": "Florida Av @ Palm Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_1",
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "2744",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_2744",
+          "lat": 27.962149,
+          "locationType": 0,
+          "lon": -82.45543,
+          "name": "Palm Av @ Central Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "2745",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_2745",
+          "lat": 27.962177,
+          "locationType": 0,
+          "lon": -82.452099,
+          "name": "Palm Av @ Mitchell Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "5778",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_5778",
+          "lat": 27.962186,
+          "locationType": 0,
+          "lon": -82.450144,
+          "name": "Palm Av @ Florence St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "7025",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_7025",
+          "lat": 27.962259,
+          "locationType": 0,
+          "lon": -82.447107,
+          "name": "Palm Av @ Nuccio Pkwy",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "760",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_760",
+          "lat": 27.963038,
+          "locationType": 0,
+          "lon": -82.442864,
+          "name": "15th St @ 11th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "765",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_765",
+          "lat": 27.967327,
+          "locationType": 0,
+          "lon": -82.442925,
+          "name": "15th St @ 17th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_9",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "767",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_767",
+          "lat": 27.970374,
+          "locationType": 0,
+          "lon": -82.442933,
+          "name": "15th St @ 21St Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_9",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "2411",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_2411",
+          "lat": 27.970383,
+          "locationType": 0,
+          "lon": -82.44008,
+          "name": "21St Av @ 17th St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "2412",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_2412",
+          "lat": 27.970383,
+          "locationType": 0,
+          "lon": -82.437639,
+          "name": "21St Av @ 19th St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "2414",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_2414",
+          "lat": 27.970383,
+          "locationType": 0,
+          "lon": -82.435158,
+          "name": "21St Av @ 22nd St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "2416",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_2416",
+          "lat": 27.970337,
+          "locationType": 0,
+          "lon": -82.430743,
+          "name": "21St Av @ 26th St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "7774",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_7774",
+          "lat": 27.970328,
+          "locationType": 0,
+          "lon": -82.428687,
+          "name": "21St Av @ 28th Street",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3523",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_3523",
+          "lat": 27.973208,
+          "locationType": 0,
+          "lon": -82.427978,
+          "name": "29th St @ 25th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4960",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4960",
+          "lat": 27.976521,
+          "locationType": 0,
+          "lon": -82.428021,
+          "name": "29th St @ 28th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3526",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_3526",
+          "lat": 27.977704,
+          "locationType": 0,
+          "lon": -82.428023,
+          "name": "29th St @ Lake Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3528",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_3528",
+          "lat": 27.979911,
+          "locationType": 0,
+          "lon": -82.428012,
+          "name": "29th St @ Lindell Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3529",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_3529",
+          "lat": 27.981223,
+          "locationType": 0,
+          "lon": -82.427946,
+          "name": "29th St @ M L King Jr Blvd",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4961",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4961",
+          "lat": 27.984185,
+          "locationType": 0,
+          "lon": -82.427936,
+          "name": "29th St @ 38th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "2601",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_2601",
+          "lat": 27.984991,
+          "locationType": 0,
+          "lon": -82.426649,
+          "name": "Chelsea St @ 30th St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4962",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4962",
+          "lat": 27.986612,
+          "locationType": 0,
+          "lon": -82.426345,
+          "name": "30th St @ Cayuga St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1652",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1652",
+          "lat": 27.988695,
+          "locationType": 0,
+          "lon": -82.426345,
+          "name": "30th St @ Osborne Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1653",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1653",
+          "lat": 27.990434,
+          "locationType": 0,
+          "lon": -82.426365,
+          "name": "30th St @ Ellicott St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1655",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1655",
+          "lat": 27.993712,
+          "locationType": 0,
+          "lon": -82.426365,
+          "name": "30th St @ Shadowlawn St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1656",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1656",
+          "lat": 27.995677,
+          "locationType": 0,
+          "lon": -82.426374,
+          "name": "30th St @ Hillsborough Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1658",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1658",
+          "lat": 27.999155,
+          "locationType": 0,
+          "lon": -82.426374,
+          "name": "30th St @ Powhatan Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1659",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1659",
+          "lat": 28.00112,
+          "locationType": 0,
+          "lon": -82.426394,
+          "name": "30th St @ Idlewild Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1661",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1661",
+          "lat": 28.003203,
+          "locationType": 0,
+          "lon": -82.426414,
+          "name": "30th St @ Hanna Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1664",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1664",
+          "lat": 28.006817,
+          "locationType": 0,
+          "lon": -82.426413,
+          "name": "30th St @ Diana St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_41"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1665",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1665",
+          "lat": 28.008628,
+          "locationType": 0,
+          "lon": -82.426393,
+          "name": "30th St @ Pocahontas Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1666",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1666",
+          "lat": 28.01052,
+          "locationType": 0,
+          "lon": -82.426372,
+          "name": "30th St @ Sligh Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_41"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1520",
+          "direction": "W",
+          "id": "Hillsborough Area Regional Transit_1520",
+          "lat": 28.01072,
+          "locationType": 0,
+          "lon": -82.429928,
+          "name": "Sligh Av @ Rowlett Park Dr",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_41"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3432",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_3432",
+          "lat": 28.011227,
+          "locationType": 0,
+          "lon": -82.430111,
+          "name": "Rowlett Park Dr @ Sligh Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_9",
+            "Hillsborough Area Regional Transit_12",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4888",
+          "direction": "",
+          "id": "Hillsborough Area Regional Transit_4888",
+          "lat": 28.016063,
+          "locationType": 0,
+          "lon": -82.431822,
+          "name": "Rowlett Park Dr @ theochem Lab",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_9",
+            "Hillsborough Area Regional Transit_12",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "7813",
+          "direction": "NE",
+          "id": "Hillsborough Area Regional Transit_7813",
+          "lat": 28.022565,
+          "locationType": 0,
+          "lon": -82.435064,
+          "name": "22nd St @ Rowlett Park Dr",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4963",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4963",
+          "lat": 28.02512,
+          "locationType": 0,
+          "lon": -82.434586,
+          "name": "22nd St @ Water Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4964",
+          "direction": "NE",
+          "id": "Hillsborough Area Regional Transit_4964",
+          "lat": 28.02745,
+          "locationType": 0,
+          "lon": -82.4324,
+          "name": "22nd St @ Rowlett Park Rd",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4965",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_4965",
+          "lat": 28.028705,
+          "locationType": 0,
+          "lon": -82.430433,
+          "name": "Yukon St @ 26th St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3479",
+          "direction": "E",
+          "id": "Hillsborough Area Regional Transit_3479",
+          "lat": 28.028867,
+          "locationType": 0,
+          "lon": -82.427261,
+          "name": "Yukon St @ Ruth Place",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1668",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1668",
+          "lat": 28.031954,
+          "locationType": 0,
+          "lon": -82.426321,
+          "name": "30th St @ Busch Blvd",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1669",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1669",
+          "lat": 28.036023,
+          "locationType": 0,
+          "lon": -82.426126,
+          "name": "30th St @ Annie St",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4966",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4966",
+          "lat": 28.038276,
+          "locationType": 0,
+          "lon": -82.426115,
+          "name": "30th St @ 97th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4968",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4968",
+          "lat": 28.041295,
+          "locationType": 0,
+          "lon": -82.426117,
+          "name": "30th St @ Pointsettia Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "1670",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_1670",
+          "lat": 28.043362,
+          "locationType": 0,
+          "lon": -82.426114,
+          "name": "30th St @ Bougainvillea  Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4969",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4969",
+          "lat": 28.04482,
+          "locationType": 0,
+          "lon": -82.42609,
+          "name": "30th St @ University Center",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4970",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4970",
+          "lat": 28.045185,
+          "locationType": 0,
+          "lon": -82.426111,
+          "name": "3Oth St @ Times Customer Service",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4971",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4971",
+          "lat": 28.046904,
+          "locationType": 0,
+          "lon": -82.426112,
+          "name": "30th St @ 109th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4972",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4972",
+          "lat": 28.050822,
+          "locationType": 0,
+          "lon": -82.426099,
+          "name": "30th St @ 113th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4973",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4973",
+          "lat": 28.052574,
+          "locationType": 0,
+          "lon": -82.426031,
+          "name": "30th St @ Railroad Crossing",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4974",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4974",
+          "lat": 28.056123,
+          "locationType": 0,
+          "lon": -82.425899,
+          "name": "30th St @ Pine Dr",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4975",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_4975",
+          "lat": 28.060313,
+          "locationType": 0,
+          "lon": -82.425948,
+          "name": "30th St @ Campus Hill Dr",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3075",
+          "direction": "W",
+          "id": "Hillsborough Area Regional Transit_3075",
+          "lat": 28.065622,
+          "locationType": 0,
+          "lon": -82.427307,
+          "name": "131St Av @ Bruce B Downs @ Va Hosp",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_57"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "6497",
+          "direction": "",
+          "id": "Hillsborough Area Regional Transit_6497",
+          "lat": 28.066419,
+          "locationType": 0,
+          "lon": -82.429872,
+          "name": "University Area Transit Center",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_1",
+            "Hillsborough Area Regional Transit_2",
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_9",
+            "Hillsborough Area Regional Transit_12",
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_21",
+            "Hillsborough Area Regional Transit_45",
+            "Hillsborough Area Regional Transit_57"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3086",
+          "direction": "",
+          "id": "Hillsborough Area Regional Transit_3086",
+          "lat": 28.065459,
+          "locationType": 0,
+          "lon": -82.427307,
+          "name": "131St Av @ Bruce B Downs  @ Va Hosp",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_57"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3113",
+          "direction": "NE",
+          "id": "Hillsborough Area Regional Transit_3113",
+          "lat": 28.065757,
+          "locationType": 0,
+          "lon": -82.424618,
+          "name": "Holly Dr @ Pine Dr @ Crosswalk",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_5",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "6645",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_6645",
+          "lat": 28.066832,
+          "locationType": 0,
+          "lon": -82.420449,
+          "name": "Magnolia Dr @ Holly Dr",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "4657",
+          "direction": "W",
+          "id": "Hillsborough Area Regional Transit_4657",
+          "lat": 28.069269,
+          "locationType": 0,
+          "lon": -82.423516,
+          "name": "Fletcher Av @ 31St St (Fh)",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_6",
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "6647",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_6647",
+          "lat": 28.072313,
+          "locationType": 0,
+          "lon": -82.425897,
+          "name": "Bruce B Downs Blvd @ 138th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18",
+            "Hillsborough Area Regional Transit_57"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "6649",
+          "direction": "W",
+          "id": "Hillsborough Area Regional Transit_6649",
+          "lat": 28.080535,
+          "locationType": 0,
+          "lon": -82.427933,
+          "name": "Bearss Av @ Collegean Hall",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "7053",
+          "direction": "W",
+          "id": "Hillsborough Area Regional Transit_7053",
+          "lat": 28.080511,
+          "locationType": 0,
+          "lon": -82.430206,
+          "name": "Bearss Av @ Livingston Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3348",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_3348",
+          "lat": 28.081024,
+          "locationType": 0,
+          "lon": -82.430772,
+          "name": "Livingston Av @ Bearss Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "7054",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_7054",
+          "lat": 28.083659,
+          "locationType": 0,
+          "lon": -82.430742,
+          "name": "Livingston Av @ 148th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "3350",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_3350",
+          "lat": 28.086411,
+          "locationType": 0,
+          "lon": -82.430721,
+          "name": "Livingston Av @ 149th Av",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        },
+        {
+          "code": "6643",
+          "direction": "N",
+          "id": "Hillsborough Area Regional Transit_6643",
+          "lat": 28.089888,
+          "locationType": 0,
+          "lon": -82.430701,
+          "name": "Livingston Av @ Campus Lodge Apts",
+          "routeIds": [
+            "Hillsborough Area Regional Transit_18"
+          ],
+          "wheelchairBoarding": "UNKNOWN"
+        }
+      ],
+      "trips": [
+        {
+          "blockId": "Hillsborough Area Regional Transit_288260",
+          "directionId": "0",
+          "id": "Hillsborough Area Regional Transit_99869",
+          "routeId": "Hillsborough Area Regional Transit_18",
+          "routeShortName": "",
+          "serviceId": "Hillsborough Area Regional Transit_We",
+          "shapeId": "Hillsborough Area Regional Transit_38056",
+          "timeZone": "",
+          "tripHeadsign": "North to UATC/Livingston",
+          "tripShortName": ""
+        },
+        {
+          "blockId": "Hillsborough Area Regional Transit_288260",
+          "directionId": "1",
+          "id": "Hillsborough Area Regional Transit_99900",
+          "routeId": "Hillsborough Area Regional Transit_18",
+          "routeShortName": "",
+          "serviceId": "Hillsborough Area Regional Transit_We",
+          "shapeId": "Hillsborough Area Regional Transit_38057",
+          "timeZone": "",
+          "tripHeadsign": "South to UATC/Downtown/MTC",
+          "tripShortName": ""
+        },
+        {
+          "blockId": "Hillsborough Area Regional Transit_288260",
+          "directionId": "1",
+          "id": "Hillsborough Area Regional Transit_99905",
+          "routeId": "Hillsborough Area Regional Transit_18",
+          "routeShortName": "",
+          "serviceId": "Hillsborough Area Regional Transit_We",
+          "shapeId": "Hillsborough Area Regional Transit_38057",
+          "timeZone": "",
+          "tripHeadsign": "South to UATC/Downtown/MTC",
+          "tripShortName": ""
+        }
+      ]
+    }
+  },
+  "text": "OK",
+  "version": 2
+}

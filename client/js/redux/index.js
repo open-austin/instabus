@@ -1,10 +1,7 @@
-import {combineReducers} from 'redux';
+import {combineReducers} from 'redux-immutablejs';
 
-import ui from './ui';
-
-function data(state = {}, action = {}) {
-  return state;
-}
+import ui, * as uiActions from './ui';
+import data, * as dataActions from './data';
 
 const rootReducer = combineReducers({
   ui,
@@ -12,3 +9,5 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+
+export {uiActions as ui, dataActions as data};

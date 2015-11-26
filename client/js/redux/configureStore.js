@@ -1,15 +1,18 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
+import Immutable from 'immutable';
 
 import DevTools from '../containers/DevTools';
 import rootReducer from './index';
 
-import INITIAL_STATE from '../constants/INITIAL_STATE';
+const INITIAL_STATE = Immutable.Map();
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
-  applyMiddleware(createLogger()),
+  applyMiddleware(createLogger({
+    transformer: state => state.toJS(),
+  })),
   DevTools.instrument()
 )(createStore);
 

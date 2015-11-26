@@ -5,15 +5,9 @@ import * as uiActions from '../redux/ui';
 
 import About from '../components/About';
 import App from '../components/App';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default class AppContainer extends Component {
-  togglePage() {
-    if (this.props.page === 'App') {
-      this.props.setPage('About');
-    } else {
-      this.props.setPage('App');
-    }
-  }
   render() {
     let renderedElement;
     if (this.props.page === 'About') {
@@ -24,7 +18,10 @@ export default class AppContainer extends Component {
 
     return (
       <div>
-        <button type="button" onClick={this.togglePage.bind(this)}>About</button>
+        {this.props.errorMessage}
+        <button type="button" onClick={() => this.props.setPage('App')}>Instabus</button>
+        <button type="button" onClick={() => this.props.setPage('About')}>About</button>
+        <ErrorMessage />
         {renderedElement}
       </div>
     );
@@ -33,7 +30,8 @@ export default class AppContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    page: state.ui.page,
+    page: state.getIn(['ui', 'page']),
+    errorMessage: state.getIn(['ui', 'errorMessage']),
   };
 }
 
@@ -44,6 +42,7 @@ const mapDispatchToProps = {
 AppContainer.propTypes = {
   page: PropTypes.string,
   setPage: PropTypes.func,
+  errorMessage: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
