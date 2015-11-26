@@ -2,42 +2,24 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment-timezone';
 
-import TimeAgo from './TimeAgo';
+import {ArrivalShape} from '../../constants/PropTypes';
+import ArrivalCard from './ArrivalCard';
 
 
-
-export default class TripsForLocation extends Component {
+export default class NearbyArrivalsContainer extends Component {
   render() {
-    const wef = this.props.trips.map((trip) => {
-      return (
-        <div className="trip" key={trip.tripId}>
-          <div>{trip.arrivalMoment.format('h:mm:ss a z')}</div>
-          <TimeAgo moment={trip.arrivalMoment} interval={15 * 1000} />
-          <div>{trip.routeLongName}</div>
-          <div>{trip.routeShortName}</div>
-          <div>{trip.tripHeadsign}</div>
-          <div>{trip.stopName}</div>
-        </div>
-      );
-    });
+    const cards = this.props.arrivals.map((arrival) => <ArrivalCard {...arrival} key={arrival.tripId} />);
+
     return (
-      <div>
-        <div>trips loading? {this.props.loading ? 'loading' : 'done'}</div>
-        {wef}
+      <div className="col xs-12 sm-10 md-8 lg-6 card-group">
+        {cards}
       </div>
     );
   }
 }
 
-TripsForLocation.propTypes = {
-  trips: PropTypes.arrayOf(PropTypes.shape({
-    tripId: PropTypes.string,
-    arrivalMoment: PropTypes.func,
-    routeShortName: PropTypes.string,
-    routeLongName: PropTypes.string,
-    tripHeadsign: PropTypes.string,
-    stopName: PropTypes.string,
-  })),
+NearbyArrivalsContainer.propTypes = {
+  arrivals: PropTypes.arrayOf(ArrivalShape),
 };
 
 function mapStateToProps(state) {
@@ -53,29 +35,37 @@ function mapStateToProps(state) {
   ) {
     console.log('not ready yet');
     return {
-      trips: [],
+      arrivals: [],
     };
   }
 
   const agencyTimezone = state.getIn(['data', 'agencies']).first().get('timezone');
 
-  const trips = tripsForLocation.map((tripForLocation) => {
+  let arrivals = [];
+
+  tripsForLocation.forEach((tripForLocation) => {
     const tripId = tripForLocation.tripId;
     const trip = state.getIn(['data', 'trips', tripId]);
+
+    if (!trip) return;
 
     const routeId = trip.get('routeId');
     const route = state.getIn(['data', 'routes', routeId]);
 
+    if (!route) return;
+
     // fixme: choose the stop closest to the user
     const stopId = tripForLocation.status.closestStop;
     const stop = state.getIn(['data', 'stops', stopId]);
+
+    if (!stop) return;
 
     const stopTime = tripForLocation.schedule.stopTimes.find((x) => x.stopId === stopId);
 
     const arrivalTime = ((tripForLocation.serviceDate / 1000) + stopTime.arrivalTime) * 1000;
     const arrivalMoment = moment(arrivalTime).tz(agencyTimezone);
 
-    return {
+    const arrival = {
       tripId: tripForLocation.tripId,
       arrivalMoment: arrivalMoment,
       routeLongName: route.get('longName'),
@@ -83,11 +73,13 @@ function mapStateToProps(state) {
       tripHeadsign: trip.get('tripHeadsign'),
       stopName: stop.get('name'),
     };
+
+    arrivals.push(arrival);
   });
 
   return {
-    trips,
+    arrivals,
   };
 }
 
-export default connect(mapStateToProps)(TripsForLocation);
+export default connect(mapStateToProps)(NearbyArrivalsContainer);
