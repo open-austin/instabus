@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
 
 export default class ErrorMessage extends Component {
   render() {
@@ -15,11 +14,3 @@ export default class ErrorMessage extends Component {
 ErrorMessage.propTypes = {
   errorMessage: PropTypes.string,
 };
-
-function mapStateToProps(state) {
-  return {
-    errorMessage: state.getIn(['ui', 'errorMessage']),
-  };
-}
-
-export default connect(mapStateToProps)(ErrorMessage);

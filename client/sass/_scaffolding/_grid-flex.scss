@@ -1,0 +1,329 @@
+//===========================
+// Grid Scaffolding
+//------------------------------------------------
+// Flexbox based grid system
+//===========================
+
+@mixin row-gutter {
+    margin-left: $grid-gutter-width / 2 * -1;
+    margin-right: $grid-gutter-width / 2 * -1;
+}
+
+@mixin col-gutter {
+    padding-left: $grid-gutter-width / 2;
+    padding-right: $grid-gutter-width / 2;
+}
+
+html,
+body,
+.full-height {
+    height: 100%;
+
+    // Must be a top-level component
+}
+
+//===========================
+// Grid Properties
+//------------------------------------------------
+// Properties of the grid.
+//===========================
+.viewport-margin {
+    padding-left: $viewport-margin;
+    padding-right: $viewport-margin;
+}
+
+.container-nested {
+    @include col-flex;
+}
+
+.row-gutter {
+    @include row-gutter;
+}
+
+.col-gutter {
+    @include col-gutter;
+}
+
+.row-flex {
+    @include row-flex;
+}
+
+.col-flex {
+    @include col-flex;
+}
+
+.row-col {
+    height: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-line-pack: stretch;
+    -webkit-align-content: stretch;
+    align-content: stretch;
+}
+
+.flex-none {
+    -webkit-flex: none !important;
+    -ms-flex: none !important;
+    flex: none !important;
+}
+
+//===========================
+// Grid Default Classes
+//===========================
+
+// Grid Containers
+.container-responsive {
+    position: relative;
+    padding-left: $viewport-margin;
+    padding-right: $viewport-margin;
+}
+
+// Grid Row
+.row {
+    @extend .row-flex;
+
+    @extend .row-gutter;
+
+    > footer {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+//  Grid Columns
+.col {
+    @include col-flex;
+
+    @include col-gutter;
+}
+
+@for $i from 1 through $grid-columns {
+    .xs-#{$i} {
+        @include make-column($i, $grid-columns);
+    }
+    .offset-left-xs-#{$i} {
+        margin-left: make-offset($i, $grid-columns);
+    }
+}
+
+.col-fill {
+    @include col-fill;
+}
+
+.col-stack {
+    width: 100%;
+}
+
+//===========================
+// Grid Helpers
+//---------------------------
+// Occasional there are legacy instances of grid designs that require smaller gutter widths.
+//===========================
+.row-no-gutters {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    >  .col {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+.row-nowrap {
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.row-center {
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.row-end {
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+
+//===========================
+// Flushing
+//---------------------------
+// Definition: completely level or even with another surface.
+//---------------------------
+//  Flushing is used to pull a container that is along the edge of the viewport margins over the edge.
+//===========================
+
+/*Container Flushing*/
+
+.container-flush-left {
+    margin-left: $viewport-margin * -1;
+}
+
+.container-flush-right {
+    margin-right: $viewport-margin * -1;
+}
+
+.container-flush-both {
+    @extend .container-flush-left;
+
+    @extend .container-flush-right;
+}
+
+/*Row Flushing*/
+$row-flushing-offset: ($viewport-margin + $grid-gutter-width / 2) * -1;
+
+.row-flush-left {
+    margin-left: $row-flushing-offset;
+}
+
+.row-flush-right {
+    margin-right: $row-flushing-offset;
+}
+
+.row-flush-both {
+    @extend .row-flush-left;
+
+    @extend .row-flush-right;
+}
+
+/*Column Flushing*/
+
+.col-flush-left {
+    // Works only for column closest to the left
+    @extend .container-flush-left;
+
+    &[class*="col"] {
+        padding-left: $viewport-margin + $grid-gutter-width / 2;
+    }
+}
+
+.col-flush-right {
+    // Works only for column closest to the right
+    @extend .container-flush-right;
+
+    &[class*="col"] {
+        padding-right: $viewport-margin + $grid-gutter-width / 2;
+    }
+}
+
+.col-flush-both, .col-flush-left.col-flush-right {
+    // Works only for full-width columns such as col-xs-12 or col-fixed-24.
+    @extend .container-flush-both;
+
+    float: none;
+    width: auto;
+
+    &.col-xs-12 {
+        padding-left: $viewport-margin + $grid-gutter-width / 2;
+        padding-right: $viewport-margin + $grid-gutter-width / 2;
+    }
+}
+
+//===========================
+// Scroll Areas and Containers
+//------------------------------------------------
+//
+//===========================
+
+.container-scroll-area {
+    @include col-flex;
+
+    @extend .row-col;
+
+    overflow: hidden;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.scroll-area-header,
+.scroll-area-fixed {
+    // Turn column into fixed header
+    @extend .flex-none;
+}
+
+.scroll-area {
+    overflow-y: auto !important;
+    -webkit-flex: 1 1 0px;
+    -ms-flex: 1 1 0px;
+    flex: 1 1 0px;
+}
+
+.scroll-area-footer {
+    @extend .flex-none;
+}
+
+//===========================
+// Grid Responsive Classes
+//------------------------------------------------
+//
+//===========================
+
+// XS Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@media (max-width: $screen-sm-min - 1px) {
+    .container-flush-both-xs {
+        @include container-flush-both;
+    }
+    .row-flush-both-xs {
+        @include row-flush-both;
+    }
+    .col-flush-both-xs {
+        @include col-flush-both;
+    }
+    .no-padding-xs {
+        padding: 0;
+    }
+}
+
+// Small grid
+//
+// Columns, offsets, pushes, and pulls for the small device range, from phones
+// to tablets.
+
+@media (min-width: $screen-sm-min) {
+    @for $i from 1 through $grid-columns {
+        .sm-#{$i} {
+            @include make-column($i, $grid-columns);
+        }
+        .offset-left-sm-#{$i} {
+            margin-left: make-offset($i, $grid-columns);
+        }
+    }
+}
+
+// Medium grid
+//
+// Columns, offsets, pushes, and pulls for the desktop device range.
+
+@media (min-width: $screen-md-min) {
+    @for $i from 1 through $grid-columns {
+        .md-#{$i} {
+            @include make-column($i, $grid-columns);
+        }
+        .offset-left-md-#{$i} {
+            margin-left: make-offset($i, $grid-columns);
+        }
+    }
+}
+
+// Large grid
+//
+// Columns, offsets, pushes, and pulls for the large desktop device range.
+
+@media (min-width: $screen-lg-min) {
+    @for $i from 1 through $grid-columns {
+        .lg-#{$i} {
+            @include make-column($i, $grid-columns);
+        }
+    }
+}
