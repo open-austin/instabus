@@ -9,7 +9,8 @@ import Header from '../components/Header';
 import Filters from '../components/Filters';
 import Toolbar from '../components/Toolbar';
 import Nearby from '../components/Nearby';
-import Routes from '../components/Routes';
+import RouteList from '../components/RouteList';
+import RouteDetails from '../components/RouteDetails';
 import Popular from '../components/Popular';
 
 export default class AppContainer extends Component {
@@ -20,7 +21,11 @@ export default class AppContainer extends Component {
     } else if (this.props.page === 'Nearby') {
       renderedElement = <Nearby />;
     } else if (this.props.page === 'Routes') {
-      renderedElement = <Routes />;
+      if (this.props.route) {
+        renderedElement = <RouteDetails />;
+      } else {
+        renderedElement = <RouteList />;
+      }
     } else if (this.props.page === 'Popular') {
       renderedElement = <Popular />;
     } else {
@@ -46,6 +51,7 @@ export default class AppContainer extends Component {
 function mapStateToProps(state) {
   return {
     page: state.getIn(['ui', 'page']),
+    route: state.getIn(['ui', 'route']),
     errorMessage: state.getIn(['ui', 'errorMessage']),
   };
 }
@@ -56,6 +62,7 @@ const mapDispatchToProps = {
 
 AppContainer.propTypes = {
   page: PropTypes.string,
+  route: PropTypes.string,
   setPage: PropTypes.func,
   errorMessage: PropTypes.string,
 };
