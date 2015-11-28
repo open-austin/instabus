@@ -14,7 +14,7 @@ const state = {
     page: 'Routes',
     tab: 'All',
     agency: null,
-    route: 'Hillsborough Area Regional Transit_6',
+    route: null,
     stop: null,
     vehicle: null,
     errorMessage: null,
