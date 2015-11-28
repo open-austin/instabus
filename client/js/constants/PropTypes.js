@@ -8,3 +8,15 @@ export const ArrivalShape = {
   tripHeadsign: PropTypes.string,
   stopName: PropTypes.string,
 };
+
+export const RouteShape = {
+  agencyId: PropTypes.string,
+  color: PropTypes.string,
+  description: PropTypes.string,
+  id: PropTypes.string,
+  longName: PropTypes.string,
+  shortName: PropTypes.string,
+  textColor: PropTypes.string,
+  type: PropTypes.number,
+  url: PropTypes.string,
+};

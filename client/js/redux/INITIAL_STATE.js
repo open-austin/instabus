@@ -11,14 +11,14 @@ const state = {
     trips: {},
   },
   ui: {
-    page: 'Nearby',
+    page: 'Routes',
     tab: 'All',
     agency: null,
     route: null,
     stop: null,
     vehicle: null,
     errorMessage: null,
-    userLocation: [28.058091, -82.417872],
+    userLatLng: [28.058091, -82.417872],
     tripsForLocation: {
       loading: false,
       tripIDs: [],

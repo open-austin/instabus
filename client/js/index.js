@@ -18,6 +18,6 @@ render(
   document.querySelector('#app')
 );
 
-// store.dispatch(actions.data.getStopsForLocation(userLocation));
-const userLocation = store.getState().getIn(['ui', 'userLocation']).toJS();
-store.dispatch(actions.data.getTripsForLocation(userLocation));
+// store.dispatch(actions.data.getStopsForLocation(userLatLng));
+const userLatLng = store.getState().getIn(['ui', 'userLatLng']).toJS();
+store.dispatch(actions.data.getTripsForLocation(userLatLng));
