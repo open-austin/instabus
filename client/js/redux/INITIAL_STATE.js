@@ -4,6 +4,7 @@ const state = {
   data: {
     tripsForLocation: [],
     stopsForLocation: [],
+    tripsForRoute: [],
     agencies: {},
     routes: {},
     situations: {},
@@ -19,10 +20,8 @@ const state = {
     vehicle: null,
     errorMessage: null,
     userLatLng: [28.058091, -82.417872],
-    tripsForLocation: {
-      loading: false,
-      tripIDs: [],
-    },
+    tripsForLocationLoading: false,
+    tripsForRouteLoading: false,
   },
 };
 

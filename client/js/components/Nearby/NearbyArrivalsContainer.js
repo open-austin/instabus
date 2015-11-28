@@ -43,8 +43,8 @@ function mapStateToProps(state) {
 
   let arrivals = [];
 
-  tripsForLocation.forEach((tripForLocation) => {
-    const tripId = tripForLocation.tripId;
+  tripsForLocation.forEach((tripDetails) => {
+    const tripId = tripDetails.get('tripId');
     const trip = state.getIn(['data', 'trips', tripId]);
 
     if (!trip) return;
@@ -55,18 +55,18 @@ function mapStateToProps(state) {
     if (!route) return;
 
     // fixme: choose the stop closest to the user
-    const stopId = tripForLocation.status.closestStop;
+    const stopId = tripDetails.getIn(['status', 'closestStop']);
     const stop = state.getIn(['data', 'stops', stopId]);
 
     if (!stop) return;
 
-    const stopTime = tripForLocation.schedule.stopTimes.find((x) => x.stopId === stopId);
+    const stopTime = tripDetails.getIn(['schedule', 'stopTimes']).find((x) => x.get('stopId') === stopId);
 
-    const arrivalTime = ((tripForLocation.serviceDate / 1000) + stopTime.arrivalTime) * 1000;
+    const arrivalTime = ((tripDetails.get('serviceDate') / 1000) + stopTime.get('arrivalTime')) * 1000;
     const arrivalMoment = moment(arrivalTime).tz(agencyTimezone);
 
     const arrival = {
-      tripId: tripForLocation.tripId,
+      tripId: tripDetails.get('tripId'),
       arrivalMoment: arrivalMoment,
       routeLongName: route.get('longName'),
       routeShortName: route.get('shortName'),

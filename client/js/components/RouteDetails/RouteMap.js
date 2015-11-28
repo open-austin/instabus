@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Map, Popup, TileLayer} from 'react-leaflet';
+import {Map, TileLayer} from 'react-leaflet';
 
 import {RouteShape} from '../../constants/PropTypes';
 

@@ -21,3 +21,5 @@ render(
 // store.dispatch(actions.data.getStopsForLocation(userLatLng));
 const userLatLng = store.getState().getIn(['ui', 'userLatLng']).toJS();
 store.dispatch(actions.data.getTripsForLocation(userLatLng));
+
+store.dispatch(actions.ui.setRoute('Hillsborough Area Regional Transit_6'));

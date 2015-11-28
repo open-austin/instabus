@@ -1,45 +1,35 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import toJS from 'immutable-to-js';
+import {List, Map} from 'immutable';
+import moment from 'moment-timezone';
 
 import {RouteShape} from '../../constants/PropTypes';
-import RouteMap from './RouteMap';
 import Title from '../Title';
+import TimeAgo from '../TimeAgo';
+import RouteMap from './RouteMap';
 
 export default class RouteDetails extends Component {
   render() {
-    if (!this.props.route) {
-      return <div>Loading...</div>;
-    }
-
-    return (
-      <div>
-        <Title>{this.props.route.shortName} {this.props.route.longName}</Title>
-        <RouteMap
-          route={this.props.route}
-          center={this.props.userLatLng}
-        />
-      </div>
-    );
+    return <div>Loading</div>;
   }
 }
 
-RouteDetails.propTypes = {
-  route: PropTypes.shape(RouteShape),
-  userLatLng: PropTypes.array.isRequired,
-};
-
 function mapStateToProps(state) {
-  const routeId = state.getIn(['ui', 'route']);
-  const route = state.getIn(['data', 'routes', routeId]);
+  if (
+    state.getIn(['data', 'trips']).count() &&
+    state.getIn(['data', 'routes']).count() &&
+    state.getIn(['data', 'tripsForRoute']).count()
+  ) {
+    const tripIds = state.getIn(['data', 'tripsForRoute']).map(trip => trip.get('tripId'));
+    console.log('tripIds', tripIds);
+    const trips = tripIds.map((tripId) => state.getIn(['data', 'trips', tripId], Map()));
+    console.log('trips', trips);
+    const routeIds = trips.map((trip) => trip.get('routeId'));
+    console.log('routeIds', routeIds.toJS());
+  }
 
-  return {
-    route: toJS(route),
-    userLatLng: state.getIn(['ui', 'userLatLng']).toJS(),
-  };
+  return {};
 }
 
-const mapDispatchToProps = {
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RouteDetails);
+export default connect(mapStateToProps)(RouteDetails);

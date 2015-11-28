@@ -9,5 +9,9 @@ export default function request(endpoint, query = {}) {
     ...query
   });
 
-  return fetch(`https://crossorigin.me/${url}?${qs}`);
+  return fetch(`https://crossorigin.me/${url}?${qs}`)
+    .catch(err => {
+      console.error(err);
+      throw err;
+    })
 }
