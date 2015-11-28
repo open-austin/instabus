@@ -14,11 +14,11 @@ const state = {
     page: 'Routes',
     tab: 'All',
     agency: null,
-    route: null,
+    route: 'Hillsborough Area Regional Transit_6',
     stop: null,
     vehicle: null,
     errorMessage: null,
-    userLocation: [28.058091, -82.417872],
+    userLatLng: [28.058091, -82.417872],
     tripsForLocation: {
       loading: false,
       tripIDs: [],

@@ -3,16 +3,22 @@ import {connect} from 'react-redux';
 import toJS from 'immutable-to-js';
 
 import {RouteShape} from '../../constants/PropTypes';
-import {setRoute} from '../../redux/ui';
 import RouteMap from './RouteMap';
 import Title from '../Title';
 
 export default class RouteDetails extends Component {
   render() {
+    if (!this.props.route) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div>
         <Title>{this.props.route.shortName} {this.props.route.longName}</Title>
-        <RouteMap {...this.props.route} />
+        <RouteMap
+          route={this.props.route}
+          center={this.props.userLatLng}
+        />
       </div>
     );
   }
@@ -20,7 +26,7 @@ export default class RouteDetails extends Component {
 
 RouteDetails.propTypes = {
   route: PropTypes.shape(RouteShape),
-  setRoute: PropTypes.func.isRequired,
+  userLatLng: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -29,11 +35,11 @@ function mapStateToProps(state) {
 
   return {
     route: toJS(route),
+    userLatLng: state.getIn(['ui', 'userLatLng']).toJS(),
   };
 }
 
 const mapDispatchToProps = {
-  setRoute,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteDetails);
