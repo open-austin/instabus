@@ -153,3 +153,31 @@ export function getTripsForRoute(routeId) {
       .then(() => dispatch(uiActions.setTripsForRouteLoading(false)));
   };
 }
+
+export function getStopsForLocation(latLng) {
+  return dispatch => {
+    dispatch(uiActions.setTripsForLocationLoading(true));
+
+    const query = {
+      lat: latLng[0],
+      lon: latLng[1],
+      latSpan: 0.04,
+      lonSpan: 0.04,
+      includeStatus: true,
+      includeSchedule: true,
+    };
+    obaAPI('trips-for-location', query)
+      .then(res => res.json())
+      .then(data => {
+        dispatch(setTripsForLocation(data.data.list));
+        dispatch(setRoutes(data.data.references.routes));
+        dispatch(setTrips(data.data.references.trips));
+        dispatch(setStops(data.data.references.stops));
+        dispatch(setAgencies(data.data.references.agencies));
+      })
+      .catch(err => {
+        dispatch(uiActions.setErrorMessage(err.toString()));
+      })
+      .then(() => dispatch(uiActions.setTripsForLocationLoading(false)));
+  };
+}

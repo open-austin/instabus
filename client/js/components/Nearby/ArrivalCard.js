@@ -10,7 +10,7 @@ export default class ArrivalCard extends Component {
         <div className="col col-fill">
           <h3>{this.props.routeShortName} {this.props.routeLongName}</h3>
           <h4>{this.props.arrivalHeadsign}</h4>
-          <h6>{this.props.stopName}</h6>
+          <h6>{this.props.stopName} {this.props.formattedStopDistance} away</h6>
           <div>{this.props.arrivalMoment.format('h:mm:ss a z')}</div>
         </div>
         <div className="col">
