@@ -9,27 +9,112 @@ import Title from '../Title';
 import TimeAgo from '../TimeAgo';
 import RouteMap from './RouteMap';
 
+import ScheduleDeviation from './ScheduleDeviation.js';
+
 export default class RouteDetails extends Component {
   render() {
-    return <div>Loading</div>;
+    if (this.props.loading) {
+      return <div>Loading</div>;
+    }
+
+    const selectedRouteTrips = this.props.routeTrips.map((trip) => (
+      <div className="card row row-nowrap" key={trip.id}>
+        <div><b>{trip.tripHeadsign}</b></div>
+        <div>Next stop: {trip.nextStopName} in <TimeAgo moment={trip.nextStopArrivalMoment} /></div>
+        <ScheduleDeviation scheduleDeviation={trip.scheduleDeviation} />
+      </div>
+    ));
+
+    const otherRoutesTrips = this.props.relatedTrips.map((trip) => (
+      <div className="card row row-nowrap" key={trip.id}>
+        <div><b>{trip.routeShortName} {trip.routeLongName}</b></div>
+        <div><b>{trip.tripHeadsign}</b></div>
+        <div>Next stop: {trip.nextStopName} in <TimeAgo moment={trip.nextStopArrivalMoment} /></div>
+        <ScheduleDeviation scheduleDeviation={trip.scheduleDeviation} />
+      </div>
+    ));
+
+    return (
+      <div className="container-responsive container-flush-both-xs">
+        <Title>Route {this.props.routeShortName}</Title>
+        <div className="row row-center">
+          <div className="col xs-12 sm-10 md-8 lg-6 card-group">
+            <button>Map</button>
+            <h2>Current trips</h2>
+            {selectedRouteTrips}
+            <h2>Related trips</h2>
+            {otherRoutesTrips}
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
 function mapStateToProps(state) {
+  let routeTrips = new List();
+  let relatedTrips = new List();
+
   if (
-    state.getIn(['data', 'trips']).count() &&
-    state.getIn(['data', 'routes']).count() &&
-    state.getIn(['data', 'tripsForRoute']).count()
+    !state.getIn(['data', 'agencies']).count() ||
+    !state.getIn(['data', 'stops']).count() ||
+    !state.getIn(['data', 'trips']).count() ||
+    !state.getIn(['data', 'routes']).count()
   ) {
-    const tripIds = state.getIn(['data', 'tripsForRoute']).map(trip => trip.get('tripId'));
-    console.log('tripIds', tripIds);
-    const trips = tripIds.map((tripId) => state.getIn(['data', 'trips', tripId], Map()));
-    console.log('trips', trips);
-    const routeIds = trips.map((trip) => trip.get('routeId'));
-    console.log('routeIds', routeIds.toJS());
+    console.log('not ready yet');
+    return {
+      loading: true,
+    };
   }
 
-  return {};
+  const selectedRouteId = state.getIn(['ui', 'route']);
+  const agencyTimezone = state.getIn(['data', 'agencies']).first().get('timezone');
+
+  state.getIn(['data', 'tripsForRoute']).forEach(tripDetails => {
+    const tripId = tripDetails.get('tripId');
+    const trip = state.getIn(['data', 'trips', tripId]);
+    if (!trip) return;
+    const routeId = trip.get('routeId');
+    const route = state.getIn(['data', 'routes', routeId], new Map());
+    const nextStopId = tripDetails.getIn(['status', 'nextStop']);
+    const nextStop = state.getIn(['data', 'stops', nextStopId], new Map());
+    const closestStopId = tripDetails.getIn(['status', 'closestStop']);
+    const closestStop = state.getIn(['data', 'stops', closestStopId], new Map());
+
+    const nextStopTime = tripDetails.getIn(['schedule', 'stopTimes']).find((x) => x.get('stopId') === nextStopId);
+    const nextStopArrivalMoment = moment(((tripDetails.get('serviceDate') / 1000) + nextStopTime.get('arrivalTime')) * 1000).tz(agencyTimezone);
+
+    const closestStopTime = tripDetails.getIn(['schedule', 'stopTimes']).find((x) => x.get('stopId') === closestStopId);
+    const closestStopArrivalMoment = moment(((tripDetails.get('serviceDate') / 1000) + closestStopTime.get('arrivalTime')) * 1000).tz(agencyTimezone);
+
+    const data = {
+      routeLongName: route.get('longName'),
+      routeShortName: route.get('shortName'),
+      tripHeadsign: trip.get('tripHeadsign'),
+      nextStopName: nextStop.get('name'),
+      nextStopArrivalMoment: nextStopArrivalMoment,
+      closestStopName: closestStop.get('name'),
+      closestStopArrivalMoment: closestStopArrivalMoment,
+      scheduleDeviation: tripDetails.getIn(['status', 'scheduleDeviation']),
+    };
+
+    if (routeId === selectedRouteId) {
+      routeTrips = routeTrips.push(data);
+    } else {
+      relatedTrips = relatedTrips.push(data);
+    }
+  });
+
+  relatedTrips = relatedTrips.sort((a, b) => Number(a.routeShortName) >= Number(b.routeShortName));
+
+  const selectedRoute = state.getIn(['data', 'routes', selectedRouteId]);
+
+  return {
+    loading: false,
+    routeShortName: selectedRoute.get('routeShortName'),
+    routeTrips,
+    relatedTrips: relatedTrips,
+  };
 }
 
 export default connect(mapStateToProps)(RouteDetails);

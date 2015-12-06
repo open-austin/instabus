@@ -6,13 +6,12 @@ function seconds(aMoment) {
   return (aMoment.diff(moment(), 'seconds') % 60) + 's';
 }
 function minutes(aMoment) {
-  var diff = aMoment.diff(moment(), 'minutes');
+  let diff = aMoment.diff(moment(), 'minutes');
   if (diff < 60) {
     return diff + 'm';
-  } else {
-    diff = aMoment.diff(moment(), 'hours');
-    return diff + 'h';
   }
+  diff = aMoment.diff(moment(), 'hours');
+  return diff + 'h';
 }
 function past(aMoment) {
   return !aMoment.isAfter();
@@ -21,11 +20,6 @@ function past(aMoment) {
 export default class Trip extends Component {
   constructor(props) {
     super(props);
-    this.intervalID = setInterval(() => this.forceUpdate(), this.props.interval);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.intervalID);
   }
 
   render() {
@@ -46,5 +40,4 @@ export default class Trip extends Component {
 
 Trip.propTypes = {
   moment: PropTypes.object.isRequired,
-  interval: PropTypes.number.isRequired,
 };

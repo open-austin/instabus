@@ -15,7 +15,7 @@ export default class ArrivalCard extends Component {
         </div>
         <div className="col">
           <h2 className=""><span className="text-tall">
-            <TimeAgo moment={this.props.arrivalMoment} interval={15 * 1000} />
+            <TimeAgo moment={this.props.arrivalMoment} />
           </span></h2>
         </div>
       </div>
