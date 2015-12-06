@@ -22,4 +22,4 @@ render(
 const userLatLng = store.getState().getIn(['ui', 'userLatLng']).toJS();
 store.dispatch(actions.data.getTripsForLocation(userLatLng));
 
-store.dispatch(actions.ui.setRoute('Hillsborough Area Regional Transit_6'));
+// store.dispatch(actions.ui.setRoute('Hillsborough Area Regional Transit_6'));

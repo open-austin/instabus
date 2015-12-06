@@ -4,7 +4,7 @@ import toJS from 'immutable-to-js';
 import {List, Map} from 'immutable';
 import moment from 'moment-timezone';
 
-import {RouteShape} from '../../constants/PropTypes';
+import {TripDetailShape} from '../../constants/PropTypes';
 import Title from '../Title';
 import TimeAgo from '../TimeAgo';
 import RouteMap from './RouteMap';
@@ -51,9 +51,17 @@ export default class RouteDetails extends Component {
   }
 }
 
+RouteDetails.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  routeShortName: PropTypes.string,
+  routeTrips: PropTypes.arrayOf(PropTypes.shape(TripDetailShape)),
+  relatedTrips: PropTypes.arrayOf(PropTypes.shape(TripDetailShape)),
+};
+
 function mapStateToProps(state) {
-  let routeTrips = new List();
-  let relatedTrips = new List();
+  let loading = false;
+  let routeTrips = [];
+  let relatedTrips = [];
 
   if (
     !state.getIn(['data', 'agencies']).count() ||
@@ -64,6 +72,8 @@ function mapStateToProps(state) {
     console.log('not ready yet');
     return {
       loading: true,
+      routeTrips,
+      relatedTrips,
     };
   }
 
@@ -99,21 +109,22 @@ function mapStateToProps(state) {
     };
 
     if (routeId === selectedRouteId) {
-      routeTrips = routeTrips.push(data);
+      routeTrips.push(data);
     } else {
-      relatedTrips = relatedTrips.push(data);
+      relatedTrips.push(data);
     }
   });
 
   relatedTrips = relatedTrips.sort((a, b) => Number(a.routeShortName) >= Number(b.routeShortName));
 
   const selectedRoute = state.getIn(['data', 'routes', selectedRouteId]);
+  const routeShortName = selectedRoute.get('routeShortName');
 
   return {
-    loading: false,
-    routeShortName: selectedRoute.get('routeShortName'),
+    loading,
+    routeShortName,
     routeTrips,
-    relatedTrips: relatedTrips,
+    relatedTrips,
   };
 }
 

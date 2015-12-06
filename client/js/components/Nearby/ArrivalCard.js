@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {ArrivalShape} from '../../constants/PropTypes';
+import {TripDetailShape} from '../../constants/PropTypes';
 import TimeAgo from '../TimeAgo';
 
 export default class ArrivalCard extends Component {
@@ -23,4 +23,4 @@ export default class ArrivalCard extends Component {
   }
 }
 
-ArrivalCard.propTypes = ArrivalShape;
+ArrivalCard.propTypes = TripDetailShape;

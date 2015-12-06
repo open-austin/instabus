@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment-timezone';
 
-import {ArrivalShape} from '../../constants/PropTypes';
+import {TripDetailShape} from '../../constants/PropTypes';
 import ArrivalCard from './ArrivalCard';
 
 
@@ -19,7 +19,7 @@ export default class NearbyArrivalsContainer extends Component {
 }
 
 NearbyArrivalsContainer.propTypes = {
-  arrivals: PropTypes.arrayOf(ArrivalShape),
+  arrivals: PropTypes.arrayOf(TripDetailShape),
 };
 
 function mapStateToProps(state) {
