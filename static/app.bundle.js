@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "445561a064f63dc3c45f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5057416cf686c9887de5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -28708,6 +28708,7 @@
 	    vehicle: null,
 	    errorMessage: null,
 	    userLatLng: [28.058091, -82.417872],
+	    // userLatLng: [30.267153, -97.743061],
 	    tripsForLocationLoading: false,
 	    tripsForRouteLoading: false
 	  }
