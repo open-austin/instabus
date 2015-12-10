@@ -10,6 +10,10 @@ import ArrivalCard from './ArrivalCard';
 
 export default class NearbyArrivalsContainer extends Component {
   render() {
+    if (!this.props.userLocationLoaded) {
+      return <div>Still figuring out your location</div>;
+    }
+
     const rows = this.props.groupedArrivals.map((groupedArrival) => {
       const arrivalElements = groupedArrival.arrivals.map((arrival) => <ArrivalCard {...arrival} key={arrival.tripId} />);
       return (
@@ -30,6 +34,7 @@ export default class NearbyArrivalsContainer extends Component {
 }
 
 NearbyArrivalsContainer.propTypes = {
+  userLocationLoaded: PropTypes.bool.isRequired,
   groupedArrivals: PropTypes.arrayOf(PropTypes.shape({
     routeShortName: PropTypes.string.isRequired,
     routeLongName: PropTypes.string.isRequired,
@@ -50,6 +55,7 @@ function mapStateToProps(state) {
   ) {
     console.log('not ready yet');
     return {
+      userLocationLoaded: !!state.getIn(['ui', 'userLatLng']),
       groupedArrivals: [],
     };
   }
@@ -119,6 +125,7 @@ function mapStateToProps(state) {
     .toJS();
 
   return {
+    userLocationLoaded: true,
     groupedArrivals,
   };
 }
