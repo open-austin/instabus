@@ -10,18 +10,31 @@ import ArrivalCard from './ArrivalCard';
 
 export default class NearbyArrivalsContainer extends Component {
   render() {
-    const cards = this.props.arrivals.map((arrival) => <ArrivalCard {...arrival} key={arrival.tripId} />);
+    const rows = this.props.groupedArrivals.map((groupedArrival) => {
+      const arrivalElements = groupedArrival.arrivals.map((arrival) => <ArrivalCard {...arrival} key={arrival.tripId} />);
+      return (
+        <div className="trip card row row-nowrap" key={groupedArrival.routeShortName}>
+          <h2>{groupedArrival.routeShortName}</h2>
+          <h3>{groupedArrival.routeLongName}</h3>
+          {arrivalElements}
+        </div>
+      );
+    });
 
     return (
       <div className="col xs-12 sm-10 md-8 lg-6 card-group">
-        {cards}
+        {rows}
       </div>
     );
   }
 }
 
 NearbyArrivalsContainer.propTypes = {
-  arrivals: PropTypes.arrayOf(PropTypes.shape(TripDetailShape)),
+  groupedArrivals: PropTypes.arrayOf(PropTypes.shape({
+    routeShortName: PropTypes.string.isRequired,
+    routeLongName: PropTypes.string.isRequired,
+    arrivals: PropTypes.arrayOf(PropTypes.shape(TripDetailShape)).isRequired,
+  })),
 };
 
 function mapStateToProps(state) {
@@ -37,14 +50,14 @@ function mapStateToProps(state) {
   ) {
     console.log('not ready yet');
     return {
-      arrivals: [],
+      groupedArrivals: [],
     };
   }
 
   const agencyTimezone = state.getIn(['data', 'agencies']).first().get('timezone');
   const userLatLng = state.getIn(['ui', 'userLatLng']).toJS();
 
-  let arrivals = [];
+  let arrivalsList = new List();
 
   tripsForLocation.forEach((tripDetails) => {
     const tripId = tripDetails.get('tripId');
@@ -57,9 +70,11 @@ function mapStateToProps(state) {
 
     if (!route) return;
 
-    const sortedStops = tripDetails.getIn(['schedule', 'stopTimes'], new List())
+    const distanceFromUserToStop = (stop) => distanceBetweenCoords(userLatLng, [stop.get('lat'), stop.get('lon')]);
+    const sortedStops = tripDetails
+      .getIn(['schedule', 'stopTimes'], new List())
       .map(stopTime => state.getIn(['data', 'stops', stopTime.get('stopId')]))
-      .sort((stopA, stopB) => distanceBetweenCoords(userLatLng, [stopA.get('lat'), stopA.get('lon')]) - distanceBetweenCoords(userLatLng, [stopB.get('lat'), stopB.get('lon')]));
+      .sort((stopA, stopB) => distanceFromUserToStop(stopA) - distanceFromUserToStop(stopB));
 
     const nearestStop = sortedStops.first();
     const nearestStopId = nearestStop.get('id');
@@ -83,13 +98,28 @@ function mapStateToProps(state) {
       stopName: nearestStop.get('name'),
     };
 
-    arrivals.push(arrival);
+    arrivalsList = arrivalsList.push(arrival);
   });
 
-  arrivals = arrivals.sort((a, b) => a.stopDistance - b.stopDistance);
+  const minDistance = (arrivals) => arrivals.map(arrival => arrival.stopDistance).min();
+  const compareArrivals = (arrivalsA, arrivalsB) => minDistance(arrivalsA) - minDistance(arrivalsB);
+  const formatArrivalsGroup = (arrivals) => {
+    return {
+      routeShortName: arrivals.first().routeShortName,
+      routeLongName: arrivals.first().routeLongName,
+      arrivals: arrivals.toJS(),
+    };
+  };
+
+  const groupedArrivals = arrivalsList
+    .groupBy((arrival) => arrival.routeShortName)
+    .toList()
+    .sort(compareArrivals)
+    .map(formatArrivalsGroup)
+    .toJS();
 
   return {
-    arrivals,
+    groupedArrivals,
   };
 }
 

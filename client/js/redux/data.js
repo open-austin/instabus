@@ -109,8 +109,7 @@ export function getTripsForLocation(latLng) {
     const query = {
       lat: latLng[0],
       lon: latLng[1],
-      latSpan: 0.04,
-      lonSpan: 0.04,
+      radius: 3000,
       includeStatus: true,
       includeSchedule: true,
     };
