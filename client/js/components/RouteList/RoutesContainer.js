@@ -41,7 +41,7 @@ function mapStateToProps(state) {
   const routesLookup = state.getIn(['data', 'routes'], Map());
 
   const routes = List(routesLookup.values())
-    .sort((a, b) => +a.get('shortName') > +b.get('shortName'));
+    .sort((a, b) => +a.get('shortName') - +b.get('shortName'));
 
   const currentRouteId = state.getIn(['ui', 'route']);
   const currentRoute = routesLookup.get(currentRouteId);

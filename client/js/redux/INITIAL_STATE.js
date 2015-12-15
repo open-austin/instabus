@@ -4,6 +4,7 @@ const state = {
   data: {
     tripsForLocation: [],
     stopsForLocation: [],
+    tripsForRoute: [],
     agencies: {},
     routes: {},
     situations: {},
@@ -11,18 +12,16 @@ const state = {
     trips: {},
   },
   ui: {
-    page: 'Routes',
+    page: 'Nearby',
     tab: 'All',
     agency: null,
     route: null,
     stop: null,
     vehicle: null,
     errorMessage: null,
-    userLatLng: [28.058091, -82.417872],
-    tripsForLocation: {
-      loading: false,
-      tripIDs: [],
-    },
+    userLatLng: null,
+    tripsForLocationLoading: false,
+    tripsForRouteLoading: false,
   },
 };
 

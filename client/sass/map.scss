@@ -4,3 +4,12 @@
     position: relative;
     margin: 20px 0;
 }
+
+.schedule-deviation {
+    &.ahead {
+        color: green;
+    }
+    &.behind {
+        color: red;
+    }
+}

@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint client",
+    "build": "npm run build:js && npm run build:css && cp client/index.html dist",
+    "build:js": "webpack -d --progress",
     "watch:js": "webpack -d --watch --progress",
-    "build:css": "node-sass client/sass/main.scss --output dist --source-map true --include-path node_modules/normalize.css/ --include-path node_modules/leaflet/dist/",
-    "watch:css": "node-sass client/sass/main.scss --output dist --source-map true --include-path node_modules/normalize.css/ --include-path node_modules/leaflet/dist/ --watch client/sass",
+    "build:css": "node-sass client/sass/main.scss --output dist/static --source-map true --include-path node_modules/normalize.css/ --include-path node_modules/leaflet/dist/",
+    "watch:css": "node-sass client/sass/main.scss --output dist/static --source-map true --include-path node_modules/normalize.css/ --include-path node_modules/leaflet/dist/ --watch client/sass",
     "serve": "node server",
-    "start": "npm run serve & npm run watch:js & npm run watch:css"
+    "start": "mkdir -p dist/static && npm run build:css && npm run serve & npm run watch:js & npm run watch:css",
+    "deploy": "rm -rf dist && mkdir dist && mkdir dist/static && npm run build && node scripts/deploy"
   },
   "author": "Dust.bin",
   "license": "ISC",
@@ -20,6 +23,9 @@
     "eslint": "1.9.0",
     "eslint-config-airbnb": "1.0.0",
     "eslint-plugin-react": "3.9.0",
+    "gulp": "^3.9.0",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-print": "^2.0.1",
     "isomorphic-fetch": "^2.1.1",
     "json-loader": "^0.5.4",
     "lodash": "^3.10.1",
@@ -53,6 +59,8 @@
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "redux-immutablejs": "0.0.7",
+    "turf-distance": "^1.0.1",
+    "turf-point": "^2.0.1",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.0"

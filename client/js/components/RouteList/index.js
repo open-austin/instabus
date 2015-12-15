@@ -40,7 +40,7 @@ function mapStateToProps(state) {
   const routesLookup = state.getIn(['data', 'routes'], Map());
 
   const routes = List(routesLookup.values())
-    .sort((a, b) => +a.get('shortName') > +b.get('shortName'));
+    .sort((a, b) => +a.get('shortName') - +b.get('shortName'));
 
   return {
     routes: toJS(routes),
