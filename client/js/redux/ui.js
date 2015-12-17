@@ -85,6 +85,9 @@ export function getUserLatLng() {
         dispatch(setUserLatLng(latLng));
         dispatch(getTripsForLocation(latLng));
       })
-      .catch(err => setErrorMessage(err.toString()));
+      .catch(err => {
+        console.error(err);
+        setErrorMessage(err.toString());
+      });
   };
 }
