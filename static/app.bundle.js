@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f8f1c1d748a4fb26da85"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2f03aee0bf1344468529"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -49245,8 +49245,8 @@
 	  var query = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
 	  // const url = `http://localhost:8080/api/where/${endpoint}.json`;
-	  // const url = `http://ec2-52-34-101-15.us-west-2.compute.amazonaws.com:8080/api/where/${endpoint}.json`;
-	  var url = 'http://api.tampa.onebusaway.org/api/where/' + endpoint + '.json';
+	  var url = 'http://52.88.82.199:8080/onebusaway-api-webapp/api/where/' + endpoint + '.json';
+	  // const url = `http://api.tampa.onebusaway.org/api/where/${endpoint}.json`;
 	  console.log('url', url);
 	  var qs = _queryString2['default'].stringify(_extends({
 	    key: 'TEST'
