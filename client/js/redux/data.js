@@ -120,7 +120,6 @@ export function getTripsForLocation(latLng) {
         dispatch(setRoutes(data.data.references.routes));
         dispatch(setTrips(data.data.references.trips));
         dispatch(setStops(data.data.references.stops));
-        dispatch(setAgencies(data.data.references.agencies));
       })
       .catch(err => {
         dispatch(uiActions.setErrorMessage(err.toString()));
@@ -144,7 +143,6 @@ export function getTripsForRoute(routeId) {
         dispatch(setRoutes(data.data.references.routes));
         dispatch(setTrips(data.data.references.trips));
         dispatch(setStops(data.data.references.stops));
-        dispatch(setAgencies(data.data.references.agencies));
       })
       .catch(err => {
         dispatch(uiActions.setErrorMessage(err.toString()));
@@ -172,11 +170,26 @@ export function getStopsForLocation(latLng) {
         dispatch(setRoutes(data.data.references.routes));
         dispatch(setTrips(data.data.references.trips));
         dispatch(setStops(data.data.references.stops));
-        dispatch(setAgencies(data.data.references.agencies));
       })
       .catch(err => {
         dispatch(uiActions.setErrorMessage(err.toString()));
       })
       .then(() => dispatch(uiActions.setTripsForLocationLoading(false)));
+  };
+}
+
+export function getRoutes() {
+  return (dispatch, getState) => {
+    const state = store.getState();
+    const agencyId = state.getIn(['ui', 'agency']);
+
+    obaAPI(`routes-for-agency/${agencyId}`)
+      .then(res => res.json())
+      .then(data => {
+        dispatch(setRoutes(data.data.list));
+      })
+      .catch(err => {
+        dispatch(uiActions.setErrorMessage(err.toString()));
+      });
   };
 }

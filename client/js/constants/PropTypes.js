@@ -1,6 +1,6 @@
 import {PropTypes} from 'react';
 
-export const TripDetailShape = {
+export const TripDetailShape = PropTypes.shape({
   tripId: PropTypes.string,
   routeShortName: PropTypes.string,
   routeLongName: PropTypes.string,
@@ -10,9 +10,9 @@ export const TripDetailShape = {
   closestStopName: PropTypes.string,
   closestStopArrivalMoment: PropTypes.object,
   scheduleDeviation: PropTypes.number,
-};
+});
 
-export const RouteShape = {
+export const RouteShape = PropTypes.shape({
   agencyId: PropTypes.string,
   color: PropTypes.string,
   description: PropTypes.string,
@@ -22,4 +22,4 @@ export const RouteShape = {
   textColor: PropTypes.string,
   type: PropTypes.number,
   url: PropTypes.string,
-};
+});

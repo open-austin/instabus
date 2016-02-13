@@ -10,40 +10,31 @@ import Filters from '../components/Filters';
 import Toolbar from '../components/Toolbar';
 import Nearby from '../components/Nearby';
 import RouteList from '../components/RouteList';
-import RouteDetails from '../components/RouteDetails';
+import RouteDetail from '../components/RouteDetail';
 import Popular from '../components/Popular';
 
 
 export default class AppContainer extends Component {
   render() {
     let renderedElement;
-    if (this.props.page === 'About') {
+
+    if (this.props.page === 'ABOUT') {
       renderedElement = <About />;
-    } else if (this.props.page === 'Nearby') {
+    } else if (this.props.page === 'NEARBY') {
       renderedElement = <Nearby />;
-    } else if (this.props.page === 'Routes') {
-      if (this.props.route) {
-        renderedElement = <RouteDetails />;
-      } else {
-        renderedElement = <RouteList />;
-      }
-    } else if (this.props.page === 'Popular') {
+    } else if (this.props.page === 'ROUTE_LIST') {
+      renderedElement = <RouteList />;
+    } else if (this.props.page === 'ROUTE_DETAIL') {
+      renderedElement = <RouteDetail />;
+    } else if (this.props.page === 'POPULAR') {
       renderedElement = <Popular />;
     } else {
       renderedElement = <div>404</div>;
     }
 
     return (
-      <div className="container-scroll-area">
-        <Header />
-        <Filters />
+      <div>
         {renderedElement}
-        <Toolbar
-          currentPage={this.props.page}
-          setPage={this.props.setPage}
-          items={['Nearby', 'Routes', 'Popular', 'About']}
-        />
-        <ErrorMessage errorMessage={this.props.errorMessage} />
       </div>
     );
   }
@@ -52,7 +43,6 @@ export default class AppContainer extends Component {
 function mapStateToProps(state) {
   return {
     page: state.getIn(['ui', 'page']),
-    route: state.getIn(['ui', 'route']),
     errorMessage: state.getIn(['ui', 'errorMessage']),
   };
 }
@@ -63,7 +53,6 @@ const mapDispatchToProps = {
 
 AppContainer.propTypes = {
   page: PropTypes.string,
-  route: PropTypes.string,
   setPage: PropTypes.func,
   errorMessage: PropTypes.string,
 };

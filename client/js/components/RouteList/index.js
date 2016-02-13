@@ -1,54 +1,55 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import {createSelector} from 'reselect';
 import {Map, List} from 'immutable';
 import toJS from 'immutable-to-js';
 
-import {RouteShape} from '../../constants/PropTypes';
+import {RouteShape} from 'js/constants/PropTypes';
 import {setRoute} from '../../redux/ui';
 import Title from '../Title';
-import RouteCard from './RouteCard';
+import RouteListItem from './RouteListItem';
 
 export default class RouteListContainer extends Component {
+
   render() {
-    const cards = this.props.routes.map((route) => (
-      <RouteCard
-        key={route.id}
-        onClick={() => this.props.setRoute(route.id)}
-        {...route}
-      />
-    ));
+    const items = this.props.routes.map((route, i) => <RouteListItem route={route} key={i} />);
 
     return (
-      <div className="container-responsive container-flush-both-xs">
-        <Title>Routes</Title>
-        <div className="row row-center">
-          <div className="col xs-12 sm-10 md-8 lg-6 card-group">
-            {cards}
-          </div>
-        </div>
-      </div>
+      <ul className="routes-list inner">
+        {items}
+      </ul>
     );
   }
 }
 
 RouteListContainer.propTypes = {
-  routes: PropTypes.arrayOf(RouteShape),
-  setRoute: PropTypes.func.isRequired,
+  routes: PropTypes.arrayOf(RouteShape.isRequired),
 };
 
-function mapStateToProps(state) {
-  const routesLookup = state.getIn(['data', 'routes'], Map());
+const routesSelector = (state) => state.getIn(['data', 'routes']);
 
-  const routes = List(routesLookup.values())
-    .sort((a, b) => +a.get('shortName') - +b.get('shortName'));
+const routesListSelector = createSelector(
+  routesSelector,
+  (routes) => routes.toList()
+);
 
-  return {
-    routes: toJS(routes),
-  };
-}
+const sortedRoutesSelector = createSelector(
+    routesListSelector,
+    routes => {
+      console.log('sort');
+      return routes.sort(
+      (a, b) => a.get('shortName').localeCompare(b.get('shortName'))
+    );}
+);
 
-const mapDispatchToProps = {
-  setRoute,
-};
+const mapStateToProps = createSelector(
+  sortedRoutesSelector,
+  (routes) => {
+    console.log('routes', routes.toJS());
+    return {
+      routes: routes.toJS(),
+    };
+  }
+);
 
-export default connect(mapStateToProps, mapDispatchToProps)(RouteListContainer);
+export default connect(mapStateToProps)(RouteListContainer);

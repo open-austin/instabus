@@ -1,50 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Instabus</title>
     <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- FIXME: favicon -->
-    <!-- FIXME: apple touch icon -->
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="static/normalize.css">
-    <link rel="stylesheet" href="static/main.css">
-    <style type="text/css">
-    .trip div {
-        display: inline-block;
-        margin: 5px;
-    }
-    .past {
-        background: #ddd;
-    }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui=yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="google-site-verification" content="HQOHLFvHUp-RViUr7Tdf3yG9VcPnnCuJXCofJS0nCKg" />
+    <meta name="theme-color" content="rgb(207,30,30)">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/icon-60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/icon-76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/icon-60@2x.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/icon-76@2x.png">
+     <!-- FIXME: version the css and bundle like instabus does -->
+    <link href="static/main.css" rel="stylesheet">
 </head>
 <body>
     <!--[if lt IE 10]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <noscript>You need JavaScript enabled for Instabus to work.</noscript>
     <div id="app"></div>
-    <script src="static/app.bundle.js"></script>
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
-    <script>
-    (function(b, o, i, l, e, r) {
-        b.GoogleAnalyticsObject = l;
-        b[l] || (b[l] =
-            function() {
-                (b[l].q = b[l].q || []).push(arguments)
-            });
-        b[l].l = +new Date;
-        e = o.createElement(i);
-        r = o.getElementsByTagName(i)[0];
-        e.src = 'https://www.google-analytics.com/analytics.js';
-        r.parentNode.insertBefore(e, r)
-    }(window, document, 'script', 'ga'));
-    ga('create', 'UA-XXXXX-X', 'auto');
-    ga('send', 'pageview');
+    <script type="text/javascript">
+        window.analytics=window.analytics||[],window.analytics.methods=["identify","group","track","page","pageview","alias","ready","on","once","off","trackLink","trackForm","trackClick","trackSubmit"],window.analytics.factory=function(t){return function(){var a=Array.prototype.slice.call(arguments);return a.unshift(t),window.analytics.push(a),window.analytics}};for(var i=0;i<window.analytics.methods.length;i++){var key=window.analytics.methods[i];window.analytics[key]=window.analytics.factory(key)}window.analytics.load=function(t){if(!document.getElementById("analytics-js")){var a=document.createElement("script");a.type="text/javascript",a.id="analytics-js",a.async=!0,a.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.io/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n)}},window.analytics.SNIPPET_VERSION="2.0.9",
+        window.analytics.load('rogws3jvr0');
+        window.analytics.page();
     </script>
-    -->
+    <script src="//cdn.ravenjs.com/1.1.15/jquery,native/raven.min.js"></script>
+    <script>Raven.config('https://eaceb7cd004540e790225cb7397bf44c@app.getsentry.com/39712', {}).install();</script>
+    <script src="static/app.bundle.js"></script>
 </body>
 </html>

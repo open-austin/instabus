@@ -17,6 +17,9 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ],
+  resolve: {
+    modulesDirectories: ['node_modules', 'client'],
+  },
   module: {
     loaders: [{
       test: /\.js$/,

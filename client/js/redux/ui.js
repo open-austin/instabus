@@ -9,7 +9,7 @@ const SET_USER_LAT_LNG = 'instabus/ui/SET_USER_LAT_LNG';
 const SET_TRIPS_FOR_LOCATION_LOADING = 'instabus/ui/SET_TRIPS_FOR_LOCATION_LOADING';
 const SET_TRIPS_FOR_ROUTE_LOADING = 'instabus/ui/SET_TRIPS_FOR_ROUTE_LOADING';
 const SET_ERROR_MESSAGE = 'instabus/ui/SET_ERROR_MESSAGE';
-const SET_ROUTE = 'instabus/ui/SET_ROUTE';
+const SET_CURRENT_ROUTE = 'instabus/ui/SET_CURRENT_ROUTE';
 
 export default function reducer(state = INITIAL_STATE.get('ui'), action = {}) {
   switch (action.type) {
@@ -23,8 +23,8 @@ export default function reducer(state = INITIAL_STATE.get('ui'), action = {}) {
     return state.set('userLatLng', fromJS(action.payload));
   case SET_ERROR_MESSAGE:
     return state.set('errorMessage', action.payload);
-  case SET_ROUTE:
-    return state.set('route', action.payload);
+  case SET_CURRENT_ROUTE:
+    return state.set('currentRoute', action.payload);
   default:
     return state;
   }
@@ -58,14 +58,10 @@ export function setErrorMessage(errorMessage) {
   };
 }
 
-export function setRoute(routeId) {
-  return (dispatch) => {
-    dispatch({
-      type: SET_ROUTE,
-      payload: routeId,
-    });
-
-    dispatch(getTripsForRoute(routeId));
+export function setCurrentRoute(routeId) {
+  return {
+    type: SET_CURRENT_ROUTE,
+    payload: routeId,
   };
 }
 
@@ -78,12 +74,9 @@ export function setUserLatLng(latLng) {
 
 export function getUserLatLng() {
   return (dispatch) => {
-    // FIXME: i'm not sure where the right place to dispatch getTripsForLocation is
-
     getUserLocation()
       .then(latLng => {
         dispatch(setUserLatLng(latLng));
-        dispatch(getTripsForLocation(latLng));
       })
       .catch(err => {
         console.error(err);

@@ -59,6 +59,7 @@
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "redux-immutablejs": "0.0.7",
+    "reselect": "^2.0.3",
     "turf-distance": "^1.0.1",
     "turf-point": "^2.0.1",
     "webpack": "^1.9.11",

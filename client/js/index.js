@@ -19,6 +19,7 @@ render(
 );
 
 store.dispatch(actions.ui.getUserLatLng());
+store.dispatch(actions.data.getRoutes());
 
 // store.dispatch(actions.data.getStopsForLocation(userLatLng));
 // store.dispatch(actions.ui.setRoute('Hillsborough Area Regional Transit_6'));
