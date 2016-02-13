@@ -1,12 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
-import {Map, List} from 'immutable';
-import toJS from 'immutable-to-js';
 
-import {RouteShape} from 'js/constants/PropTypes';
-import {setRoute} from '../../redux/ui';
-import Title from '../Title';
+import {RouteType} from 'js/constants/OBAPropTypes';
 import RouteListItem from './RouteListItem';
 
 export default class RouteListContainer extends Component {
@@ -23,7 +19,7 @@ export default class RouteListContainer extends Component {
 }
 
 RouteListContainer.propTypes = {
-  routes: PropTypes.arrayOf(RouteShape.isRequired),
+  routes: PropTypes.arrayOf(RouteType.isRequired),
 };
 
 const routesSelector = (state) => state.getIn(['data', 'routes']);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {TripDetailShape} from '../../constants/PropTypes';
+import {TripDetailsType} from 'js/constants/OBAPropTypes';
 import TimeAgo from '../TimeAgo';
 
 export default class ArrivalCard extends Component {
@@ -22,4 +22,4 @@ export default class ArrivalCard extends Component {
   }
 }
 
-ArrivalCard.propTypes = TripDetailShape;
+ArrivalCard.propTypes = TripDetailsType;

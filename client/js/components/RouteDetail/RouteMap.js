@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Map, TileLayer} from 'react-leaflet';
 
-import {RouteShape} from '../../constants/PropTypes';
+import {RouteType} from 'js/constants/PropTypes';
 
 export default class RouteMap extends Component {
   render() {
@@ -23,6 +23,6 @@ export default class RouteMap extends Component {
 }
 
 RouteMap.propTypes = {
-  route: PropTypes.shape(RouteShape),
+  route: PropTypes.shape(RouteType),
   center: PropTypes.array.isRequired,
 };

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
-import {RouteShape} from 'js/constants/PropTypes';
+import {RouteType} from 'js/constants/OBAPropTypes';
 import {setCurrentRoute, setPage} from 'js/redux/ui';
 
 class RouteListItem extends Component {
@@ -9,8 +9,8 @@ class RouteListItem extends Component {
     super(props);
 
     this.setCurrentRoute = () => {
-      this.props.setCurrentRoute(this.props.route.route_number)
-      this.props.setPage('ROUTE_DETAIL')
+      this.props.setCurrentRoute(this.props.route.id);
+      this.props.setPage('ROUTE_DETAIL');
     };
   }
 
@@ -29,9 +29,9 @@ class RouteListItem extends Component {
 }
 
 RouteListItem.propTypes = {
-  route: RouteShape.isRequired,
+  route: RouteType.isRequired,
   setCurrentRoute: PropTypes.func.isRequired,
-  setPage: PropTypes.func.isRequired
+  setPage: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {

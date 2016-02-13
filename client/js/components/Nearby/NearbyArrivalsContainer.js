@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import {List} from 'immutable';
 import {distanceBetweenCoords, formatDistanceBetweenCoords} from '../../libs/surf';
 
-import {TripDetailShape} from '../../constants/PropTypes';
+import {TripDetailsType} from '../../constants/OBAPropTypes';
 import ArrivalCard from './ArrivalCard';
 
 
@@ -38,7 +38,7 @@ NearbyArrivalsContainer.propTypes = {
   groupedArrivals: PropTypes.arrayOf(PropTypes.shape({
     routeShortName: PropTypes.string.isRequired,
     routeLongName: PropTypes.string.isRequired,
-    arrivals: PropTypes.arrayOf(PropTypes.shape(TripDetailShape)).isRequired,
+    arrivals: PropTypes.arrayOf(PropTypes.shape(TripDetailsType)).isRequired,
   })),
 };
 

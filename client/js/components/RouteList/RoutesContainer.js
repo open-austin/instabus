@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Map, List} from 'immutable';
 import toJS from 'immutable-to-js';
 
-import {RouteShape} from '../../constants/PropTypes';
+import {RouteType} from 'js/constants/PropTypes';
 import RouteCard from './RouteCard';
 import RouteMap from './RouteMap';
 import {setRoute} from '../../redux/ui';
@@ -32,8 +32,8 @@ export default class RoutesContainer extends Component {
 }
 
 RoutesContainer.propTypes = {
-  currentRoute: PropTypes.shape(RouteShape),
-  routes: PropTypes.arrayOf(RouteShape),
+  currentRoute: PropTypes.shape(RouteType),
+  routes: PropTypes.arrayOf(RouteType),
   setRoute: PropTypes.func.isRequired,
 };
 

@@ -1,25 +1,22 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
-import toJS from 'immutable-to-js';
-import {List, Map} from 'immutable';
-import moment from 'moment-timezone';
 
-import {RouteShape} from 'js/constants/PropTypes';
-import Title from '../Title';
-import TimeAgo from '../TimeAgo';
-import RouteMap from './RouteMap';
-
-import ScheduleDeviation from './ScheduleDeviation.js';
+import {RouteType} from 'js/constants/OBAPropTypes';
 
 class RouteDetail extends Component {
   render() {
-    return <div>Current route</div>;
+    return (
+      <div>
+        <h1>{this.props.route.shortName}</h1>
+        <h2>{this.props.route.longName}</h2>
+      </div>
+    );
   }
 }
 
 RouteDetail.propTypes = {
-  route: RouteShape.isRequired,
+  route: RouteType.isRequired,
 };
 
 const currentRouteSelector = createSelector(
@@ -32,7 +29,10 @@ const currentRouteSelector = createSelector(
 const mapStateToProps = createSelector(
   currentRouteSelector,
   (route) => {
-    return {route: route};
+    console.log('calc');
+    return {
+      route: route.toJS(),
+    };
   }
 );
 
