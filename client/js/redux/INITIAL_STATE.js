@@ -19,6 +19,8 @@ const state = {
     situations: {},
     stops: {},
     trips: {},
+    shapes: {},
+    tripDetails: {},
   },
   ui: {
     page: 'ROUTE_LIST',

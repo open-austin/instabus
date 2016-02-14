@@ -3,15 +3,13 @@ import {connect} from 'react-redux';
 
 import * as uiActions from '../redux/ui';
 
-import About from '../components/About';
 import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
 import Filters from '../components/Filters';
 import Toolbar from '../components/Toolbar';
-import Nearby from '../components/Nearby';
+import About from '../components/About';
 import RouteList from '../components/RouteList';
 import RouteDetail from '../components/RouteDetail';
-import Popular from '../components/Popular';
 
 
 export default class AppContainer extends Component {
@@ -20,20 +18,17 @@ export default class AppContainer extends Component {
 
     if (this.props.page === 'ABOUT') {
       renderedElement = <About />;
-    } else if (this.props.page === 'NEARBY') {
-      renderedElement = <Nearby />;
     } else if (this.props.page === 'ROUTE_LIST') {
       renderedElement = <RouteList />;
     } else if (this.props.page === 'ROUTE_DETAIL') {
       renderedElement = <RouteDetail />;
-    } else if (this.props.page === 'POPULAR') {
-      renderedElement = <Popular />;
     } else {
       renderedElement = <div>404</div>;
     }
 
     return (
       <div>
+        <ErrorMessage />
         {renderedElement}
       </div>
     );

@@ -1,4 +1,7 @@
-import {fromJS, Map} from 'immutable';
+import {
+  fromJS,
+  Map
+} from 'immutable';
 
 import obaAPI from '../libs/obaAPI';
 import INITIAL_STATE from './INITIAL_STATE';
@@ -18,6 +21,7 @@ const SET_TRIPS = 'instabus/data/SET_TRIPS';
 const SET_ROUTES = 'instabus/data/SET_ROUTES';
 const SET_STOPS = 'instabus/data/SET_STOPS';
 const SET_AGENCIES = 'instabus/data/SET_AGENCIES';
+const SET_SHAPE = 'instabus/data/SET_SHAPE';
 
 export default function reducer(state = INITIAL_STATE.get('data'), action = {}) {
   if (action.type === SET_TRIPS_FOR_LOCATION) {
@@ -49,6 +53,9 @@ export default function reducer(state = INITIAL_STATE.get('data'), action = {}) 
     const agencies = indexBy(fromJS(action.payload), 'id');
     const merged = agencies;
     return state.set('agencies', merged);
+  }
+  if (action.type === SET_SHAPE) {
+    return state.setIn(['shapes', action.payload.tripId], action.payload.shape);
   }
   return state;
 }
@@ -113,13 +120,16 @@ export function getTripsForLocation(latLng) {
       includeStatus: true,
       includeSchedule: true,
     };
-    obaAPI('trips-for-location', query)
+
+    return obaAPI('trips-for-location', query)
       .then(res => res.json())
       .then(data => {
         dispatch(setTripsForLocation(data.data.list));
         dispatch(setRoutes(data.data.references.routes));
         dispatch(setTrips(data.data.references.trips));
         dispatch(setStops(data.data.references.stops));
+
+        return data.data.list;
       })
       .catch(err => {
         dispatch(uiActions.setErrorMessage(err.toString()));
@@ -128,7 +138,7 @@ export function getTripsForLocation(latLng) {
   };
 }
 
-export function getTripsForRoute(routeId) {
+export function getTripDetailsForRoute(routeId) {
   return dispatch => {
     dispatch(uiActions.setTripsForRouteLoading(true));
 
@@ -136,7 +146,8 @@ export function getTripsForRoute(routeId) {
       includeStatus: true,
       includeSchedule: true,
     };
-    obaAPI(`trips-for-route/${routeId}`, query)
+
+    return obaAPI(`trips-for-route/${routeId}`, query)
       .then(res => res.json())
       .then(data => {
         dispatch(setTripsForRoute(data.data.list));
@@ -147,7 +158,9 @@ export function getTripsForRoute(routeId) {
       .catch(err => {
         dispatch(uiActions.setErrorMessage(err.toString()));
       })
-      .then(() => dispatch(uiActions.setTripsForRouteLoading(false)));
+      .then(() => {
+        dispatch(uiActions.setTripsForRouteLoading(false));
+      });
   };
 }
 
@@ -163,13 +176,16 @@ export function getStopsForLocation(latLng) {
       includeStatus: true,
       includeSchedule: true,
     };
-    obaAPI('trips-for-location', query)
+
+    return obaAPI('trips-for-location', query)
       .then(res => res.json())
       .then(data => {
         dispatch(setTripsForLocation(data.data.list));
         dispatch(setRoutes(data.data.references.routes));
         dispatch(setTrips(data.data.references.trips));
         dispatch(setStops(data.data.references.stops));
+
+        return data.data.list;
       })
       .catch(err => {
         dispatch(uiActions.setErrorMessage(err.toString()));
@@ -183,12 +199,56 @@ export function getRoutes() {
     const state = store.getState();
     const agencyId = state.getIn(['ui', 'agency']);
 
-    obaAPI(`routes-for-agency/${agencyId}`)
+    return obaAPI(`routes-for-agency/${agencyId}`)
       .then(res => res.json())
       .then(data => {
         dispatch(setRoutes(data.data.list));
+
+        return data.data.list;
       })
       .catch(err => {
+        dispatch(uiActions.setErrorMessage(err.toString()));
+      });
+  };
+}
+
+export function setShapes(tripId, shape) {
+  return {
+    type: SET_SHAPE,
+    payload: {
+      tripId,
+      shape,
+    },
+  };
+}
+
+export function getShapesForTrip(tripId) {
+  return (dispatch) => {
+    return obaAPI(`shapes-for-trip/${tripId}`)
+      .then(res => res.json())
+      .then(data => {
+        dispatch(setShapes(tripId, data.data.list));
+
+        return data.data.list;
+      })
+      .catch(err => {
+        dispatch(uiActions.setErrorMessage(err.toString()));
+      });
+  };
+}
+
+
+export function loadRouteDetails(routeId) {
+  return (dispatch, getState) => {
+    return dispatch(getTripDetailsForRoute(routeId))
+      .then(() => {
+        const tripDetails = getState().getIn(['data', 'tripsForRoute']);
+        const promises = tripDetails.map(
+          trip => getShapesForTrip(trip.get('tripId'))
+        );
+        return Promise.all(promises);
+      })
+      .catch((err) => {
         dispatch(uiActions.setErrorMessage(err.toString()));
       });
   };

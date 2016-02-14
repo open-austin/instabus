@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import {RouteType} from 'js/constants/OBAPropTypes';
 import {setCurrentRoute, setPage} from 'js/redux/ui';
+import {loadRouteDetails} from 'js/redux/data';
 
 class RouteListItem extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class RouteListItem extends Component {
     this.setCurrentRoute = () => {
       this.props.setCurrentRoute(this.props.route.id);
       this.props.setPage('ROUTE_DETAIL');
+      this.props.loadRouteDetails(this.props.route.id);
     };
   }
 
@@ -32,11 +34,14 @@ RouteListItem.propTypes = {
   route: RouteType.isRequired,
   setCurrentRoute: PropTypes.func.isRequired,
   setPage: PropTypes.func.isRequired,
+
+  loadRouteDetails: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   setCurrentRoute,
   setPage,
+  loadRouteDetails,
 };
 
 export default connect(null, mapDispatchToProps)(RouteListItem);

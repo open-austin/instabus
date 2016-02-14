@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
 
 import {RouteType} from 'js/constants/OBAPropTypes';
+import RouteMap from 'js/components/RouteMap';
 
 class RouteDetail extends Component {
   render() {
@@ -10,6 +11,7 @@ class RouteDetail extends Component {
       <div>
         <h1>{this.props.route.shortName}</h1>
         <h2>{this.props.route.longName}</h2>
+        <RouteMap />
       </div>
     );
   }
@@ -29,7 +31,6 @@ const currentRouteSelector = createSelector(
 const mapStateToProps = createSelector(
   currentRouteSelector,
   (route) => {
-    console.log('calc');
     return {
       route: route.toJS(),
     };

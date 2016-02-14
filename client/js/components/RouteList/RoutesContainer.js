@@ -32,7 +32,7 @@ export default class RoutesContainer extends Component {
 }
 
 RoutesContainer.propTypes = {
-  currentRoute: PropTypes.shape(RouteType),
+  currentRoute: RouteType,
   routes: PropTypes.arrayOf(RouteType),
   setRoute: PropTypes.func.isRequired,
 };
