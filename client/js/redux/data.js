@@ -1,7 +1,4 @@
-import {
-  fromJS,
-  Map
-} from 'immutable';
+import {fromJS, Map} from 'immutable';
 
 import obaAPI from '../libs/obaAPI';
 import INITIAL_STATE from './INITIAL_STATE';
@@ -18,6 +15,7 @@ const SET_TRIPS_FOR_LOCATION = 'instabus/data/SET_TRIPS_FOR_LOCATION';
 const SET_STOPS_FOR_LOCATION = 'instabus/data/SET_STOPS_FOR_LOCATION';
 const SET_TRIPS_FOR_ROUTE = 'instabus/data/SET_TRIPS_FOR_ROUTE';
 const SET_TRIPS = 'instabus/data/SET_TRIPS';
+const SET_TRIP = 'instabus/data/SET_TRIP';
 const SET_ROUTES = 'instabus/data/SET_ROUTES';
 const SET_STOPS = 'instabus/data/SET_STOPS';
 const SET_AGENCIES = 'instabus/data/SET_AGENCIES';
@@ -31,13 +29,19 @@ export default function reducer(state = INITIAL_STATE.get('data'), action = {}) 
     return state.set('stopsForLocation', fromJS(action.payload));
   }
   if (action.type === SET_TRIPS_FOR_ROUTE) {
-    return state.set('tripsForRoute', fromJS(action.payload));
+    const {routeId, tripDetails} = action.payload;
+    return state.setIn(['tripsDetailsForRoute', routeId], fromJS(action.payload.tripDetails));
   }
   if (action.type === SET_TRIPS) {
     // fixme: agencies, trips, etc. all the stuff form initial-state.data is getting merged in also :(
     const trips = indexBy(fromJS(action.payload), 'id');
     const merged = trips;
     return state.set('trips', merged);
+  }
+  if (action.type === SET_TRIP) {
+    // fixme: agencies, trips, etc. all the stuff form initial-state.data is getting merged in also :(
+    const tripId = action.payload.id;
+    return state.setIn(['trips', tripId], action.payload);
   }
   if (action.type === SET_ROUTES) {
     const routes = indexBy(fromJS(action.payload), 'id');
@@ -55,7 +59,8 @@ export default function reducer(state = INITIAL_STATE.get('data'), action = {}) 
     return state.set('agencies', merged);
   }
   if (action.type === SET_SHAPE) {
-    return state.setIn(['shapes', action.payload.tripId], action.payload.shape);
+    const {shapeId, shape} = action.payload;
+    return state.setIn(['shapes', shapeId], fromJS(shape));
   }
   return state;
 }
@@ -74,17 +79,27 @@ export function setStopsForLocation(stops) {
   };
 }
 
-export function setTripsForRoute(trips) {
+export function setTripsDetailsForRoute(routeId, tripDetails) {
   return {
     type: SET_TRIPS_FOR_ROUTE,
-    payload: trips,
+    payload: {
+      routeId,
+      tripDetails,
+    },
   };
 }
 
-export function setTrips(trips) {
+export function setTrips(payload) {
   return {
     type: SET_TRIPS,
-    payload: trips,
+    payload,
+  };
+}
+
+export function setTrip(trip) {
+  return {
+    type: SET_TRIP,
+    payload,
   };
 }
 
@@ -122,7 +137,6 @@ export function getTripsForLocation(latLng) {
     };
 
     return obaAPI('trips-for-location', query)
-      .then(res => res.json())
       .then(data => {
         dispatch(setTripsForLocation(data.data.list));
         dispatch(setRoutes(data.data.references.routes));
@@ -131,16 +145,13 @@ export function getTripsForLocation(latLng) {
 
         return data.data.list;
       })
-      .catch(err => {
-        dispatch(uiActions.setErrorMessage(err.toString()));
-      })
       .then(() => dispatch(uiActions.setTripsForLocationLoading(false)));
   };
 }
 
-export function getTripDetailsForRoute(routeId) {
+export function getTripsDetailsForRoute(routeId) {
   return dispatch => {
-    dispatch(uiActions.setTripsForRouteLoading(true));
+    dispatch(uiActions.setTripsDetailsForRouteLoading(true));
 
     const query = {
       includeStatus: true,
@@ -148,18 +159,14 @@ export function getTripDetailsForRoute(routeId) {
     };
 
     return obaAPI(`trips-for-route/${routeId}`, query)
-      .then(res => res.json())
       .then(data => {
-        dispatch(setTripsForRoute(data.data.list));
+        dispatch(setTripsDetailsForRoute(routeId, data.data.list));
         dispatch(setRoutes(data.data.references.routes));
         dispatch(setTrips(data.data.references.trips));
         dispatch(setStops(data.data.references.stops));
       })
-      .catch(err => {
-        dispatch(uiActions.setErrorMessage(err.toString()));
-      })
       .then(() => {
-        dispatch(uiActions.setTripsForRouteLoading(false));
+        dispatch(uiActions.setTripsDetailsForRouteLoading(false));
       });
   };
 }
@@ -178,7 +185,6 @@ export function getStopsForLocation(latLng) {
     };
 
     return obaAPI('trips-for-location', query)
-      .then(res => res.json())
       .then(data => {
         dispatch(setTripsForLocation(data.data.list));
         dispatch(setRoutes(data.data.references.routes));
@@ -186,9 +192,6 @@ export function getStopsForLocation(latLng) {
         dispatch(setStops(data.data.references.stops));
 
         return data.data.list;
-      })
-      .catch(err => {
-        dispatch(uiActions.setErrorMessage(err.toString()));
       })
       .then(() => dispatch(uiActions.setTripsForLocationLoading(false)));
   };
@@ -200,56 +203,52 @@ export function getRoutes() {
     const agencyId = state.getIn(['ui', 'agency']);
 
     return obaAPI(`routes-for-agency/${agencyId}`)
-      .then(res => res.json())
       .then(data => {
         dispatch(setRoutes(data.data.list));
-
-        return data.data.list;
-      })
-      .catch(err => {
-        dispatch(uiActions.setErrorMessage(err.toString()));
       });
   };
 }
 
-export function setShapes(tripId, shape) {
+export function setShape(shapeId, shape) {
   return {
     type: SET_SHAPE,
     payload: {
-      tripId,
+      shapeId,
       shape,
     },
   };
 }
 
-export function getShapesForTrip(tripId) {
+export function getShape(shapeId) {
   return (dispatch) => {
-    return obaAPI(`shapes-for-trip/${tripId}`)
-      .then(res => res.json())
+    return obaAPI(`shape/${shapeId}`)
       .then(data => {
-        dispatch(setShapes(tripId, data.data.list));
-
-        return data.data.list;
-      })
-      .catch(err => {
-        dispatch(uiActions.setErrorMessage(err.toString()));
+        dispatch(setShape(shapeId, data.data.entry));
       });
   };
 }
 
+export function getTrip(tripId) {
+  return (dispatch) => {
+    return obaAPI(`trip/${tripId}`)
+      .then(data => {
+        dispatch(setTrip(tripId, data.data.list));
+      });
+  };
+}
 
 export function loadRouteDetails(routeId) {
   return (dispatch, getState) => {
-    return dispatch(getTripDetailsForRoute(routeId))
+    return dispatch(getTripsDetailsForRoute(routeId))
       .then(() => {
-        const tripDetails = getState().getIn(['data', 'tripsForRoute']);
-        const promises = tripDetails.map(
-          trip => getShapesForTrip(trip.get('tripId'))
-        );
+        const tripsDetails = getState().getIn(['data', 'tripsDetailsForRoute', routeId]);
+        const promises = tripsDetails.map((td)   => {
+          const tripId = td.get('tripId');
+          const trip = getState().getIn(['data', 'trips', tripId]);
+          const shapeId = trip.get('shapeId');
+          dispatch(getShape(shapeId));
+        });
         return Promise.all(promises);
-      })
-      .catch((err) => {
-        dispatch(uiActions.setErrorMessage(err.toString()));
       });
   };
 }

@@ -14,6 +14,7 @@ export default function request(endpoint, query = {}) {
 
   // return fetch(`${url}?${qs}`)
   return fetch(`https://crossorigin.me/${url}?${qs}`)
+    .then(res => res.json())
     .catch(err => {
       console.error(err);
       throw err;

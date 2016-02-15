@@ -11,7 +11,7 @@ class RouteDetail extends Component {
       <div>
         <h1>{this.props.route.shortName}</h1>
         <h2>{this.props.route.longName}</h2>
-        <RouteMap />
+        <RouteMap routeId={this.props.route.id} />
       </div>
     );
   }

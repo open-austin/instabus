@@ -4,7 +4,7 @@ const state = {
   data: {
     tripsForLocation: [],
     stopsForLocation: [],
-    tripsForRoute: [],
+    tripsDetailsForRoute: {},
     agencies: {
       'disclaimer': '',
       'id': '1',
@@ -32,7 +32,7 @@ const state = {
     errorMessage: null,
     userLatLng: null,
     tripsForLocationLoading: false,
-    tripsForRouteLoading: false,
+    tripsDetailsForRouteLoading: false,
   },
 };
 

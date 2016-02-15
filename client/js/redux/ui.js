@@ -2,7 +2,7 @@ import {fromJS} from 'immutable';
 
 import INITIAL_STATE from './INITIAL_STATE';
 import {getUserLocation} from '../libs/location';
-import {getTripsForRoute, getTripsForLocation} from './data';
+import {getTripsDetailsForRoute, getTripsForLocation} from './data';
 
 const SET_PAGE = 'instabus/ui/SET_PAGE';
 const SET_USER_LAT_LNG = 'instabus/ui/SET_USER_LAT_LNG';
@@ -18,7 +18,7 @@ export default function reducer(state = INITIAL_STATE.get('ui'), action = {}) {
   case SET_TRIPS_FOR_LOCATION_LOADING:
     return state.set('tripsForLocationLoading', action.payload);
   case SET_TRIPS_FOR_ROUTE_LOADING:
-    return state.set('tripsForRouteLoading', action.payload);
+    return state.set('tripsDetailsForRouteLoading', action.payload);
   case SET_USER_LAT_LNG:
     return state.set('userLatLng', fromJS(action.payload));
   case SET_ERROR_MESSAGE:
@@ -37,7 +37,7 @@ export function setTripsForLocationLoading(loading) {
   };
 }
 
-export function setTripsForRouteLoading(loading) {
+export function setTripsDetailsForRouteLoading(loading) {
   return {
     type: SET_TRIPS_FOR_ROUTE_LOADING,
     payload: loading,
@@ -52,9 +52,10 @@ export function setPage(page) {
 }
 
 export function setErrorMessage(errorMessage) {
+  console.error(errorMessage.stack);
   return {
     type: SET_ERROR_MESSAGE,
-    payload: errorMessage,
+    payload: errorMessage.toString(),
   };
 }
 
@@ -79,8 +80,7 @@ export function getUserLatLng() {
         dispatch(setUserLatLng(latLng));
       })
       .catch(err => {
-        console.error(err);
-        setErrorMessage(err.toString());
+        setErrorMessage(err);
       });
   };
 }

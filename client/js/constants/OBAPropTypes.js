@@ -242,3 +242,10 @@ export const VehicleStatusType = PropTypes.shape({
   tripId: PropTypes.string,
   tripStatus: TripStatusType,
 });
+
+// From https://github.com/OneBusAway/onebusaway-application-modules/blob/3bee16af29cbde556de7eaba59b44c2bfaf411cf/onebusaway-geospatial/src/main/java/org/onebusaway/geospatial/model/EncodedPolylineBean.java
+export const EncodedPolylineType = PropTypes.shape({
+  points: PropTypes.string,
+  levels: PropTypes.string,
+  length: PropTypes.number,
+});
