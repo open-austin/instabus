@@ -1,22 +1,18 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import Immutable from 'immutable';
 
 import DevTools from '../containers/DevTools';
 import rootReducer from './index';
 
-const INITIAL_STATE = Immutable.Map();
-
 const finalCreateStore = compose(
   applyMiddleware(thunk),
-  applyMiddleware(createLogger({
-    transformer: state => state.toJS(),
-  })),
+  applyMiddleware(createLogger()),
   DevTools.instrument()
 )(createStore);
 
 export default function configureStore() {
+  const INITIAL_STATE = {};
   const store = finalCreateStore(rootReducer, INITIAL_STATE);
 
   if (module.hot) {
@@ -26,5 +22,6 @@ export default function configureStore() {
       store.replaceReducer(nextRootReducer);
     });
   }
+
   return store;
 }

@@ -1,3 +1,13 @@
 {
-  "extends": "airbnb"
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "ecmaFeatures": {
+    "experimentalObjectRestSpread": true,
+    "classes": true
+  },
+  "rules": {
+    "brace-style": [2, "stroustrup", {"allowSingleLine": true}],
+    "max-len": 0,
+    "object-curly-spacing": 0
+  }
 }

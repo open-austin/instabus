@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
+import _ from 'lodash';
 
 import {RouteType} from 'js/constants/OBAPropTypes';
 import RouteListItem from './RouteListItem';
@@ -22,28 +23,23 @@ RouteListContainer.propTypes = {
   routes: PropTypes.arrayOf(RouteType.isRequired),
 };
 
-const routesSelector = (state) => state.getIn(['data', 'routes']);
+const routesSelector = (state) => state.data.routes;
 
 const routesListSelector = createSelector(
   routesSelector,
-  (routes) => routes.toList()
+  (routes) => _.values(routes),
 );
 
 const sortedRoutesSelector = createSelector(
     routesListSelector,
-    routes => {
-      console.log('sort');
-      return routes.sort(
-      (a, b) => a.get('shortName').localeCompare(b.get('shortName'))
-    );}
+    routes => routes.sort((a, b) => a.shortName.localeCompare(b.shortName))
 );
 
 const mapStateToProps = createSelector(
   sortedRoutesSelector,
   (routes) => {
-    console.log('routes', routes.toJS());
     return {
-      routes: routes.toJS(),
+      routes,
     };
   }
 );

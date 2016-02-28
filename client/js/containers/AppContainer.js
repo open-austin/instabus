@@ -4,9 +4,6 @@ import {connect} from 'react-redux';
 import * as uiActions from '../redux/ui';
 
 import ErrorMessage from '../components/ErrorMessage';
-import Header from '../components/Header';
-import Filters from '../components/Filters';
-import Toolbar from '../components/Toolbar';
 import About from '../components/About';
 import RouteList from '../components/RouteList';
 import RouteDetail from '../components/RouteDetail';
@@ -18,11 +15,14 @@ export default class AppContainer extends Component {
 
     if (this.props.page === 'ABOUT') {
       renderedElement = <About />;
-    } else if (this.props.page === 'ROUTE_LIST') {
+    }
+    else if (this.props.page === 'ROUTE_LIST') {
       renderedElement = <RouteList />;
-    } else if (this.props.page === 'ROUTE_DETAIL') {
+    }
+    else if (this.props.page === 'ROUTE_DETAIL') {
       renderedElement = <RouteDetail />;
-    } else {
+    }
+    else {
       renderedElement = <div>404</div>;
     }
 
@@ -37,8 +37,8 @@ export default class AppContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    page: state.getIn(['ui', 'page']),
-    errorMessage: state.getIn(['ui', 'errorMessage']),
+    page: state.ui.page,
+    errorMessage: state.ui.errorMessage,
   };
 }
 

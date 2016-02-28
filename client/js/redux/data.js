@@ -1,14 +1,11 @@
-import {fromJS, Map} from 'immutable';
+import _ from 'lodash';
 
 import obaAPI from '../libs/obaAPI';
 import INITIAL_STATE from './INITIAL_STATE';
 import * as uiActions from './ui';
 
 function indexBy(iterable, searchKey) {
-  return iterable.reduce(
-    (prev, item) => prev.set(item.get(searchKey), item),
-    Map()
-  );
+  return _.keyBy(iterable, searchKey);
 }
 
 const SET_TRIPS_FOR_LOCATION = 'instabus/data/SET_TRIPS_FOR_LOCATION';
@@ -21,46 +18,60 @@ const SET_STOPS = 'instabus/data/SET_STOPS';
 const SET_AGENCIES = 'instabus/data/SET_AGENCIES';
 const SET_SHAPE = 'instabus/data/SET_SHAPE';
 
-export default function reducer(state = INITIAL_STATE.get('data'), action = {}) {
+export default function reducer(state = INITIAL_STATE.data, action = {}) {
   if (action.type === SET_TRIPS_FOR_LOCATION) {
-    return state.set('tripsForLocation', fromJS(action.payload));
+    return {...state, tripsFxorLocation: action.payload};
   }
   if (action.type === SET_STOPS_FOR_LOCATION) {
-    return state.set('stopsForLocation', fromJS(action.payload));
+    return {...state, stopsForLocation: action.payload};
   }
   if (action.type === SET_TRIPS_FOR_ROUTE) {
     const {routeId, tripDetails} = action.payload;
-    return state.setIn(['tripsDetailsForRoute', routeId], fromJS(action.payload.tripDetails));
+    return {
+      ...state,
+      tripsDetailsForRoute: {
+        ...state.tripsDetailsForRoute,
+        [routeId]: tripDetails,
+      },
+    };
   }
   if (action.type === SET_TRIPS) {
     // fixme: agencies, trips, etc. all the stuff form initial-state.data is getting merged in also :(
-    const trips = indexBy(fromJS(action.payload), 'id');
-    const merged = trips;
-    return state.set('trips', merged);
+    const trips = indexBy((action.payload), 'id');
+    return {...state, trips};
   }
   if (action.type === SET_TRIP) {
     // fixme: agencies, trips, etc. all the stuff form initial-state.data is getting merged in also :(
     const tripId = action.payload.id;
-    return state.setIn(['trips', tripId], action.payload);
+    return {
+      ...state,
+      trips: {
+        ...state.trips,
+        [tripId]: action.payload,
+      },
+    };
   }
   if (action.type === SET_ROUTES) {
-    const routes = indexBy(fromJS(action.payload), 'id');
-    const merged = routes;
-    return state.set('routes', merged);
+    const routes = indexBy((action.payload), 'id');
+    return {...state, routes};
   }
   if (action.type === SET_STOPS) {
-    const stops = indexBy(fromJS(action.payload), 'id');
-    const merged = stops;
-    return state.set('stops', merged);
+    const stops = indexBy((action.payload), 'id');
+    return {...state, stops};
   }
   if (action.type === SET_AGENCIES) {
-    const agencies = indexBy(fromJS(action.payload), 'id');
-    const merged = agencies;
-    return state.set('agencies', merged);
+    const agencies = indexBy((action.payload), 'id');
+    return {...state, agencies};
   }
   if (action.type === SET_SHAPE) {
     const {shapeId, shape} = action.payload;
-    return state.setIn(['shapes', shapeId], fromJS(shape));
+    return {
+      ...state,
+      shapes: {
+        ...state.shapes,
+        [shapeId]: shape,
+      },
+    };
   }
   return state;
 }
@@ -96,17 +107,17 @@ export function setTrips(payload) {
   };
 }
 
-export function setTrip(trip) {
+export function setTrip(payload) {
   return {
     type: SET_TRIP,
     payload,
   };
 }
 
-export function setRoutes(routes) {
+export function setRoutes(payload) {
   return {
     type: SET_ROUTES,
-    payload: routes,
+    payload,
   };
 }
 
@@ -117,10 +128,10 @@ export function setStops(stops) {
   };
 }
 
-export function setAgencies(agencies) {
+export function setAgencies(payload) {
   return {
     type: SET_AGENCIES,
-    payload: agencies,
+    payload,
   };
 }
 
@@ -199,8 +210,8 @@ export function getStopsForLocation(latLng) {
 
 export function getRoutes() {
   return (dispatch, getState) => {
-    const state = store.getState();
-    const agencyId = state.getIn(['ui', 'agency']);
+    const state = getState();
+    const agencyId = state.ui.agency;
 
     return obaAPI(`routes-for-agency/${agencyId}`)
       .then(data => {
@@ -220,35 +231,30 @@ export function setShape(shapeId, shape) {
 }
 
 export function getShape(shapeId) {
-  return (dispatch) => {
-    return obaAPI(`shape/${shapeId}`)
-      .then(data => {
-        dispatch(setShape(shapeId, data.data.entry));
-      });
-  };
+  return (dispatch) => obaAPI(`shape/${shapeId}`)
+    .then(data => {
+      dispatch(setShape(shapeId, data.data.entry));
+    });
 }
 
 export function getTrip(tripId) {
-  return (dispatch) => {
-    return obaAPI(`trip/${tripId}`)
-      .then(data => {
-        dispatch(setTrip(tripId, data.data.list));
-      });
-  };
+  return (dispatch) => obaAPI(`trip/${tripId}`)
+    .then(data => {
+      dispatch(setTrip(tripId, data.data.list));
+    });
 }
 
 export function loadRouteDetails(routeId) {
-  return (dispatch, getState) => {
-    return dispatch(getTripsDetailsForRoute(routeId))
-      .then(() => {
-        const tripsDetails = getState().getIn(['data', 'tripsDetailsForRoute', routeId]);
-        const promises = tripsDetails.map((td)   => {
-          const tripId = td.get('tripId');
-          const trip = getState().getIn(['data', 'trips', tripId]);
-          const shapeId = trip.get('shapeId');
-          dispatch(getShape(shapeId));
-        });
-        return Promise.all(promises);
+  return (dispatch, getState) => dispatch(getTripsDetailsForRoute(routeId))
+    .then(() => {
+      const state = getState();
+      const tripsDetails = state.data.tripsDetailsForRoute[routeId];
+
+      tripsDetails.forEach((td) => {
+        const tripId = td.tripId;
+        const trip = state.data.trips[tripId];
+        const shapeId = trip.shapeId;
+        dispatch(getShape(shapeId));
       });
-  };
+    });
 }

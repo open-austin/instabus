@@ -1,19 +1,17 @@
-import Immutable from 'immutable';
-
-const state = {
+export default {
   data: {
     tripsForLocation: [],
     stopsForLocation: [],
     tripsDetailsForRoute: {},
     agencies: {
-      'disclaimer': '',
-      'id': '1',
-      'lang': 'en',
-      'name': 'Capital Metro',
-      'phone': '512-474-1200',
-      'privateService': false,
-      'timezone': 'America/Chicago',
-      'url': 'http://www.capmetro.org/'
+      disclaimer: '',
+      id: '1',
+      lang: 'en',
+      name: 'Capital Metro',
+      phone: '512-474-1200',
+      privateService: false,
+      timezone: 'America/Chicago',
+      url: 'http://www.capmetro.org/',
     },
     routes: {},
     situations: {},
@@ -35,5 +33,3 @@ const state = {
     tripsDetailsForRouteLoading: false,
   },
 };
-
-export default Immutable.fromJS(state);

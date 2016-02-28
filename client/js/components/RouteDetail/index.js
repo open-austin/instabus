@@ -22,9 +22,9 @@ RouteDetail.propTypes = {
 };
 
 const currentRouteSelector = createSelector(
-  (state) => state.getIn(['data', 'routes']),
-  (state) => state.getIn(['ui', 'currentRoute']),
-  (routes, routeId) => routes.get(routeId)
+  (state) => state.data.routes,
+  (state) => state.ui.currentRoute,
+  (routes, routeId) => routes[routeId]
 );
 
 
@@ -32,7 +32,7 @@ const mapStateToProps = createSelector(
   currentRouteSelector,
   (route) => {
     return {
-      route: route.toJS(),
+      route,
     };
   }
 );

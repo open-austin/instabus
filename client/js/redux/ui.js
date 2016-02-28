@@ -1,8 +1,5 @@
-import {fromJS} from 'immutable';
-
 import INITIAL_STATE from './INITIAL_STATE';
-import {getUserLocation} from '../libs/location';
-import {getTripsDetailsForRoute, getTripsForLocation} from './data';
+import { getUserLocation } from '../libs/location';
 
 const SET_PAGE = 'instabus/ui/SET_PAGE';
 const SET_USER_LAT_LNG = 'instabus/ui/SET_USER_LAT_LNG';
@@ -11,23 +8,26 @@ const SET_TRIPS_FOR_ROUTE_LOADING = 'instabus/ui/SET_TRIPS_FOR_ROUTE_LOADING';
 const SET_ERROR_MESSAGE = 'instabus/ui/SET_ERROR_MESSAGE';
 const SET_CURRENT_ROUTE = 'instabus/ui/SET_CURRENT_ROUTE';
 
-export default function reducer(state = INITIAL_STATE.get('ui'), action = {}) {
-  switch (action.type) {
-  case SET_PAGE:
-    return state.set('page', action.payload);
-  case SET_TRIPS_FOR_LOCATION_LOADING:
-    return state.set('tripsForLocationLoading', action.payload);
-  case SET_TRIPS_FOR_ROUTE_LOADING:
-    return state.set('tripsDetailsForRouteLoading', action.payload);
-  case SET_USER_LAT_LNG:
-    return state.set('userLatLng', fromJS(action.payload));
-  case SET_ERROR_MESSAGE:
-    return state.set('errorMessage', action.payload);
-  case SET_CURRENT_ROUTE:
-    return state.set('currentRoute', action.payload);
-  default:
-    return state;
+export default function reducer(state = INITIAL_STATE.ui, action = {}) {
+  if (action.type === SET_PAGE) {
+    return {...state, page: action.payload};
   }
+  if (action.type === SET_TRIPS_FOR_LOCATION_LOADING) {
+    return {...state, tripsForLocationLoading: action.payload};
+  }
+  if (action.type === SET_TRIPS_FOR_ROUTE_LOADING) {
+    return {...state, tripsDetailsForRouteLoading: action.payload};
+  }
+  if (action.type === SET_USER_LAT_LNG) {
+    return {...state, userLatLng: action.payload};
+  }
+  if (action.type === SET_ERROR_MESSAGE) {
+    return {...state, errorMessage: action.payload};
+  }
+  if (action.type === SET_CURRENT_ROUTE) {
+    return {...state, currentRoute: action.payload};
+  }
+  return state;
 }
 
 export function setTripsForLocationLoading(loading) {

@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Map, List} from 'immutable';
-import toJS from 'immutable-to-js';
+import _ from 'lodash';
 
 import {RouteType} from 'js/constants/PropTypes';
 import RouteCard from './RouteCard';
@@ -38,17 +37,17 @@ RoutesContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const routesLookup = state.getIn(['data', 'routes'], Map());
+  const routesLookup = state.data.routes;
 
-  const routes = List(routesLookup.values())
-    .sort((a, b) => +a.get('shortName') - +b.get('shortName'));
+  const routes = _.values(routesLookup)
+    .sort((a, b) => +a.shortName - +b.shortName);
 
-  const currentRouteId = state.getIn(['ui', 'route']);
-  const currentRoute = routesLookup.get(currentRouteId);
+  const currentRouteId = state.ui.route;
+  const currentRoute = routesLookup[currentRouteId];
 
   return {
-    currentRoute: toJS(currentRoute),
-    routes: toJS(routes),
+    currentRoute,
+    routes,
   };
 }
 

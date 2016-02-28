@@ -1,17 +1,14 @@
 import React, {Component, PropTypes} from 'react';
-import Leaflet from 'leaflet';
 import {Map as ReactLeafletMap, Polyline, Popup, TileLayer, Marker} from 'react-leaflet';
 import polyline from 'polyline';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect';
-import {List, Map} from 'immutable';
 
 
 import {AUSTIN_LAT_LNG} from 'js/constants/Map';
 
 // import VehicleMarker from './VehicleMarker';
 // import StopMarker from './StopMarker';
-import RoutePolyline from './RoutePolyline';
 // import MapLegend from './MapLegend';
 
 //
@@ -59,32 +56,35 @@ import RoutePolyline from './RoutePolyline';
 
 class RouteMap extends Component {
   render() {
-    const polylineLayers = this.props.polylines.map((polyline, i) => (
+    const attribution = '<a href="http://openstreetmap.org">OpenStreetMap</a> | <a href="http://mapbox.com">Mapbox</a>';
+
+    const polylineLayers = this.props.polylines.map((poly, i) => (
         <Polyline
-          positions={polyline}
+          positions={poly}
           key={i}
-          color='rgb(130,127,122)'
-          stroke={true}
+          color="rgb(130, 127, 122)"
+          stroke
           weight={5}
           opacity={0.3}
-          smoothFactor={1} />
+          smoothFactor={1}
+        />
       )
     );
     return (
       <ReactLeafletMap
         center={AUSTIN_LAT_LNG}
         zoom={13}
-        id='map'
+        id="map"
       >
         <TileLayer
-          url='https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png'
-          attribution='<a href="http://openstreetmap.org">OpenStreetMap</a> | <a href="http://mapbox.com">Mapbox</a>'
-          id='drmaples.ipbindf8'
+          url="https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png"
+          attribution={attribution}
+          id="drmaples.ipbindf8"
         />
         {polylineLayers}
         <Marker position={AUSTIN_LAT_LNG}>
           <Popup>
-            <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
+            <span>A pretty CSS3 popup. Easily customizable.</span>
           </Popup>
         </Marker>
       </ReactLeafletMap>
@@ -92,7 +92,7 @@ class RouteMap extends Component {
   }
 }
 
-RouteMap.propTypes =  {
+RouteMap.propTypes = {
   routeId: PropTypes.string.isRequired,
   // routes: PropTypes.arrayOf(PropTypes.object).isRequired,
   // stops: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -101,66 +101,59 @@ RouteMap.propTypes =  {
   // fleetUpdateTime: PropTypes.string.isRequired,
 };
 
-const routeSelector = (state, props) => {
-  return state.getIn(['data', 'routes', props.routeId])
-};
-
 const tripsDetailsSelector = createSelector(
-  routeSelector,
-  (state) => state.getIn(['data', 'tripsDetailsForRoute'], new Map({})),
+  (state, props) => state.data.routes[props.routeId],
+  (state) => state.data.tripsDetailsForRoute,
   (route, TripsDetailsForRoute) => {
     if (!route) {
-      return new List();
+      return [];
     }
-    return TripsDetailsForRoute.get(route.get('id'), new List())
+    return TripsDetailsForRoute[route.id] || [];
   }
 );
 
 const tripIdsSelector = createSelector(
   tripsDetailsSelector,
-  (tripsDetails) => tripsDetails.map(tripDetails => tripDetails.get('tripId'))
-)
+  (tripsDetails) => tripsDetails.map(tripDetails => tripDetails.tripId)
+);
 
 const tripsSelector = createSelector(
   tripIdsSelector,
-  (state) => state.getIn(['data' , 'trips']),
+  (state) => state.data.trips,
   (tripIds, trips) => tripIds.reduce((result, tripId) => {
-    const trip = trips.get(tripId);
+    const trip = trips[tripId];
     if (trip) {
-      return result.push(trip);
+      return [...result, trip];
     }
     return result;
-  }, new List())
+  }, [])
 );
 
 const shapesSelector = createSelector(
   tripsSelector,
-  (state) => state.getIn(['data', 'shapes']),
+  (state) => state.data.shapes,
   (trips, shapes) => {
-    console.log('trips', trips, trips.toJS());
+    console.log('trips', trips);
     return trips.reduce((result, trip) => {
-      const shape = shapes.get(trip.get('shapeId'));
+      const shape = shapes[trip.shapeId];
       if (shape) {
-        return result.push(shape);
+        return [...result, shape];
       }
       return result;
-    }, new List());
+    }, []);
   }
 );
 
 const polylinesSelector = createSelector(
   shapesSelector,
-  (shapes) => shapes.map(shape => {
-    return polyline.decode(shape.get('points'))
-  })
-)
+  (shapes) => shapes.map(shape => polyline.decode(shape.points))
+);
 
 const mapStateToProps = createSelector(
   polylinesSelector,
   (polylines) => {
-    console.log('polylines', polylines.toJS())
     return {
-      polylines: polylines.toJS(),
+      polylines,
     };
   }
 );
