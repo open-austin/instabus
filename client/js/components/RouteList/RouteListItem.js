@@ -2,8 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 import {RouteType} from 'js/constants/OBAPropTypes';
-import {setCurrentRoute, setPage} from 'js/redux/ui';
-import {loadRouteDetails} from 'js/redux/data';
+import {setCurrentRoute, setPage} from 'js/actions/ui';
+import {loadRouteDetails} from 'js/actions/data';
 
 class RouteListItem extends Component {
   constructor(props) {

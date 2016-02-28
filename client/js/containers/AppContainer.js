@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
-import * as uiActions from '../redux/ui';
+import {setPage} from 'js/actions/ui';
 
 import ErrorMessage from '../components/ErrorMessage';
 import About from '../components/About';
@@ -43,7 +43,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  setPage: uiActions.setPage,
+  setPage,
 };
 
 AppContainer.propTypes = {

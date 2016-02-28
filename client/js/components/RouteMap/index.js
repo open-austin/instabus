@@ -133,7 +133,6 @@ const shapesSelector = createSelector(
   tripsSelector,
   (state) => state.data.shapes,
   (trips, shapes) => {
-    console.log('trips', trips);
     return trips.reduce((result, trip) => {
       const shape = shapes[trip.shapeId];
       if (shape) {

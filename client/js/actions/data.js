@@ -1,80 +1,18 @@
-import _ from 'lodash';
-
 import obaAPI from '../libs/obaAPI';
-import INITIAL_STATE from './INITIAL_STATE';
-import * as uiActions from './ui';
+import {
+  setTripsDetailsForRouteLoading,
+  setTripsForLocationLoading,
+} from 'js/actions/ui';
 
-function indexBy(iterable, searchKey) {
-  return _.keyBy(iterable, searchKey);
-}
-
-const SET_TRIPS_FOR_LOCATION = 'instabus/data/SET_TRIPS_FOR_LOCATION';
-const SET_STOPS_FOR_LOCATION = 'instabus/data/SET_STOPS_FOR_LOCATION';
-const SET_TRIPS_FOR_ROUTE = 'instabus/data/SET_TRIPS_FOR_ROUTE';
-const SET_TRIPS = 'instabus/data/SET_TRIPS';
-const SET_TRIP = 'instabus/data/SET_TRIP';
-const SET_ROUTES = 'instabus/data/SET_ROUTES';
-const SET_STOPS = 'instabus/data/SET_STOPS';
-const SET_AGENCIES = 'instabus/data/SET_AGENCIES';
-const SET_SHAPE = 'instabus/data/SET_SHAPE';
-
-export default function reducer(state = INITIAL_STATE.data, action = {}) {
-  if (action.type === SET_TRIPS_FOR_LOCATION) {
-    return {...state, tripsFxorLocation: action.payload};
-  }
-  if (action.type === SET_STOPS_FOR_LOCATION) {
-    return {...state, stopsForLocation: action.payload};
-  }
-  if (action.type === SET_TRIPS_FOR_ROUTE) {
-    const {routeId, tripDetails} = action.payload;
-    return {
-      ...state,
-      tripsDetailsForRoute: {
-        ...state.tripsDetailsForRoute,
-        [routeId]: tripDetails,
-      },
-    };
-  }
-  if (action.type === SET_TRIPS) {
-    // fixme: agencies, trips, etc. all the stuff form initial-state.data is getting merged in also :(
-    const trips = indexBy((action.payload), 'id');
-    return {...state, trips};
-  }
-  if (action.type === SET_TRIP) {
-    // fixme: agencies, trips, etc. all the stuff form initial-state.data is getting merged in also :(
-    const tripId = action.payload.id;
-    return {
-      ...state,
-      trips: {
-        ...state.trips,
-        [tripId]: action.payload,
-      },
-    };
-  }
-  if (action.type === SET_ROUTES) {
-    const routes = indexBy((action.payload), 'id');
-    return {...state, routes};
-  }
-  if (action.type === SET_STOPS) {
-    const stops = indexBy((action.payload), 'id');
-    return {...state, stops};
-  }
-  if (action.type === SET_AGENCIES) {
-    const agencies = indexBy((action.payload), 'id');
-    return {...state, agencies};
-  }
-  if (action.type === SET_SHAPE) {
-    const {shapeId, shape} = action.payload;
-    return {
-      ...state,
-      shapes: {
-        ...state.shapes,
-        [shapeId]: shape,
-      },
-    };
-  }
-  return state;
-}
+export const SET_TRIPS_FOR_LOCATION = 'instabus/data/SET_TRIPS_FOR_LOCATION';
+export const SET_STOPS_FOR_LOCATION = 'instabus/data/SET_STOPS_FOR_LOCATION';
+export const SET_TRIP_DETAILS_FOR_ROUTE = 'instabus/data/SET_TRIP_DETAILS_FOR_ROUTE';
+export const SET_TRIPS = 'instabus/data/SET_TRIPS';
+export const SET_TRIP = 'instabus/data/SET_TRIP';
+export const SET_ROUTES = 'instabus/data/SET_ROUTES';
+export const SET_STOPS = 'instabus/data/SET_STOPS';
+export const SET_AGENCIES = 'instabus/data/SET_AGENCIES';
+export const SET_SHAPE = 'instabus/data/SET_SHAPE';
 
 export function setTripsForLocation(trips) {
   return {
@@ -92,7 +30,7 @@ export function setStopsForLocation(stops) {
 
 export function setTripsDetailsForRoute(routeId, tripDetails) {
   return {
-    type: SET_TRIPS_FOR_ROUTE,
+    type: SET_TRIP_DETAILS_FOR_ROUTE,
     payload: {
       routeId,
       tripDetails,
@@ -137,7 +75,7 @@ export function setAgencies(payload) {
 
 export function getTripsForLocation(latLng) {
   return dispatch => {
-    dispatch(uiActions.setTripsForLocationLoading(true));
+    dispatch(setTripsForLocationLoading(true));
 
     const query = {
       lat: latLng[0],
@@ -156,13 +94,13 @@ export function getTripsForLocation(latLng) {
 
         return data.data.list;
       })
-      .then(() => dispatch(uiActions.setTripsForLocationLoading(false)));
+      .then(() => dispatch(setTripsForLocationLoading(false)));
   };
 }
 
 export function getTripsDetailsForRoute(routeId) {
   return dispatch => {
-    dispatch(uiActions.setTripsDetailsForRouteLoading(true));
+    dispatch(setTripsDetailsForRouteLoading(true));
 
     const query = {
       includeStatus: true,
@@ -177,14 +115,14 @@ export function getTripsDetailsForRoute(routeId) {
         dispatch(setStops(data.data.references.stops));
       })
       .then(() => {
-        dispatch(uiActions.setTripsDetailsForRouteLoading(false));
+        dispatch(setTripsDetailsForRouteLoading(false));
       });
   };
 }
 
 export function getStopsForLocation(latLng) {
   return dispatch => {
-    dispatch(uiActions.setTripsForLocationLoading(true));
+    dispatch(setTripsForLocationLoading(true));
 
     const query = {
       lat: latLng[0],
@@ -204,7 +142,7 @@ export function getStopsForLocation(latLng) {
 
         return data.data.list;
       })
-      .then(() => dispatch(uiActions.setTripsForLocationLoading(false)));
+      .then(() => dispatch(setTripsForLocationLoading(false)));
   };
 }
 

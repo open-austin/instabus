@@ -27,7 +27,7 @@ const routesSelector = (state) => state.data.routes;
 
 const routesListSelector = createSelector(
   routesSelector,
-  (routes) => _.values(routes),
+  (routes) => _.values(routes)
 );
 
 const sortedRoutesSelector = createSelector(

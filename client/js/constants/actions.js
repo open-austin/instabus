@@ -1,0 +1,9 @@
+export const SET_TRIPS_FOR_LOCATION = 'instabus/data/SET_TRIPS_FOR_LOCATION';
+export const SET_STOPS_FOR_LOCATION = 'instabus/data/SET_STOPS_FOR_LOCATION';
+export const SET_TRIP_DETAILS_FOR_ROUTE = 'instabus/data/SET_TRIP_DETAILS_FOR_ROUTE';
+export const SET_TRIPS = 'instabus/data/SET_TRIPS';
+export const SET_TRIP = 'instabus/data/SET_TRIP';
+export const SET_ROUTES = 'instabus/data/SET_ROUTES';
+export const SET_STOPS = 'instabus/data/SET_STOPS';
+export const SET_AGENCIES = 'instabus/data/SET_AGENCIES';
+export const SET_SHAPE = 'instabus/data/SET_SHAPE';

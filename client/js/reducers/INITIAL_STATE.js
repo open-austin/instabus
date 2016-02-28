@@ -1,7 +1,6 @@
 export default {
   data: {
     tripsForLocation: [],
-    stopsForLocation: [],
     tripsDetailsForRoute: {},
     agencies: {
       disclaimer: '',
@@ -14,19 +13,14 @@ export default {
       url: 'http://www.capmetro.org/',
     },
     routes: {},
-    situations: {},
     stops: {},
     trips: {},
     shapes: {},
-    tripDetails: {},
   },
   ui: {
     page: 'ROUTE_LIST',
-    tab: 'All',
     agency: '1',
     currentRoute: null,
-    stop: null,
-    vehicle: null,
     errorMessage: null,
     userLatLng: null,
     tripsForLocationLoading: false,
