@@ -4,6 +4,7 @@ import {createSelector} from 'reselect';
 
 import {RouteType} from 'js/constants/OBAPropTypes';
 import RouteMap from 'js/components/RouteMap';
+import RouteTrips from 'js/components/RouteTrips';
 
 class RouteDetail extends Component {
   render() {
@@ -12,6 +13,7 @@ class RouteDetail extends Component {
         <h1>{this.props.route.shortName}</h1>
         <h2>{this.props.route.longName}</h2>
         <RouteMap routeId={this.props.route.id} />
+        <RouteTrips routeId={this.props.route.id} />
       </div>
     );
   }
