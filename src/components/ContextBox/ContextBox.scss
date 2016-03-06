@@ -1,0 +1,14 @@
+@import 'globals';
+
+.wrap {
+  @extend .whiteBox;
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  width: 300px;
+  border-radius: 4px;
+  //height: auto;
+  height: calc(100% - 190px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
