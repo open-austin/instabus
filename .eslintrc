@@ -1,6 +1,10 @@
 {
-  "parser": "babel-eslint",
   "extends": "airbnb",
+  "parser": "babel-eslint",
+  "plugins": [
+    "flow-vars",
+    "babel"
+  ],
   "env": {
     "mocha": true
   },
@@ -9,8 +13,11 @@
     "classes": true
   },
   "rules": {
+    "strict": 0,
     "brace-style": [2, "stroustrup", {"allowSingleLine": true}],
     "max-len": 0,
-    "object-curly-spacing": 0
+    "no-unused-vars": [1, { "vars": "all", "args": "after-used" }],
+    "flow-vars/define-flow-type": 1,
+    "flow-vars/use-flow-type": 1,
   }
 }
