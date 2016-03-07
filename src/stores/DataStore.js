@@ -1,5 +1,5 @@
-import {observable, autorun} from 'mobx'
-import Queries from 'lib/Queries'
+import { observable, autorun } from 'mobx';
+import Queries from 'lib/Queries';
 
 export class DataStore {
   @observable routes = []
@@ -10,14 +10,14 @@ export class DataStore {
   loadAllRoutes = () => {
     Queries.getAllRoutes().then(routes => {
       this.routes = routes.data.list.sort((a, b) => {
-        return a.shortName - b.shortName
-      })
-    })
+        return a.shortName - b.shortName;
+      });
+    });
   }
 
   clearStops = () => {
-    this.stops = []
-    this.polyline = []
+    this.stops = [];
+    this.polyline = [];
   }
 
   loadTripsForRoute = (route) => {
@@ -26,13 +26,13 @@ export class DataStore {
       Queries.getStopsForRoute(route)
     ]).then((values) => {
       const trips = values[0],
-            stops = values[1]
-      this.polyline = stops.data.entry.polylines[0].points
-      this.stops = stops.data.references.stops
-      this.trips = trips.data.list
-    })
+        stops = values[1];
+      this.polyline = stops.data.entry.polylines[0].points;
+      this.stops = stops.data.references.stops;
+      this.trips = trips.data.list;
+    });
   }
 }
 
-const store = new DataStore()
-export default store
+const store = new DataStore();
+export default store;
