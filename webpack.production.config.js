@@ -8,11 +8,12 @@ module.exports = {
   entry: __dirname + '/src/index.js',
   output: {
     path: __dirname + '/dist',
-    filename: '[name]-[hash].js'
+    filename: '[name]-[hash].js',
   },
   resolve: {
     root: path.resolve(__dirname, 'src'),
-    extensions: ['', '.js']
+    moduleDirectory: ['node_modules', 'src'],  // allow import 'js/app/App'
+    extensions: ['', '.js'],
   },
 
   module: {
@@ -21,12 +22,12 @@ module.exports = {
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass')
-      }
-    ]
+        loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass'),
+      },
+    ],
   },
   sassLoader: {
-    includePaths: [path.resolve(__dirname, 'src/styles')]
+    includePaths: [path.resolve(__dirname, 'src/styles')],
   },
   postcss: [
     cssnano({
@@ -34,24 +35,24 @@ module.exports = {
       autoprefixer: {
         add: true,
         remove: true,
-        browsers: ['last 2 versions']
+        browsers: ['last 2 versions'],
       },
       discardComments: {
-        removeAll: true
-      }
-    })
+        removeAll: true,
+      },
+    }),
   ],
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + '/src/index.tmpl.html'
+      template: __dirname + '/src/index.tmpl.html',
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         unused: true,
-        dead_code: true
-      }
+        dead_code: true,
+      },
     }),
-    new ExtractTextPlugin('[name]-[hash].css')
-  ]
-}
+    new ExtractTextPlugin('[name]-[hash].css'),
+  ],
+};

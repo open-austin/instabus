@@ -1,9 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
-import Root from 'components/Root';
+import App from 'app/App';
+import DevTools from 'redux/DevTools';
 
 ReactDOM.render(
-  <Root />,
+  <Provider store={this.props.store}>
+    <div>
+      <App />
+      <DevTools />
+    </div>
+  </Provider>,
   document.getElementById('root')
 );

@@ -8,11 +8,12 @@ module.exports = {
   entry: __dirname + '/src/index.js',
   output: {
     path: __dirname + '/dist',
-    filename: 'app.js'
+    filename: 'app.js',
   },
   resolve: {
     root: path.resolve(__dirname, 'src'),
-    extensions: ['', '.js']
+    moduleDirectory: ['node_modules', 'src'],  // allow import 'js/app/App'
+    extensions: ['', '.js'],
   },
 
   module: {
@@ -25,10 +26,10 @@ module.exports = {
           'style?sourceMap',
           'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
           'postcss-loader',
-          'sass'
-        ]
-      }
-    ]
+          'sass',
+        ],
+      },
+    ],
   },
   postcss: [
     cssnano({
@@ -36,28 +37,28 @@ module.exports = {
       autoprefixer: {
         add: true,
         remove: true,
-        browsers: ['last 2 versions']
+        browsers: ['last 2 versions'],
       },
       discardComments: {
-        removeAll: true
-      }
-    })
+        removeAll: true,
+      },
+    }),
   ],
   sassLoader: {
-    includePaths: [path.resolve(__dirname, 'src/styles')]
+    includePaths: [path.resolve(__dirname, 'src/styles')],
   },
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + '/src/index.tmpl.html'
+      template: __dirname + '/src/index.tmpl.html',
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
 
   devServer: {
     colors: true,
     historyApiFallback: true,
     inline: true,
-    hot: true
-  }
-}
+    hot: true,
+  },
+};
