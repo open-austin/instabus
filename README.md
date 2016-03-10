@@ -2,7 +2,7 @@
 
 This is a rewrite of github.com/luqmaan/instabus.
 
-Why are we rewriting Instabus?
+Why rewrite Instabus?
 
 1. Fetch data from the OneBusAway so that Instabus works for multiple cities (Austin, Tampa, Atlanta, etc.)
 2. Add missing features like viewing the schedule for a stop or viewing nearby arrivals
@@ -28,4 +28,4 @@ npm install
 npm start
 ```
 
-We recommend using a editor with plugins for `editorconfig` and `eslint`.
+Use an editor with plugins for `editorconfig` and `eslint`.
