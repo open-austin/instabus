@@ -11,7 +11,7 @@ Why rewrite Instabus?
 
 Check out the issues labeled with `components`, to see what we're thinking for a new layout. https://github.com/open-austin/instabus/issues?q=is%3Aissue+is%3Aopen+label%3Acomponents
 
-:warning: The code is still in the very early stages and is not ready for contributions. If you'd like to start contributing code, please let me know so I can have a sense of urgency and get the code ready. 
+:warning: The code is still in the very early stages and is not ready for contributions. If you'd like to start contributing code, please let me know so I can have a sense of urgency and get the code ready.
 
 ## Contributing
 
@@ -29,6 +29,13 @@ npm start
 ```
 
 Use an editor with plugins for `editorconfig` and `eslint`.
+
+Tests
+
+```
+npm run test
+npm run test -- --watch --full-trace
+```
 
 ## Prior Art
 

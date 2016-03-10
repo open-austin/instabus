@@ -6,8 +6,7 @@ import App from 'app/App';
 import DevTools from 'redux/DevTools';
 import configureStore from 'redux/configureStore';
 
-const store = configureStore();
-
+const store = window.store = configureStore();
 
 render(
   <Provider store={store}>

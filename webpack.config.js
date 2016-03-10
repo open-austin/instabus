@@ -12,7 +12,6 @@ module.exports = {
   },
   resolve: {
     root: path.resolve(__dirname, 'src'),
-    moduleDirectory: ['node_modules', 'src'],  // allow import 'js/app/App'
     extensions: ['', '.js'],
   },
 
