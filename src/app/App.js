@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import cssmodules from 'react-css-modules';
 
-import TopBar from './TopBar';
 import styles from 'styles/base.scss';
+import TopBar from './TopBar';
+import RouteList from 'routes/RouteList';
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
         <h1>Hello</h1>
         <h1>Hello</h1>
         <h1>Hello</h1>
+        <RouteList />
       </div>
     );
   }

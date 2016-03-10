@@ -108,7 +108,8 @@ export const RegisteredAlarmType = PropTypes.shape({
 export const RouteType = PropTypes.shape({
   id: PropTypes.string,
   shortName: PropTypes.string,
-  numberName: PropTypes.string,
+  // FIXME: The Austin OBA instace is returns longName, but it wasn't in here b4
+  longName: PropTypes.string,
   description: PropTypes.string,
   type: PropTypes.number,
   url: PropTypes.string,
