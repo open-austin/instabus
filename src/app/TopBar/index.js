@@ -8,4 +8,4 @@ const TopBar = () => (
   </div>
 );
 
-export default cssmodules(styles, TopBar);
+export default cssmodules(TopBar, styles);

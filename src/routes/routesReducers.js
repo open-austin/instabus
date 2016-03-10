@@ -1,3 +1,9 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+function routes(state = {}, action = {}) {
+  return state;
+}
+
+export default combineReducers({
+  routes,
+});

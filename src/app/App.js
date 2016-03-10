@@ -8,11 +8,20 @@ class App extends Component {
   render() {
     return (
       <div>
-        heello
         <TopBar />
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
+        <h1>Hello</h1>
       </div>
     );
   }
 }
 
-export default cssmodules(styles, Root);
+export default cssmodules(App, styles);
