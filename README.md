@@ -1,6 +1,6 @@
 # Instabus 6.7
 
-This is a rewrite of github.com/luqmaan/instabus.
+This is a rewrite of https://github.com/luqmaan/instabus.
 
 Why rewrite Instabus?
 
@@ -29,3 +29,10 @@ npm start
 ```
 
 Use an editor with plugins for `editorconfig` and `eslint`.
+
+## Prior Art
+
+https://github.com/luqmaan/instabus
+https://github.com/luqmaan/instabus-react
+https://github.com/luqmaan/MetroRappid-iOS
+https://github.com/sethgho/MetroRappidAndroid
