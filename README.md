@@ -32,7 +32,7 @@ Use an editor with plugins for `editorconfig` and `eslint`.
 
 ## Prior Art
 
-https://github.com/luqmaan/instabus
-https://github.com/luqmaan/instabus-react
-https://github.com/luqmaan/MetroRappid-iOS
-https://github.com/sethgho/MetroRappidAndroid
+- https://github.com/luqmaan/instabus
+- https://github.com/luqmaan/instabus-react
+- https://github.com/luqmaan/MetroRappid-iOS
+- https://github.com/sethgho/MetroRappidAndroid
