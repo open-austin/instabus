@@ -15,7 +15,7 @@ Check out the issues labeled with `components`, to see what we're thinking for a
 
 ## Contributing
 
-Want to help? Have idea for what the "new" Instabus should look like?
+Want to help? Have ideas for what the "new" Instabus should look like?
 
 - Open an Issue on this repo
 - Join the #instabus channel on the Open Austin slack: http://slack.open-austin.org
