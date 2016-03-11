@@ -6,7 +6,10 @@ export default {
     allRoutesLoading: false,
   },
   trips: {
-    trips: {},
+    nearby: {
+      nearbyTrips: {},
+      nearbyTripsLoading: false,
+    },
   },
   stops: {
     stops: {},

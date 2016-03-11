@@ -20,21 +20,23 @@ export function setNearbyTripsLoading(payload) {
   };
 }
 
-export function getNearbyTrips(payload) {
+export function getNearbyTrips(userLocation) {
   return (dispatch) => {
     dispatch(setNearbyTripsLoading(true));
 
-    // add getState to => arguments
-    // const state = getState();
-    // const location = state.userLocation;
     const query = {
-      lat: payload.location.lat,
-      lon: payload.location.lon,
-      latSpan: payload.span.lat,
-      lonSpan: payload.span.lon,
+      lat: userLocation.lat,
+      lon: userLocation.lon,
+      // FIXME: Not sure what these values should be
+      // So I'm using radius instaed
+      // latSpan: 100,
+      // lonSpan: 100,
+      radius: 3000,
+      includeStatus: true,
+      includeSchedule: true,
     };
 
-    return oba(`routes-for-location/${query}`)
+    return oba('routes-for-location', query)
       .then(data => {
         const tripsById = _.keyBy((data.data.list), 'id');
         console.log(tripsById);
