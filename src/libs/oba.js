@@ -10,7 +10,7 @@ export default function oba(endpoint, query = {}) {
     ...query,
   });
 
-  return fetch(`https://crossorigin.me/${url}?${qs}`)
+  return fetch(`${url}?${qs}`)
     .then(res => res.json())
     .catch(err => {
       console.error(err);
