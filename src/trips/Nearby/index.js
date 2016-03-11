@@ -3,18 +3,19 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { getNearbyTrips } from 'trips/Nearby/nearbyActions';
-import { TripType } from 'constants/OBAPropTypes';
+import { TripType, CoordinatePointType } from 'constants/OBAPropTypes';
 import { nearbyTripsSelector } from 'trips/Nearby/nearbySelectors';
 
 class NearbyTrips extends Component {
   static propTypes = {
+    userLocation: CoordinatePointType,
     nearbyTrips: PropTypes.arrayOf(TripType).isRequired,
     getNearbyTrips: PropTypes.func.isRequired,
     nearbyTripsLoading: PropTypes.bool.isRequired,
   };
 
   componentWillMount() {
-    this.props.getNearbyTrips();
+    this.props.getNearbyTrips(this.props.userLocation);
   }
 
   renderTrip(trip) {
@@ -39,8 +40,9 @@ class NearbyTrips extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  userLocation: (state) => state.userLocation,
   nearbyTrips: nearbyTripsSelector,
-  nearbyTripsLoading: (state) => state.trips.nearbyTripsLoading,
+  nearbyTripsLoading: (state) => state.trips.nearby.nearbyTripsLoading,
 });
 
 const mapDispatchToProps = {
