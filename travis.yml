@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - "5.0"
+
+sudo: false
+
+env:
+  matrix:
+    - NPM_2=true
+
+script:
+  - npm --version
+
+  - npm install
+  - npm run test
+
+deploy:
+  provider: script
+  script: npm run deploy
+  on:
+  	branch: develop
