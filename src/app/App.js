@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import styles from 'styles/base.scss';
 import RouteList from 'routes/RouteList';
+import NearbyTrips from 'trips/Nearby';
 import TopBar from './TopBar';
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
@@ -20,20 +21,14 @@ class App extends Component {
   }
 
   render() {
+    const {
+      userLocation,
+    } = this.props;
     return (
       <div>
-        <TopBar />
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        <h1>Hello</h1>
-        {this.props.userLocation && `User is at ${this.props.userLocation.lat}, ${this.props.userLocation.lon}`}
+        { /* <TopBar /> */ }
+        { userLocation && `User is at ${userLocation.lat}, ${userLocation.lon}` }
+        { userLocation && <NearbyTrips location={userLocation} /> }
         <RouteList />
       </div>
     );

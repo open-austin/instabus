@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
 
-function trips(state = {}, action = {}) {
-  return state;
-}
+import nearby from 'trips/Nearby/nearbyReducers';
 
 export default combineReducers({
-  trips,
+  nearby,
 });
