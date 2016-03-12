@@ -15,7 +15,12 @@ script:
   - npm install
   - npm run test
 
+cache:
+  directories:
+    - node_modules
+
 deploy:
+  skip_cleanup: true
   provider: script
   script: npm run deploy
   on:
