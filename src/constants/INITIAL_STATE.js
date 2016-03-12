@@ -12,7 +12,11 @@ export default {
     },
   },
   stops: {
-    stops: {},
+    stopList: {
+      selectedRoute: '',
+      stopsForRoute: {},
+      stopsForRouteLoading: false,
+    },
   },
   history: {
     history: {},

@@ -39,7 +39,6 @@ export function getNearbyTrips(userLocation) {
     return oba('trips-for-location', query)
       .then(data => {
         const tripsById = _.keyBy((data.data.list), 'tripId');
-        console.log(tripsById);
         dispatch(setNearbyTrips(tripsById));
       })
       .catch((err) => console.error(err))

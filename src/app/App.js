@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import styles from 'styles/base.scss';
 import RouteList from 'routes/RouteList';
 import NearbyTrips from 'trips/Nearby';
+import StopList from 'stops/StopList';
 import TopBar from './TopBar';
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
@@ -28,6 +29,7 @@ class App extends Component {
       <div>
         { /* <TopBar /> */ }
         { userLocation && `User is at ${userLocation.lat}, ${userLocation.lon}` }
+        <StopList routeId="1_642" />
         <NearbyTrips />
         <RouteList />
       </div>
