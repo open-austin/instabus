@@ -28,7 +28,7 @@ class App extends Component {
       <div>
         { /* <TopBar /> */ }
         { userLocation && `User is at ${userLocation.lat}, ${userLocation.lon}` }
-        { userLocation && <NearbyTrips location={userLocation} /> }
+        <NearbyTrips />
         <RouteList />
       </div>
     );

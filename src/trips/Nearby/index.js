@@ -3,37 +3,47 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { getNearbyTrips } from 'trips/Nearby/nearbyActions';
-import { TripType, CoordinatePointType } from 'constants/OBAPropTypes';
+import { TripDetailsType, CoordinatePointType } from 'constants/OBAPropTypes';
 import { nearbyTripsSelector } from 'trips/Nearby/nearbySelectors';
 
 class NearbyTrips extends Component {
   static propTypes = {
     userLocation: CoordinatePointType,
-    nearbyTrips: PropTypes.arrayOf(TripType).isRequired,
+    nearbyTrips: PropTypes.arrayOf(TripDetailsType).isRequired,
     getNearbyTrips: PropTypes.func.isRequired,
     nearbyTripsLoading: PropTypes.bool.isRequired,
   };
 
-  componentWillMount() {
-    this.props.getNearbyTrips(this.props.userLocation);
+  componentDidUpdate(prevProps) {
+    if (!prevProps.userLocation && this.props.userLocation) {
+      this.props.getNearbyTrips(this.props.userLocation);
+    }
   }
 
   renderTrip(trip) {
     return (
-      <div key={trip.id}>
-        <b>{trip.id}</b>
+      <div key={trip.tripId}>
+        <b>{trip.tripId}</b>
       </div>
     );
   }
 
   render() {
-    const items = this.props.nearbyTrips.map(this.renderTrip);
+    if (this.props.userLocation) {
+      const items = this.props.nearbyTrips.map(this.renderTrip);
+      return (
+        <div>
+          <h1>Nearby Trips</h1>
+          {this.props.nearbyTripsLoading && <div>Loading trips</div>}
+          {items}
+        </div>
+      );
+    }
 
     return (
       <div>
-        <h1>Route List</h1>
+        <h1>Nearby Trips</h1>
         {this.props.nearbyTripsLoading && <div>Loading trips</div>}
-        {items}
       </div>
     );
   }
