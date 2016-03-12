@@ -9,29 +9,42 @@ import StopList from 'stops/StopList';
 import TopBar from './TopBar';
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
-import { watchUserLocation } from 'app/actions';
+import { watchUserLocation, stopWatchingUserLocation } from 'app/actions';
 
 
 class App extends Component {
   static propTypes = {
     userLocation: CoordinatePointType,
     watchUserLocation: PropTypes.func.isRequired,
+    stopWatchingUserLocation: PropTypes.func.isRequired,
+    userLocationError: PropTypes.string,
   }
+
   componentWillMount() {
     this.props.watchUserLocation();
   }
 
+  componentWillUnmount() {
+    this.props.stopWatchingUserLocation();
+  }
+
+  renderUserLocation() {
+    if (this.props.userLocationError) {
+      return <div>Can't get your location: ${this.props.userLocationError}</div>;
+    }
+    else if (this.props.userLocation) {
+      return <div>You are at {this.props.userLocation.lat}, {this.props.userLocation.lon}</div>;
+    }
+    return <div>Finding your location...</div>;
+  }
+
   render() {
-    const {
-      userLocation,
-    } = this.props;
     return (
       <div>
-        { /* <TopBar /> */ }
-        { userLocation && `User is at ${userLocation.lat}, ${userLocation.lon}` }
+        {this.renderUserLocation()}
+        <RouteList />
         <StopList routeId="1_642" />
         <NearbyTrips />
-        <RouteList />
       </div>
     );
   }
@@ -39,10 +52,12 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   userLocation: state.userLocation,
+  userLocationError: state.userLocationError,
 });
 
 const mapDispatchToProps = {
   watchUserLocation,
+  stopWatchingUserLocation,
 };
 
 export default cssmodules(connect(mapStateToProps, mapDispatchToProps)(App), styles);

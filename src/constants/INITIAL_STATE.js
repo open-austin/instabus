@@ -1,6 +1,7 @@
 export default {
   selectedAgencyID: 1,
   userLocation: null,
+  userLocationError: null,
   routes: {
     allRoutes: {},
     allRoutesLoading: false,

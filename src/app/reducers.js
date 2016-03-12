@@ -9,6 +9,7 @@ import history from 'history/historyReducers';
 
 import {
   SET_USER_LOCATION,
+  SET_USER_LOCATION_ERROR,
 } from 'app/actions';
 
 
@@ -23,9 +24,17 @@ function userLocation(state = null, action = {}) {
   return state;
 }
 
+function userLocationError(state = null, action = {}) {
+  if (action.type === SET_USER_LOCATION_ERROR) {
+    return action.payload;
+  }
+  return state;
+}
+
 export default combineReducers({
   selectedAgencyID,
   userLocation,
+  userLocationError,
   routes,
   trips,
   stops,
