@@ -6,8 +6,9 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --progress --port 3333",
-    "build": "rm -r dist/* && NODE_ENV=production webpack --config ./webpack.production.config.js --progress && node publish.js",
-    "test": "NODE_PATH=./src mocha \"src/**/test.*.js\" --compilers js:babel-register"
+    "test": "NODE_PATH=./src mocha \"src/**/test.*.js\" --compilers js:babel-register",
+    "build": "rm -r dist/* && NODE_ENV=production webpack --config ./webpack.production.config.js --progress",
+    "deploy": "npm run build && node deploy.js"
   },
   "repository": {
     "type": "git",
