@@ -36,10 +36,9 @@ export function getNearbyTrips(userLocation) {
       includeSchedule: true,
     };
 
-    return oba('routes-for-location', query)
+    return oba('trips-for-location', query)
       .then(data => {
-        const tripsById = _.keyBy((data.data.list), 'id');
-        console.log(tripsById);
+        const tripsById = _.keyBy((data.data.list), 'tripId');
         dispatch(setNearbyTrips(tripsById));
       })
       .catch((err) => console.error(err))

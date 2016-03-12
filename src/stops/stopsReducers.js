@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
 
-function stops(state = {}, action = {}) {
-  return state;
-}
+import stopList from 'stops/StopList/stopListReducers';
 
 export default combineReducers({
-  stops,
+  stopList,
 });
