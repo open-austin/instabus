@@ -6,7 +6,6 @@ import styles from 'styles/base.scss';
 import RouteList from 'routes/RouteList';
 import NearbyTrips from 'trips/Nearby';
 import StopList from 'stops/StopList';
-import TopBar from './TopBar';
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
 import { watchUserLocation, stopWatchingUserLocation } from 'app/actions';
@@ -43,7 +42,7 @@ class App extends Component {
       <div>
         {this.renderUserLocation()}
         <RouteList />
-        <StopList routeId="1_642" />
+        <StopList />
         <NearbyTrips />
       </div>
     );

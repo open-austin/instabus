@@ -1,10 +1,11 @@
+import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getAllRoutes } from 'routes/RouteListActions';
+import { getAllRoutes } from 'routes/routeList/routeListActions';
 import { RouteType } from 'constants/OBAPropTypes';
-import { sortedRoutesSelector } from 'routes/routesSelectors';
+import RouteItem from 'routes/RouteItem';
 
 class RouteList extends Component {
   static propTypes = {
@@ -17,11 +18,9 @@ class RouteList extends Component {
     this.props.getAllRoutes();
   }
 
-  renderRoute(route) {
+  renderRoute(route, i) {
     return (
-      <div key={route.id}>
-        <b>{route.shortName}</b> - {route.longName}
-      </div>
+      <RouteItem route={route} key={i} />
     );
   }
 
@@ -37,6 +36,11 @@ class RouteList extends Component {
     );
   }
 }
+
+export const sortedRoutesSelector = createSelector(
+  (state) => state.routes.allRoutes,
+  (routes) => _.sortBy(routes, ['shortName'])
+);
 
 const mapStateToProps = createStructuredSelector({
   allRoutes: sortedRoutesSelector,

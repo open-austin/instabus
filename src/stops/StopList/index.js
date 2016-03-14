@@ -1,21 +1,23 @@
+import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import { getStopsForRoute } from 'stops/StopList/stopListActions';
-import { StopType } from 'constants/OBAPropTypes';
-import { stopListSelector } from 'stops/StopList/stopListSelectors';
+import { StopType, RouteType } from 'constants/OBAPropTypes';
 
 class StopList extends Component {
   static propTypes = {
-    routeId: PropTypes.string.isRequired,
-    stopsForRoute: PropTypes.arrayOf(StopType).isRequired,
+    route: RouteType.isRequired,
+    stops: PropTypes.arrayOf(StopType),
     getStopsForRoute: PropTypes.func.isRequired,
     stopsForRouteLoading: PropTypes.bool.isRequired,
   };
 
-  componentWillMount() {
-    this.props.getStopsForRoute(this.props.routeId);
+  componentWillReceiveProps() {
+    if (!this.props.stops) {
+      this.props.getStopsForRoute(this.props.route.id);
+    }
   }
 
   renderStop(stop) {
@@ -27,7 +29,7 @@ class StopList extends Component {
   }
 
   render() {
-    const items = this.props.stopsForRoute.map(this.renderStop);
+    const items = this.props.stops.map(this.renderStop);
 
     return (
       <div>
@@ -39,9 +41,27 @@ class StopList extends Component {
   }
 }
 
+export const currentRouteSelector = createSelector(
+  (state) => state.currentRoute,
+  (state) => state.routes.allRoutes,
+  (currentRoute, allRoutes) => allRoutes[currentRoute]
+);
+
+export const stopsForRouteSelector = createSelector(
+  (state) => state.stops.stopsForRoute,
+  (state) => state.currentRoute,
+  (stopsForRoute, currentRoute) => stopsForRoute[currentRoute]
+);
+
+export const stopListSelector = createSelector(
+  stopsForRouteSelector,
+  (stops) => _.sortBy(stops, ['id'])
+);
+
 const mapStateToProps = createStructuredSelector({
-  stopsForRoute: stopListSelector,
-  stopsForRouteLoading: (state) => state.stops.stopList.stopsForRouteLoading,
+  route: currentRouteSelector,
+  stops: stopListSelector,
+  stopsForRouteLoading: (state) => state.stops.stopsForRouteLoading,
 });
 
 const mapDispatchToProps = {

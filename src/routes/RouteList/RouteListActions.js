@@ -2,9 +2,10 @@ import _ from 'lodash';
 
 import oba from 'libs/oba';
 
-export const SET_ALL_ROUTES = 'instabus/routes/SET_ALL_ROUTES';
-export const SET_ALL_ROUTES_LOADING = 'instabus/routes/SET_ALL_ROUTES_LOADING';
-
+import {
+  SET_ALL_ROUTES,
+  SET_ALL_ROUTES_LOADING,
+} from 'constants/ActionTypes';
 
 export function setAllRoutes(payload) {
   return {
@@ -25,7 +26,7 @@ export function getAllRoutes() {
     dispatch(setAllRoutesLoading(true));
 
     const state = getState();
-    const agencyId = state.selectedAgencyID;
+    const agencyId = state.currentAgencyID;
 
     return oba(`routes-for-agency/${agencyId}`)
       .then(data => {

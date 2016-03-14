@@ -1,6 +1,9 @@
 import { watchPosition, stopWatching } from 'libs/location';
 
-export const SET_USER_LOCATION = 'instabus/app/SET_USER_LOCATION';
+import {
+  SET_USER_LOCATION,
+  SET_USER_LOCATION_ERROR,
+} from 'constants/ActionTypes';
 
 export function setUserLocation(payload) {
   return {
@@ -8,8 +11,6 @@ export function setUserLocation(payload) {
     payload,
   };
 }
-
-export const SET_USER_LOCATION_ERROR = 'instabus/app/SET_USER_LOCATION_ERROR';
 
 export function setUserLocationError(payload) {
   return {

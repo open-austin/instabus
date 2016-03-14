@@ -2,9 +2,10 @@ import _ from 'lodash';
 
 import oba from 'libs/oba';
 
-export const SET_NEARBY_TRIPS = 'instabus/trips/SET_NEARBY_TRIPS';
-export const SET_NEARBY_TRIPS_LOADING = 'instabus/trips/SET_NEARBY_TRIPS_LOADING';
-
+import {
+  SET_NEARBY_TRIPS,
+  SET_NEARBY_TRIPS_LOADING,
+} from 'constants/ActionTypes';
 
 export function setNearbyTrips(payload) {
   return {

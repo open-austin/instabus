@@ -2,16 +2,10 @@ import _ from 'lodash';
 
 import oba from 'libs/oba';
 
-export const SET_SELECTED_ROUTE = 'instabus/stops/stopList/SET_SELECTED_ROUTE';
-export const SET_STOPS_FOR_ROUTE = 'instabus/stops/stopList/SET_STOPS_FOR_ROUTE';
-export const SET_STOPS_FOR_ROUTE_LOADING = 'instabus/stops/stopList/SET_STOPS_FOR_ROUTE_LOADING';
-
-export function setSelectedRoute(payload) {
-  return {
-    type: SET_SELECTED_ROUTE,
-    payload,
-  };
-}
+import {
+  SET_STOPS_FOR_ROUTE,
+  SET_STOPS_FOR_ROUTE_LOADING,
+} from 'constants/ActionTypes';
 
 export function setStopsForRoute(payload) {
   return {
@@ -30,7 +24,6 @@ export function setStopsForRouteLoading(payload) {
 export function getStopsForRoute(routeId) {
   return (dispatch) => {
     dispatch(setStopsForRouteLoading(true));
-    dispatch(setSelectedRoute(routeId));
 
     return oba(`stops-for-route/${routeId}`)
       .then(data => {
