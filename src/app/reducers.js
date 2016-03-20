@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import INITIAL_STATE from 'constants/INITIAL_STATE';
+import InitialState from 'constants/InitialState';
 
 import routes from 'routes/routesReducers';
 import stops from 'stops/stopsReducers';
@@ -9,10 +9,27 @@ import history from 'history/historyReducers';
 
 import {
   SET_USER_LOCATION,
-} from 'app/actions';
+  SET_USER_LOCATION_ERROR,
+  SET_CURRENT_ROUTE,
+  SET_CURRENT_TRIP,
+} from 'constants/ActionTypes';
 
 
-function selectedAgencyID(state = INITIAL_STATE.selectedAgencyID) {
+function currentAgencyID(state = InitialState.currentAgencyID) {
+  return state;
+}
+
+function currentRoute(state = InitialState.currentRoute, action = {}) {
+  if (action.type === SET_CURRENT_ROUTE) {
+    return action.payload;
+  }
+  return state;
+}
+
+function currentTrip(state = InitialState.currentTrip, action = {}) {
+  if (action.type === SET_CURRENT_TRIP) {
+    return action.payload;
+  }
   return state;
 }
 
@@ -23,9 +40,19 @@ function userLocation(state = null, action = {}) {
   return state;
 }
 
+function userLocationError(state = null, action = {}) {
+  if (action.type === SET_USER_LOCATION_ERROR) {
+    return action.payload;
+  }
+  return state;
+}
+
 export default combineReducers({
-  selectedAgencyID,
+  currentAgencyID,
+  currentRoute,
+  currentTrip,
   userLocation,
+  userLocationError,
   routes,
   trips,
   stops,

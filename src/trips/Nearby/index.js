@@ -1,10 +1,11 @@
+import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getNearbyTrips } from 'trips/Nearby/nearbyActions';
+import { getNearbyTrips } from 'trips/Nearby/NearbyActions';
 import { TripDetailsType, CoordinatePointType } from 'constants/OBAPropTypes';
-import { nearbyTripsSelector } from 'trips/Nearby/nearbySelectors';
+
 
 class NearbyTrips extends Component {
   static propTypes = {
@@ -49,10 +50,15 @@ class NearbyTrips extends Component {
   }
 }
 
+export const nearbyTripsSelector = createSelector(
+  (state) => state.trips.nearbyTrips,
+  (trips) => _.sortBy(trips, ['id'])
+);
+
 const mapStateToProps = createStructuredSelector({
   userLocation: (state) => state.userLocation,
   nearbyTrips: nearbyTripsSelector,
-  nearbyTripsLoading: (state) => state.trips.nearby.nearbyTripsLoading,
+  nearbyTripsLoading: (state) => state.trips.nearbyTripsLoading,
 });
 
 const mapDispatchToProps = {

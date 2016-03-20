@@ -1,9 +1,9 @@
 import expect from 'expect';
 
-import { sortedRoutesSelector } from 'routes/routesSelectors';
+import { sortedRoutesSelector } from 'routes/RouteList';
 
-describe('routes', () => {
-  describe('routes/routesSelectors', () => {
+describe('RouteList', () => {
+  describe('sortedRoutesSelector', () => {
     it('should sort the routes', () => {
       const state = {
         routes: {

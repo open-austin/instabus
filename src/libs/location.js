@@ -1,6 +1,8 @@
+let watchID = null;
+
 export function watchPosition() {
   return new Promise((resolve, reject) => {
-    navigator.geolocation.watchPosition(
+    watchID = navigator.geolocation.watchPosition(
       (position) => resolve({
         lat: position.coords.latitude,
         lon: position.coords.longitude,
@@ -16,4 +18,8 @@ export function watchPosition() {
       }
     );
   });
+}
+
+export function stopWatching() {
+  navigator.geolocation.clearWatch(watchID);
 }

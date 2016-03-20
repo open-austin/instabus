@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import {
   SET_ALL_ROUTES,
   SET_ALL_ROUTES_LOADING,
-} from 'routes/RouteListActions';
+} from 'constants/ActionTypes';
 
 
 function allRoutes(state = {}, action = {}) {
