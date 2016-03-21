@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import styles from 'styles/base.scss';
 import RouteList from 'components/RouteList';
+import StopList from 'components/StopList';
+
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
@@ -11,6 +13,7 @@ import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 
 class App extends Component {
   static propTypes = {
+    currentTab: PropTypes.string.isRequired,
     userLocation: CoordinatePointType,
     watchUserLocation: PropTypes.func.isRequired,
     stopWatchingUserLocation: PropTypes.func.isRequired,
@@ -35,11 +38,22 @@ class App extends Component {
     return <div>Finding your location...</div>;
   }
 
+  renderCurrent() {
+    // FIXME: add proper routing
+    if (this.props.currentTab === 'RouteList') {
+      return <RouteList />;
+    }
+    if (this.props.currentTab === 'StopList') {
+      return <StopList />;
+    }
+    return <div>404</div>;
+  }
+
   render() {
     return (
       <div>
         {this.renderUserLocation()}
-        <RouteList />
+        {this.renderCurrent()}
       </div>
     );
   }
@@ -48,6 +62,7 @@ class App extends Component {
 const mapStateToProps = (state) => ({
   userLocation: state.userLocation,
   userLocationError: state.userLocationError,
+  currentTab: state.currentTab,
 });
 
 const mapDispatchToProps = {

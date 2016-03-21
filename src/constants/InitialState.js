@@ -1,4 +1,5 @@
 export default {
+  currentTab: 'RouteList',
   currentAgency: '1',
   currentRoute: '1_801',
   userLocation: null,
@@ -127,10 +128,21 @@ export default {
     ],
     stopGroups: {
       '1_801': {
+        0: {
+          id: '0',
+          name: { name: '801 TECH RIDGE-NB', names: ['801 TECH RIDGE-NB'], type: 'destination' },
+          polylines: [
+            { length: 50, levels: '', points: 'qrmwDfuusQLL|DzBjLnGpCtAnMdHpY|OnBlAhHtDxBhAdD|AtF|BxBr@~Bt@pErA|B^xC^nT~Dp@LbCd@lAXnCn@`X~InJdCjGnAzCr@bIdBfXzFdN|CxGxAtN|CXFfPlDpFfAhLfCfGdJjAhAvAv@PDz@PjFFJUFsGK[`GrB~Bx@xMlEtBr@qAvD{@xB' },
+          ],
+          stopIds: ['1_2606'],
+          subGroups: [],
+        },
         1: {
           id: '1',
           name: { name: '801 SOUTH PARK-SB', names: ['801 SOUTH PARK-SB'], type: 'destination' },
-          polylines: [],
+          polylines: [
+            { length: 50, levels: '', points: 'qrmwDfuusQLL|DzBjLnGpCtAnMdHpY|OnBlAhHtDxBhAdD|AtF|BxBr@~Bt@pErA|B^xC^nT~Dp@LbCd@lAXnCn@`X~InJdCjGnAzCr@bIdBfXzFdN|CxGxAtN|CXFfPlDpFfAhLfCfGdJjAhAvAv@PDz@PjFFJUFsGK[`GrB~Bx@xMlEtBr@qAvD{@xB' },
+          ],
           stopIds: ['1_2606'],
           subGroups: [],
         },

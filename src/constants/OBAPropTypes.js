@@ -250,3 +250,19 @@ export const EncodedPolylineType = PropTypes.shape({
   levels: PropTypes.string,
   length: PropTypes.number,
 });
+
+// https://github.com/OneBusAway/onebusaway-application-modules/blob/3bee16af29cbde556de7eaba59b44c2bfaf411cf/onebusaway-transit-data/src/main/java/org/onebusaway/transit_data/model/NameBean.java
+export const NameType = PropTypes.shape({
+  type: PropTypes.string,
+  name: PropTypes.string,
+  names: PropTypes.arrayOf(PropTypes.string),
+});
+
+// https://github.com/OneBusAway/onebusaway-application-modules/blob/3bee16af29cbde556de7eaba59b44c2bfaf411cf/onebusaway-transit-data/src/main/java/org/onebusaway/transit_data/model/StopGroupBean.java
+export const StopGroupType = PropTypes.shape({
+  id: PropTypes.string,
+  name: NameType,
+  stopIds: PropTypes.arrayOf(PropTypes.string),
+  subGroups: PropTypes.arrayOf(StopGroupType),
+  polylines: PropTypes.arrayOf(EncodedPolylineType),
+});

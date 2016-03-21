@@ -16,23 +16,11 @@ class Stop extends Component {
   };
 
   render() {
-    const {stop} = this.props;
+    const { stop } = this.props;
     return (
       <div>
-        <h1>{stop.name}</h1>
-
-        <div>code: {stop.code}</div>
-        <div>direction: {stop.direction}</div>
-        <div>id: {stop.id}</div>
-        <div>lat: {stop.lat}</div>
-        <div>locationType: {stop.locationType}</div>
-        <div>lon: {stop.lon}</div>
-        <div>name: {stop.name}</div>
-        <div>routes that stop here:
-         {stop.routeIds}
-        </div>
-        <div>wheelchairBoarding: {stop.wheelchairBoarding}</div>
-
+        <div>{stop.name}</div>
+        <div>routes that stop here: {stop.routeIds.map((routeId) => (<b>{routeId}</b>))}s</div>
       </div>
     );
   }

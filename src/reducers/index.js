@@ -9,8 +9,16 @@ import {
   SET_USER_LOCATION,
   SET_USER_LOCATION_ERROR,
   SET_CURRENT_ROUTE,
+  SET_CURRENT_TAB,
 } from 'constants/ActionTypes';
 
+
+function currentTab(state = InitialState.currentTab, action = {}) {
+  if (action.type === SET_CURRENT_TAB) {
+    return action.payload;
+  }
+  return state;
+}
 
 function currentAgency(state = InitialState.currentAgency) {
   return state;
@@ -42,6 +50,7 @@ function recent(state = InitialState.recent, action = {}) {
 }
 
 export default combineReducers({
+  currentTab,
   currentAgency,
   currentRoute,
   userLocation,
