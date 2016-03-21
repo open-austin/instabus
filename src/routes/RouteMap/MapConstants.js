@@ -1,2 +1,0 @@
-export const TAMPA_LAT_LNG = [28.058091, -82.417872];
-export const AUSTIN_LAT_LNG = [30.267153, -97.743061];

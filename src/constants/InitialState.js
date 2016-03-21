@@ -1,21 +1,123 @@
 export default {
-  currentAgencyID: 1,
-  currentRoute: null,
-  currentTrip: null,
+  currentAgency: '1',
+  currentRoute: '1_801',
   userLocation: null,
   userLocationError: null,
-  routes: {
-    allRoutes: {},
+  loading: {
     allRoutesLoading: false,
-  },
-  trips: {
-    nearbyTrips: {},
     nearbyTripsLoading: false,
-  },
-  stops: {
     stopsForRouteLoading: false,
   },
-  history: {
-    history: {},
+  oba: {
+    nearbyTrips: [
+      {
+        frequency: null,
+        schedule: null,
+        serviceDate: 1458450000000,
+        situationIds: [],
+        status: {
+          activeTripId: '1_1538496',
+          blockTripSequence: 10,
+          closestStop: '1_2606',
+          closestStopTimeOffset: 13,
+          distanceAlongTrip: 11486.18365503769,
+          frequency: null,
+          lastKnownDistanceAlongTrip: 0,
+          lastKnownLocation: {
+            lat: 30.28026580810547,
+            lon: -97.73486328125,
+          },
+          lastKnownOrientation: 0,
+          lastLocationUpdateTime: 0,
+          lastUpdateTime: 1458522665000,
+          nextStop: '1_2606',
+          nextStopTimeOffset: 13,
+          orientation: 164.73151421272067,
+          phase: '',
+          position: {
+            lat: 30.271960291732046,
+            lon: -97.73827642223726,
+          },
+          predicted: true,
+          scheduleDeviation: 60,
+          scheduledDistanceAlongTrip: 11486.18365503769,
+          serviceDate: 1458450000000,
+          situationIds: [],
+          status: 'default',
+          totalDistanceAlongTrip: 22529.47702655043,
+          vehicleId: '1_8942',
+        },
+        tripId: '1_1538496',
+      },
+    ],
+    stopGroups: {
+      '1_801': {
+        1: {
+          id: '1',
+          name: { name: '801 SOUTH PARK-SB', names: ['801 SOUTH PARK-SB'], type: 'destination' },
+          polylines: [],
+          stopIds: ['1_2606'],
+          subGroups: [],
+        },
+      },
+    },
+    references: {
+      agencies: {
+        1: {
+          disclaimer: '',
+          id: '1',
+          lang: 'en',
+          name: 'Capital Metro',
+          phone: '512-474-1200',
+          privateService: false,
+          timezone: 'America/Chicago',
+          url: 'http://www.capmetro.org/',
+        },
+      },
+      routes: {
+        '1_801': {
+          agencyId: '1',
+          color: 'E11F8F',
+          description: '',
+          id: '1_801',
+          longName: 'N Lamar S Congress',
+          shortName: '801',
+          textColor: '000000',
+          type: 3,
+          url: '',
+        },
+      },
+      stops: {
+        '1_2606': {
+          code: '2606',
+          direction: 'N',
+          id: '1_2606',
+          lat: 30.27042,
+          locationType: 0,
+          lon: -97.74444,
+          name: 'AUSTIN HISTORY CENTER STATION (NB)',
+          routeIds: [
+            '1_801',
+            '1_803',
+          ],
+          wheelchairBoarding: 'UNKNOWN',
+        },
+      },
+      trips: {
+        '1_1538496': {
+          blockId: '1_556090',
+          directionId: '1',
+          id: '1_1538496',
+          routeId: '1_20',
+          routeShortName: '',
+          serviceId: '1_105-5',
+          shapeId: '1_34643',
+          timeZone: '',
+          tripHeadsign: '20-Manor Rd/Riverside-SB',
+          tripShortName: '',
+        },
+      },
+    },
   },
+  history: {},
 };

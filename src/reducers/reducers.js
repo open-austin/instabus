@@ -2,10 +2,9 @@ import { combineReducers } from 'redux';
 
 import InitialState from 'constants/InitialState';
 
-import routes from 'routes/routesReducers';
-import stops from 'stops/stopsReducers';
-import trips from 'trips/tripsReducers';
-import history from 'history/historyReducers';
+import routes from 'reducers/routes';
+import stops from 'reducers/stops';
+import trips from 'reducers/trips';
 
 import {
   SET_USER_LOCATION,
@@ -56,5 +55,4 @@ export default combineReducers({
   routes,
   trips,
   stops,
-  history,
 });
