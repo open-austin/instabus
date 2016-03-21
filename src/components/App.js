@@ -40,8 +40,6 @@ class App extends Component {
       <div>
         {this.renderUserLocation()}
         <RouteList />
-        <StopList />
-        <NearbyTrips />
       </div>
     );
   }

@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { setCurrentRoute } from 'routes/RouteItem/RouteItemActions';
 import { RouteType } from 'constants/OBAPropTypes';
-
+import { setCurrentRoute } from 'actions';
 
 class RouteItem extends Component {
   static propTypes = {
@@ -13,7 +12,9 @@ class RouteItem extends Component {
 
   constructor(props) {
     super(props);
-    this.onClick = () => this.props.setCurrentRoute(this.props.route.id);
+    this.onClick = () => {
+      this.props.setCurrentRoute(this.props.route.id);
+    };
   }
 
   render() {
