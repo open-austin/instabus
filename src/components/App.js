@@ -3,12 +3,12 @@ import cssmodules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import styles from 'styles/base.scss';
-import RouteList from 'routes/RouteList';
-import NearbyTrips from 'trips/Nearby';
-import StopList from 'stops/StopList';
+import RouteList from 'RouteList';
+import NearbyTrips from 'Nearby';
+import StopList from 'StopList';
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
-import { watchUserLocation, stopWatchingUserLocation } from 'app/actions';
+import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 
 
 class App extends Component {
