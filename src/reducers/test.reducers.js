@@ -1,12 +1,12 @@
 import expect from 'expect';
 
-import reducer from 'app/reducers';
+import rootReducer from 'reducers';
 
 import InitialState from 'constants/InitialState';
 
-describe('app/reducers', () => {
-  it('should return initial state', () => {
-    const state = reducer(undefined, { type: 'F U' });
+describe('rootReducer', () => {
+  it.only('should return initial state', () => {
+    const state = rootReducer(undefined, { type: 'F U' });
     expect(state).toEqual(InitialState);
   });
 });

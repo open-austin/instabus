@@ -9,13 +9,11 @@ export default {
     stopsForRouteLoading: false,
   },
   recent: [
-    [
-      { type: 'route', id: '1_801' },
-      { type: 'stop', id: '1_2606' },
-    ],
+    { type: 'route', id: '1_801' },
+    { type: 'stop', id: '1_2606' },
   ],
   oba: {
-    arrivalsAndDeparturesForStop: {
+    arrivalsAndDepartures: {
       '1_2606': {
         arrivalsAndDepartures: [{
           arrivalEnabled: true,

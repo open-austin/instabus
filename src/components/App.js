@@ -3,9 +3,7 @@ import cssmodules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import styles from 'styles/base.scss';
-import RouteList from 'RouteList';
-import NearbyTrips from 'Nearby';
-import StopList from 'StopList';
+import RouteList from 'components/RouteList';
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
