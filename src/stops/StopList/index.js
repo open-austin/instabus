@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getStopsForRoute } from 'stops/StopList/stopListActions';
+import { getStopsForRoute } from 'stops/StopList/StopListActions';
 import { StopType, RouteType } from 'constants/OBAPropTypes';
 
 class StopList extends Component {

@@ -3,6 +3,7 @@ import { watchPosition, stopWatching } from 'libs/location';
 import {
   SET_USER_LOCATION,
   SET_USER_LOCATION_ERROR,
+  SET_GLOBAL_ERROR,
 } from 'constants/ActionTypes';
 
 export function setUserLocation(payload) {
@@ -17,6 +18,13 @@ export function setUserLocationError(payload) {
     type: SET_USER_LOCATION_ERROR,
     payload,
   };
+}
+
+export function setGlobalError(errorMessage) {
+  return {
+    type: SET_GLOBAL_ERROR,
+    payload: errorMessage,
+  }
 }
 
 export function watchUserLocation() {

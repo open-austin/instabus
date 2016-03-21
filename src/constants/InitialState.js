@@ -13,7 +13,6 @@ export default {
     nearbyTripsLoading: false,
   },
   stops: {
-    stopsForRoute: {},
     stopsForRouteLoading: false,
   },
   history: {
