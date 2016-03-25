@@ -39,7 +39,7 @@ class RouteList extends Component {
 
 const mapStateToProps = createStructuredSelector({
   routes: sortedRoutesSelector,
-  allRoutesLoading: (state) => state.loading.allRoutesLoading,
+  allRoutesLoading: (state) => state.ui.loading.allRoutesLoading,
 });
 
 const mapDispatchToProps = {

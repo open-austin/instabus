@@ -1,19 +1,21 @@
 export default {
-  currentTab: 'StopList',
-  currentAgency: '1',
-  currentRoute: '1_801',
-  userLocation: null,
-  userLocationError: null,
-  globalError: null,
-  loading: {
-    allRoutesLoading: false,
-    nearbyTripsLoading: false,
-    stopsForRouteLoading: false,
+  ui: {
+    currentTab: 'RouteList',
+    currentAgency: '1',
+    currentRoute: null,
+    userLocation: null,
+    userLocationError: null,
+    globalError: null,
+    loading: {
+      allRoutesLoading: false,
+      nearbyTripsLoading: false,
+      stopsForRouteLoading: false,
+    },
+    recent: [
+      { type: 'route', id: '1_801' },
+      { type: 'stop', id: '1_2606' },
+    ],
   },
-  recent: [
-    { type: 'route', id: '1_801' },
-    { type: 'stop', id: '1_2606' },
-  ],
   oba: {
     arrivalsAndDepartures: {
       '1_2606': {

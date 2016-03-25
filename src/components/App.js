@@ -66,10 +66,10 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userLocation: state.userLocation,
-  userLocationError: state.userLocationError,
-  currentTab: state.currentTab,
-  globalError: state.globalError,
+  userLocation: state.ui.userLocation,
+  userLocationError: state.ui.userLocationError,
+  currentTab: state.ui.currentTab,
+  globalError: state.ui.globalError,
 });
 
 const mapDispatchToProps = {

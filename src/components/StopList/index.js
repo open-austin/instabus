@@ -45,7 +45,7 @@ class StopList extends Component {
 const mapStateToProps = createStructuredSelector({
   stopGroups: stopGroupsForCurrentRouteSelector,
   route: currentRouteSelector,
-  stopsForRouteLoading: (state) => state.loading.stopsForRouteLoading,
+  stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,
 });
 
 const mapDispatchToProps = {

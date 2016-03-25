@@ -46,7 +46,7 @@ export function getAllRoutes() {
   return (dispatch, getState) => {
     dispatch(setAllRoutesLoading(true));
 
-    const agencyId = getState().currentAgency;
+    const agencyId = getState().ui.currentAgency;
 
     return oba(`routes-for-agency/${agencyId}`)
       .then(json => {

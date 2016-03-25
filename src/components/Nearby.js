@@ -56,7 +56,7 @@ export const nearbyTripsSelector = createSelector(
 );
 
 const mapStateToProps = createStructuredSelector({
-  userLocation: (state) => state.userLocation,
+  userLocation: (state) => state.ui.userLocation,
   nearbyTrips: nearbyTripsSelector,
   nearbyTripsLoading: (state) => state.trips.nearbyTripsLoading,
 });
