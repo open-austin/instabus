@@ -20,6 +20,9 @@ function routes(state = BaseState.routes, action = {}) {
 }
 
 function stops(state = BaseState.stops, action = {}) {
+  if (action.type === SET_STOPS) {
+    return { ...state, ...action.payload };
+  }
   return state;
 }
 

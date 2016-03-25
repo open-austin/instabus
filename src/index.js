@@ -8,6 +8,13 @@ import configureStore from 'redux/configureStore';
 
 const store = window.store = configureStore();
 
+import Promise from 'bluebird';
+
+Promise.config({
+  longStackTraces: true,
+  warnings: true,
+});
+
 render(
   <Provider store={store}>
     <div>

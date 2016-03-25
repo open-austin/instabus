@@ -12,3 +12,4 @@ export const SET_AGENCIES = 'SET_AGENCIES';
 export const SET_ROUTES = 'SET_ROUTES';
 export const SET_STOPS = 'SET_STOPS';
 export const SET_TRIPS = 'SET_TRIPS';
+export const SET_STOP_GROUPS = 'SET_STOP_GROUPS';

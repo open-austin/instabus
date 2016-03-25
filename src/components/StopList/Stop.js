@@ -11,8 +11,8 @@ import {
 
 class Stop extends Component {
   static propTypes = {
-    stopId: PropTypes.string.isrequired,
-    stop: StopType,
+    stopId: PropTypes.string.isRequired,
+    stop: StopType.isRequired,
   };
 
   render() {

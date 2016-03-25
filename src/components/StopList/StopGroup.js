@@ -13,7 +13,7 @@ import Stop from 'components/StopList/Stop';
 
 class StopGroup extends Component {
   static propTypes = {
-    stopGroupId: PropTypes.string.isrequired,
+    stopGroupId: PropTypes.string.isRequired,
     stopGroup: StopGroupType,
   };
 

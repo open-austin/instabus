@@ -18,6 +18,7 @@ class App extends Component {
     watchUserLocation: PropTypes.func.isRequired,
     stopWatchingUserLocation: PropTypes.func.isRequired,
     userLocationError: PropTypes.string,
+    globalError: PropTypes.string,
   }
 
   componentWillMount() {
@@ -49,9 +50,14 @@ class App extends Component {
     return <div>404</div>;
   }
 
+  renderGlobalError() {
+    return <div>{this.props.globalError}</div>;
+  }
+
   render() {
     return (
       <div>
+        {this.renderGlobalError()}
         {this.renderUserLocation()}
         {this.renderCurrent()}
       </div>
@@ -63,6 +69,7 @@ const mapStateToProps = (state) => ({
   userLocation: state.userLocation,
   userLocationError: state.userLocationError,
   currentTab: state.currentTab,
+  globalError: state.globalError,
 });
 
 const mapDispatchToProps = {

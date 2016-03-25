@@ -1,9 +1,10 @@
 export default {
-  currentTab: 'RouteList',
+  currentTab: 'StopList',
   currentAgency: '1',
   currentRoute: '1_801',
   userLocation: null,
   userLocationError: null,
+  globalError: null,
   loading: {
     allRoutesLoading: false,
     nearbyTripsLoading: false,
@@ -126,28 +127,7 @@ export default {
         tripId: '1_1538496',
       },
     ],
-    stopGroups: {
-      '1_801': {
-        0: {
-          id: '0',
-          name: { name: '801 TECH RIDGE-NB', names: ['801 TECH RIDGE-NB'], type: 'destination' },
-          polylines: [
-            { length: 50, levels: '', points: 'qrmwDfuusQLL|DzBjLnGpCtAnMdHpY|OnBlAhHtDxBhAdD|AtF|BxBr@~Bt@pErA|B^xC^nT~Dp@LbCd@lAXnCn@`X~InJdCjGnAzCr@bIdBfXzFdN|CxGxAtN|CXFfPlDpFfAhLfCfGdJjAhAvAv@PDz@PjFFJUFsGK[`GrB~Bx@xMlEtBr@qAvD{@xB' },
-          ],
-          stopIds: ['1_2606'],
-          subGroups: [],
-        },
-        1: {
-          id: '1',
-          name: { name: '801 SOUTH PARK-SB', names: ['801 SOUTH PARK-SB'], type: 'destination' },
-          polylines: [
-            { length: 50, levels: '', points: 'qrmwDfuusQLL|DzBjLnGpCtAnMdHpY|OnBlAhHtDxBhAdD|AtF|BxBr@~Bt@pErA|B^xC^nT~Dp@LbCd@lAXnCn@`X~InJdCjGnAzCr@bIdBfXzFdN|CxGxAtN|CXFfPlDpFfAhLfCfGdJjAhAvAv@PDz@PjFFJUFsGK[`GrB~Bx@xMlEtBr@qAvD{@xB' },
-          ],
-          stopIds: ['1_2606'],
-          subGroups: [],
-        },
-      },
-    },
+    stopGroups: {},
     references: {
       agencies: {
         1: {
@@ -174,33 +154,7 @@ export default {
           url: '',
         },
       },
-      stops: {
-        '1_2606': {
-          code: '2606',
-          direction: 'N',
-          id: '1_2606',
-          lat: 30.27042,
-          locationType: 0,
-          lon: -97.74444,
-          name: 'AUSTIN HISTORY CENTER STATION (NB)',
-          routeIds: [
-            '1_801',
-            '1_803',
-          ],
-          wheelchairBoarding: 'UNKNOWN',
-        },
-        '1_5938': {
-          code: '5938',
-          direction: 'W',
-          id: '1_5938',
-          lat: 30.270613,
-          locationType: 0,
-          lon: -97.744215,
-          name: '216 8TH/LAVACA',
-          routeIds: ['1_801'],
-          wheelchairBoarding: 'UNKNOWN',
-        },
-      },
+      stops: {},
       trips: {
         '1_1538496': {
           blockId: '1_556090',

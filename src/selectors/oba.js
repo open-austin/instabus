@@ -1,5 +1,4 @@
 import _ from 'lodash';
-
 import { createSelector } from 'reselect';
 
 export const sortedRoutesSelector = createSelector(
@@ -22,14 +21,11 @@ export const stopGroupsForCurrentRouteSelector = createSelector(
 export const stopGroupSelector = createSelector(
   stopGroupsForCurrentRouteSelector,
   (state, props) => props.stopGroupId,
-  (stopGroups, stopGroupId) => {
-    return stopGroups[stopGroupId];
-  }
-)
+  (stopGroups, stopGroupId) => stopGroups[stopGroupId]
+);
+
 export const stopSelector = createSelector(
   (state) => state.oba.references.stops,
   (state, props) => props.stopId,
-  (stops, stopId) => {
-    return stops[stopId];
-  }
-)
+  (stops, stopId) => stops[stopId]
+);

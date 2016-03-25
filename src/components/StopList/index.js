@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-// import { getStopsForRoute } from 'actions/oba';
+import { getStopsForRoute } from 'actions/oba';
 import {
   RouteType,
   StopGroupType,
@@ -18,14 +18,13 @@ class StopList extends Component {
   static propTypes = {
     route: RouteType.isRequired,
     stopGroups: PropTypes.arrayOf(StopGroupType),
-    // getStopsForRoute: PropTypes.func.isRequired,
+    getStopsForRoute: PropTypes.func.isRequired,
     stopsForRouteLoading: PropTypes.bool.isRequired,
   };
 
-  componentWillReceiveProps() {
-    if (!this.props.stopGroups) {
-      // this.props.getStopsForRoute(this.props.route.id);
-    }
+  constructor(props) {
+    super(props);
+    this.props.getStopsForRoute(this.props.route.id);
   }
 
   render() {
@@ -50,7 +49,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  // getStopsForRoute,
+  getStopsForRoute,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StopList);

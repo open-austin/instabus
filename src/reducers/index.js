@@ -10,6 +10,7 @@ import {
   SET_USER_LOCATION_ERROR,
   SET_CURRENT_ROUTE,
   SET_CURRENT_TAB,
+  SET_GLOBAL_ERROR,
 } from 'constants/ActionTypes';
 
 
@@ -49,12 +50,20 @@ function recent(state = InitialState.recent, action = {}) {
   return state;
 }
 
+function globalError(state = InitialState.globalError, action = {}) {
+  if (action.type === SET_GLOBAL_ERROR) {
+    return action.payload;
+  }
+  return state;
+}
+
 export default combineReducers({
   currentTab,
   currentAgency,
   currentRoute,
   userLocation,
   userLocationError,
+  globalError,
   recent,
   loading,
   oba,
