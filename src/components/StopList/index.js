@@ -43,7 +43,7 @@ class StopList extends Component {
         <h1>Stop List</h1>
         {stopsForRouteLoading && <div>Loading Stop List</div>}
         <StopGroupSwitch />
-        {<StopGroup stopGroupId={currentStopGroup.id} />}
+        {currentStopGroup && <StopGroup stopGroupId={currentStopGroup.id} />}
       </div>
     );
   }

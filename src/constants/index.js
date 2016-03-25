@@ -1,1 +1,1 @@
-export const VEHICLE_REFRESH_RATE = 10000;
+export const VEHICLE_REFRESH_RATE = 1 * 60 * 1000;

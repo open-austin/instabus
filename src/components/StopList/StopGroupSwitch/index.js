@@ -23,7 +23,7 @@ class StopList extends Component {
     const groupToggles = stopGroups.map((stopGroup) => (
       <StopGroupSwitchItem
         stopGroup={stopGroup}
-        checked={stopGroup.id === currentStopGroup.id}
+        checked={currentStopGroup && stopGroup.id === currentStopGroup.id}
       />
     ));
 

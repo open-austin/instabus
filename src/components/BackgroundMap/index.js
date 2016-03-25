@@ -16,7 +16,7 @@ import {
   vehiclesSelector,
   stopsSelector,
   polylinesSelector,
-} from 'components/BackgroundMap/selectors';
+} from 'components/BackgroundMap/BackgroundMapSelectors';
 
 
 class BackgroundMap extends Component {
