@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -10,7 +9,14 @@ import {
   CoordinatePointType,
   EncodedPolylineType,
 } from 'constants/OBAPropTypes';
-import { currentRouteSelector } from 'selectors/oba';
+import {
+  currentRouteSelector,
+} from 'selectors/oba';
+import {
+  vehiclesSelector,
+  stopsSelector,
+  polylinesSelector,
+} from 'components/BackgroundMap/selectors';
 
 
 class BackgroundMap extends Component {
@@ -41,10 +47,10 @@ class BackgroundMap extends Component {
         <div>Things on the map</div>
         <ul>
           <li>{this.renderUserLocation()}</li>
-          <li>0 route {route}</li>
+          <li>route: {route && route.longName}</li>
           <li>0 vehicles {vehicles.length}</li>
-          <li>0 stops {stops}</li>
-          <li>0 polylines {polylines}</li>
+          <li>0 stops {JSON.stringify(stops)}</li>
+          <li>0 {JSON.stringify(polylines)}</li>
         </ul>
       </div>
     );
@@ -55,9 +61,9 @@ const mapStateToProps = createStructuredSelector({
   userLocation: (state) => state.ui.userLocation,
   userLocationError: (state) => state.ui.userLocationError,
   route: currentRouteSelector,
-  vehicles: (state) => _.toArray(state.oba.vehicles),
-  stops: (state) => null,
-  polylines: (state) => null,
+  vehicles: vehiclesSelector,
+  stops: stopsSelector,
+  polylines: polylinesSelector,
 });
 
 const mapDispatchToProps = {};
