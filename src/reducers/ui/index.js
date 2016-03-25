@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
 import InitialState from 'constants/InitialState';
+
 import loading from 'reducers/ui/loading';
+import stopList from 'reducers/ui/stopList';
 
 import {
   SET_USER_LOCATION,
@@ -64,4 +66,5 @@ export default combineReducers({
   globalError,
   recent,
   loading,
+  stopList,
 });

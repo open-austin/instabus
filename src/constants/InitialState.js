@@ -6,6 +6,9 @@ export default {
     userLocation: null,
     userLocationError: null,
     globalError: null,
+    stopList: {
+      currentStopGroup: null,
+    },
     loading: {
       allRoutesLoading: false,
       nearbyTripsLoading: false,

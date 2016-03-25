@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { RouteType } from 'constants/OBAPropTypes';
-import { setCurrentRoute, setCurrentTab } from 'actions';
+import { setCurrentRoute, setCurrentTab } from 'actions/ui';
 
 
 class RouteItem extends Component {

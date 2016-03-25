@@ -2,7 +2,10 @@ import _ from 'lodash';
 
 import oba from 'libs/oba';
 
-import { setGlobalError } from 'actions';
+import {
+  setGlobalError,
+  setCurrentStopGroup,
+} from 'actions/ui';
 import {
   setReferences,
   setRoutes,
@@ -70,7 +73,9 @@ export function getStopsForRoute(routeID) {
       .then(json => {
         setReferences(json.data.references)(dispatch);
 
-        dispatch(setStopGroups(routeID, json.data.entry.stopGroupings[0].stopGroups));
+        const stopGroups = json.data.entry.stopGroupings[0].stopGroups;
+        dispatch(setStopGroups(routeID, stopGroups));
+        dispatch(setCurrentStopGroup(stopGroups[0].id));
       })
       .catch((err) => handleError(dispatch, err))
       .then(() => {

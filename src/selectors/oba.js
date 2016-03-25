@@ -24,6 +24,12 @@ export const stopGroupSelector = createSelector(
   (stopGroups, stopGroupId) => stopGroups[stopGroupId]
 );
 
+export const currentStopGroupSelector = createSelector(
+  stopGroupsForCurrentRouteSelector,
+  (state) => state.ui.stopList.currentStopGroup,
+  (stopGroups, stopGroupId) => stopGroups[stopGroupId]
+);
+
 export const stopSelector = createSelector(
   (state) => state.oba.references.stops,
   (state, props) => props.stopId,

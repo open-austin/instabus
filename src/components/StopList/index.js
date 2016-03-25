@@ -2,24 +2,27 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { getStopsForRoute } from 'actions/oba';
 import {
   RouteType,
   StopGroupType,
 } from 'constants/OBAPropTypes';
+import { getStopsForRoute } from 'actions/oba';
 import {
-  stopGroupsForCurrentRouteSelector,
   currentRouteSelector,
+  currentStopGroupSelector,
 } from 'selectors/oba';
 
+import StopGroupSwitch from 'components/StopList/StopGroupSwitch';
 import StopGroup from 'components/StopList/StopGroup';
 
 class StopList extends Component {
   static propTypes = {
-    route: RouteType.isRequired,
-    stopGroups: PropTypes.arrayOf(StopGroupType),
-    getStopsForRoute: PropTypes.func.isRequired,
     stopsForRouteLoading: PropTypes.bool.isRequired,
+
+    currentStopGroup: StopGroupType,
+
+    route: RouteType.isRequired,
+    getStopsForRoute: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -28,22 +31,26 @@ class StopList extends Component {
   }
 
   render() {
-    const groups = this.props.stopGroups.map((stopGroup) => (
-      <StopGroup stopGroupId={stopGroup.id} />
-    ));
+    const { currentStopGroup, stopsForRouteLoading } = this.props;
+
+    if (stopsForRouteLoading) {
+      return <div>Loading</div>;
+    }
+
 
     return (
       <div>
         <h1>Stop List</h1>
-        {this.props.stopsForRouteLoading && <div>Loading Stop List</div>}
-        {groups}
+        {stopsForRouteLoading && <div>Loading Stop List</div>}
+        <StopGroupSwitch />
+        {<StopGroup stopGroupId={currentStopGroup.id} />}
       </div>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  stopGroups: stopGroupsForCurrentRouteSelector,
+  currentStopGroup: currentStopGroupSelector,
   route: currentRouteSelector,
   stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,
 });
