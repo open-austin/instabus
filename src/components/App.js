@@ -53,6 +53,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        {this.renderGlobalError()}
         <BackgroundMap />
         {this.renderCurrent()}
       </div>

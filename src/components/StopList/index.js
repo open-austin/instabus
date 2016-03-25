@@ -25,8 +25,7 @@ class StopList extends Component {
     getStopsForRoute: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  componentWillMount() {
     this.props.getStopsForRoute(this.props.route.id);
   }
 
