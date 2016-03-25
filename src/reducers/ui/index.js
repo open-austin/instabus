@@ -46,7 +46,7 @@ function userLocationError(state = null, action = {}) {
   return state;
 }
 
-function recent(state = InitialState.ui.recent, action = {}) {
+function recent(state = InitialState.ui.recent) {
   return state;
 }
 

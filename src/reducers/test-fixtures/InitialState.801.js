@@ -13,6 +13,7 @@ export default {
       allRoutesLoading: true,
       nearbyTripsLoading: true,
       stopsForRouteLoading: true,
+      vehiclesLoading: true,
     },
     recent: [
       { type: 'route', id: '1_801' },
@@ -20,6 +21,52 @@ export default {
     ],
   },
   oba: {
+    vehicles: {
+      '1_5008': {
+        lastLocationUpdateTime: 0,
+        lastUpdateTime: 1458920411000,
+        location: {
+          lat: 30.16289520263672,
+          lon: -97.79043579101562,
+        },
+        phase: '',
+        status: '',
+        tripId: '1_1538496',
+        tripStatus: {
+          activeTripId: '1_1538496',
+          blockTripSequence: 3,
+          closestStop: '1_5938',
+          closestStopTimeOffset: 3,
+          distanceAlongTrip: 21154.64587459281,
+          frequency: null,
+          lastKnownDistanceAlongTrip: 0,
+          lastKnownLocation: {
+            lat: 30.16289520263672,
+            lon: -97.79043579101562,
+          },
+          lastKnownOrientation: 0,
+          lastLocationUpdateTime: 0,
+          lastUpdateTime: 1458920411000,
+          nextStop: '1_5938',
+          nextStopTimeOffset: 3,
+          orientation: 58.43481814849745,
+          phase: '',
+          position: {
+            lat: 30.32622723526024,
+            lon: -97.72617144714636,
+          },
+          predicted: true,
+          scheduleDeviation: -3600,
+          scheduledDistanceAlongTrip: 21154.64587459281,
+          serviceDate: 1458882000000,
+          situationIds: [],
+          status: 'default',
+          totalDistanceAlongTrip: 35925.61456688476,
+          vehicleId: '1_5008',
+        },
+        vehicleId: '1_5008',
+      },
+    },
     arrivalsAndDepartures: {
       '1_2606': {
         arrivalsAndDepartures: [{

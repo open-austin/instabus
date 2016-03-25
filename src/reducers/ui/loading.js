@@ -6,6 +6,7 @@ import {
   SET_ALL_ROUTES_LOADING,
   SET_NEARBY_TRIPS_LOADING,
   SET_STOPS_FOR_ROUTE_LOADING,
+  SET_VEHICLES_LOADING,
 } from 'constants/ActionTypes';
 
 function allRoutesLoading(state = InitialState.ui.loading.allRoutesLoading, action = {}) {
@@ -29,8 +30,16 @@ function stopsForRouteLoading(state = InitialState.ui.loading.stopsForRouteLoadi
   return state;
 }
 
+function vehiclesLoading(state = InitialState.ui.loading.vehiclesLoading, action = {}) {
+  if (action.type === SET_VEHICLES_LOADING) {
+    return action.payload;
+  }
+  return state;
+}
+
 export default combineReducers({
   allRoutesLoading,
   nearbyTripsLoading,
   stopsForRouteLoading,
+  vehiclesLoading,
 });

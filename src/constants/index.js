@@ -1,0 +1,1 @@
+export const VEHICLE_REFRESH_RATE = 10000;

@@ -13,6 +13,7 @@ export default {
       allRoutesLoading: false,
       nearbyTripsLoading: false,
       stopsForRouteLoading: false,
+      vehiclesLoading: false,
     },
     recent: [
       { type: 'route', id: '1_801' },
@@ -20,6 +21,7 @@ export default {
     ],
   },
   oba: {
+    vehicles: {},
     arrivalsAndDepartures: {
       '1_2606': {
         arrivalsAndDepartures: [{

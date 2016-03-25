@@ -18,7 +18,8 @@ import {
 } from 'constants/ActionTypes';
 
 
-function handleError(dispatch, err) {
+export function handleError(dispatch, err) {
+  // FIXME: Send error to Sentry in production
   dispatch(setGlobalError(err.message));
   console.error(err);
   throw err;
@@ -58,7 +59,7 @@ export function getAllRoutes() {
         const routesById = _.keyBy((json.data.list), 'id');
         dispatch(setRoutes(routesById));
       })
-      // .catch((err) => handleError(dispatch, err))
+      .catch((err) => handleError(dispatch, err))
       .then(() => {
         dispatch(setAllRoutesLoading(false));
       });
