@@ -27,7 +27,7 @@ export const flattenedStopGroupsSelector = createSelector(
   (stopGroups) => _.values(stopGroups)
 );
 
-export const stopsSelector = createSelector(
+export const stopIdsSelector = createSelector(
   (state) => state.ui.currentRoute,
   flattenedStopGroupsSelector,
   (routeId, stopGroups) => stopGroups.reduce((prev, stopGroup) => [

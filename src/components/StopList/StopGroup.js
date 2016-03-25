@@ -18,8 +18,8 @@ class StopGroup extends Component {
   };
 
   render() {
-    const stops = this.props.stopGroup.stopIds.map((stopId) => (
-      <Stop stopId={stopId} />
+    const stops = this.props.stopGroup.stopIds.map((stopId, i) => (
+      <Stop stopId={stopId} key={i} />
     ));
     return (
       <div>

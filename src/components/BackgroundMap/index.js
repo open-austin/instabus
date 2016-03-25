@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import {
   RouteType,
-  VehicleType,
+  VehicleStatusType,
   StopType,
   CoordinatePointType,
   EncodedPolylineType,
@@ -14,7 +14,7 @@ import {
 } from 'selectors/oba';
 import {
   vehiclesSelector,
-  stopsSelector,
+  stopIdsSelector,
   polylinesSelector,
 } from 'components/BackgroundMap/BackgroundMapSelectors';
 
@@ -22,10 +22,11 @@ import {
 class BackgroundMap extends Component {
   static propTypes = {
     route: RouteType,
-    vehicles: PropTypes.arrayOf(VehicleType),
-    stops: PropTypes.arrayOf(StopType),
+    vehicles: PropTypes.arrayOf(VehicleStatusType),
+    stopIds: PropTypes.arrayOf(PropTypes.string),
     polylines: PropTypes.arrayOf(EncodedPolylineType),
     userLocation: CoordinatePointType,
+    userLocationError: PropTypes.string,
   };
 
   renderUserLocation() {
@@ -39,7 +40,7 @@ class BackgroundMap extends Component {
   }
 
   render() {
-    const { route, vehicles, stops, polylines } = this.props;
+    const { route, vehicles, stopIds, polylines } = this.props;
 
     return (
       <div>
@@ -49,7 +50,7 @@ class BackgroundMap extends Component {
           <li>{this.renderUserLocation()}</li>
           <li>route: {route && route.longName}</li>
           <li>0 vehicles {vehicles.length}</li>
-          <li>0 stops {JSON.stringify(stops)}</li>
+          <li>0 stopIds {JSON.stringify(stopIds)}</li>
           <li>0 {JSON.stringify(polylines)}</li>
         </ul>
       </div>
@@ -62,10 +63,8 @@ const mapStateToProps = createStructuredSelector({
   userLocationError: (state) => state.ui.userLocationError,
   route: currentRouteSelector,
   vehicles: vehiclesSelector,
-  stops: stopsSelector,
+  stopIds: stopIdsSelector,
   polylines: polylinesSelector,
 });
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BackgroundMap);
+export default connect(mapStateToProps)(BackgroundMap);
