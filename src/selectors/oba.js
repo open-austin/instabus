@@ -29,3 +29,9 @@ export const stopSelector = createSelector(
   (state, props) => props.stopId,
   (stops, stopId) => stops[stopId]
 );
+
+export const routeForStopSelector = createSelector(
+  (state) => state.oba.references.routes,
+  (state, props) => props.routeId,
+  (routes, routeId) => routes[routeId]
+);

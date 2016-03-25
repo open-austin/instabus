@@ -2,27 +2,23 @@ import _ from 'lodash';
 
 import oba from 'libs/oba';
 
+import { setGlobalError } from 'actions';
 import {
-  SET_ROUTES,
-  SET_STOPS,
+  setReferences,
+  setRoutes,
+} from 'actions/oba/references';
+
+import {
   SET_STOP_GROUPS,
   SET_ALL_ROUTES_LOADING,
   SET_STOPS_FOR_ROUTE_LOADING,
 } from 'constants/ActionTypes';
 
-import { setGlobalError } from 'actions';
 
 function handleError(dispatch, err) {
   dispatch(setGlobalError(err.message));
   console.error(err);
   throw err;
-}
-
-export function setRoutes(payload) {
-  return {
-    type: SET_ROUTES,
-    payload,
-  };
 }
 
 export function setStopGroups(routeID, payload) {
@@ -46,14 +42,6 @@ export function setStopsForRouteLoading(payload) {
   };
 }
 
-export function setStops(payload) {
-  console.log('setStops', payload)
-  return {
-    type: SET_STOPS,
-    payload,
-  };
-}
-
 export function getAllRoutes() {
   return (dispatch, getState) => {
     dispatch(setAllRoutesLoading(true));
@@ -62,6 +50,8 @@ export function getAllRoutes() {
 
     return oba(`routes-for-agency/${agencyId}`)
       .then(json => {
+        setReferences(json.data.references)(dispatch);
+
         const routesById = _.keyBy((json.data.list), 'id');
         dispatch(setRoutes(routesById));
       })
@@ -78,11 +68,11 @@ export function getStopsForRoute(routeID) {
 
     return oba(`stops-for-route/${routeID}`)
       .then(json => {
-        const stopsById = _.keyBy(json.data.references.stops, 'id');
-        dispatch(setStops(stopsById));
+        setReferences(json.data.references)(dispatch);
+
         dispatch(setStopGroups(routeID, json.data.entry.stopGroupings[0].stopGroups));
       })
-      // .catch((err) => handleError(dispatch, err))
+      .catch((err) => handleError(dispatch, err))
       .then(() => {
         dispatch(setStopsForRouteLoading(false));
       });

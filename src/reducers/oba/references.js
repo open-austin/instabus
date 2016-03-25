@@ -3,19 +3,32 @@ import { combineReducers } from 'redux';
 import InitialState from 'constants/InitialState';
 
 import {
-  SET_AGENCIES,
   SET_ROUTES,
-  SET_STOPS,
+  SET_AGENCIES,
   SET_TRIPS,
+  SET_STOPS,
 } from 'constants/ActionTypes';
 
 const BaseState = InitialState.oba.references;
 
-function agencies(state = BaseState.agencies, action = {}) {
+function routes(state = BaseState.routes, action = {}) {
+  if (action.type === SET_ROUTES) {
+    return { ...state, ...action.payload };
+  }
   return state;
 }
 
-function routes(state = BaseState.routes, action = {}) {
+function agencies(state = BaseState.agencies, action = {}) {
+  if (action.type === SET_AGENCIES) {
+    return { ...state, ...action.payload };
+  }
+  return state;
+}
+
+function trips(state = BaseState.trips, action = {}) {
+  if (action.type === SET_TRIPS) {
+    return { ...state, ...action.payload };
+  }
   return state;
 }
 
@@ -26,13 +39,9 @@ function stops(state = BaseState.stops, action = {}) {
   return state;
 }
 
-function trips(state = BaseState.trips, action = {}) {
-  return state;
-}
-
 export default combineReducers({
-  agencies,
   routes,
-  stops,
+  agencies,
   trips,
+  stops,
 });

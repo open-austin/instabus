@@ -4,23 +4,34 @@ import { createStructuredSelector } from 'reselect';
 
 import {
   StopType,
+  RouteType,
 } from 'constants/OBAPropTypes';
 import {
   stopSelector,
 } from 'selectors/oba';
+import StopRouteItem from 'components/StopList/StopRouteItem';
 
 class Stop extends Component {
   static propTypes = {
     stopId: PropTypes.string.isRequired,
-    stop: StopType.isRequired,
+    stop: StopType,
+    route: RouteType,
   };
 
   render() {
     const { stop } = this.props;
+    if (!stop) {
+      return null;
+    }
+    const routeItems = stop.routeIds.map((routeId) => (
+      <StopRouteItem routeId={routeId} />
+    ));
+
     return (
       <div>
         <div>{stop.name}</div>
-        <div>routes that stop here: {stop.routeIds.map((routeId) => (<b>{routeId}</b>))}s</div>
+        <div>routes that stop here</div>
+        {routeItems}
       </div>
     );
   }
