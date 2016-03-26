@@ -10,7 +10,7 @@ export default {
       currentStopGroup: '0',
     },
     loading: {
-      allRoutesLoading: true,
+      routesForAgencyLoading: true,
       nearbyTripsLoading: true,
       stopsForRouteLoading: true,
       vehiclesLoading: true,

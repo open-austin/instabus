@@ -16,7 +16,7 @@ export default {
       currentStopGroup: null,
     },
     loading: {
-      allRoutesLoading: false,
+      routesForAgencyLoading: false,
       nearbyTripsLoading: false,
       stopsForRouteLoading: false,
       vehiclesLoading: false,
@@ -27,6 +27,7 @@ export default {
     ],
   },
   oba: {
+    routesForAgency: {},
     vehicles: {},
     stopsForLocation: {},
     arrivalsAndDepartures: {

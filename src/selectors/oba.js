@@ -2,8 +2,9 @@ import _ from 'lodash';
 import { createSelector } from 'reselect';
 
 export const sortedRoutesSelector = createSelector(
-  (state) => state.oba.references.routes,
-  (routes) => _.sortBy(routes, ['shortName'])
+  (state) => state.ui.currentAgency,
+  (state) => state.oba.routesForAgency,
+  (agencyId, routes) => _.sortBy(routes[agencyId], ['shortName'])
 );
 
 export const currentRouteSelector = createSelector(

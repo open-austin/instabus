@@ -41,7 +41,7 @@ export function getArrivalsAndDeparturesForStop(stop) {
 
     return oba(`arrivals-and-departures-for-stop/${stopId}`, query)
       .then((json) => {
-        setReferences(json.data.references)(dispatch);
+        dispatch(setReferences(json.data.references));
 
         dispatch(setArrivalsAndDepartures(stopId, json.data.entry.arrivalsAndDepartures));
       });
@@ -79,7 +79,7 @@ export function getNearbyTrips() {
 
     return oba('stops-for-location', query)
       .then(json => {
-        setReferences(json.data.references)(dispatch);
+        dispatch(setReferences(json.data.references));
 
         const stops = json.data.list;
         dispatch(setStopsForLocation(location, _.keyBy(stops, 'id')));
