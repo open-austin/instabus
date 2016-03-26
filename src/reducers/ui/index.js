@@ -4,6 +4,7 @@ import InitialState from 'constants/InitialState';
 
 import loading from 'reducers/ui/loading';
 import stopList from 'reducers/ui/stopList';
+import map from 'reducers/ui/map';
 
 import {
   SET_USER_LOCATION,
@@ -67,4 +68,5 @@ export default combineReducers({
   recent,
   loading,
   stopList,
+  map,
 });

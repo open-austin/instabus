@@ -7,6 +7,7 @@ import {
   SET_AGENCIES,
   SET_TRIPS,
   SET_STOPS,
+  SET_SITUATIONS,
 } from 'constants/ActionTypes';
 
 const BaseState = InitialState.oba.references;
@@ -39,9 +40,17 @@ function stops(state = BaseState.stops, action = {}) {
   return state;
 }
 
+function situations(state = BaseState.situations, action = {}) {
+  if (action.type === SET_SITUATIONS) {
+    return { ...state, ...action.payload };
+  }
+  return state;
+}
+
 export default combineReducers({
   routes,
   agencies,
   trips,
   stops,
+  situations,
 });

@@ -5,7 +5,6 @@ import { createStructuredSelector } from 'reselect';
 import {
   RouteType,
   VehicleStatusType,
-  StopType,
   CoordinatePointType,
   EncodedPolylineType,
 } from 'constants/OBAPropTypes';

@@ -59,7 +59,7 @@ export function getAllRoutes() {
         const routesById = _.keyBy((json.data.list), 'id');
         dispatch(setRoutes(routesById));
       })
-      .catch((err) => handleError(dispatch, err))
+      // .catch((err) => handleError(dispatch, err))
       .then(() => {
         dispatch(setAllRoutesLoading(false));
       });
@@ -78,7 +78,7 @@ export function getStopsForRoute(routeID) {
         dispatch(setStopGroups(routeID, stopGroups));
         dispatch(setCurrentStopGroup(stopGroups[0].id));
       })
-      .catch((err) => handleError(dispatch, err))
+      // .catch((err) => handleError(dispatch, err))
       .then(() => {
         dispatch(setStopsForRouteLoading(false));
       });

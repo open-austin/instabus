@@ -5,6 +5,7 @@ import arrivalsAndDepartures from 'reducers/oba/arrivalsAndDepartures';
 import nearbyTrips from 'reducers/oba/nearbyTrips';
 import stopGroups from 'reducers/oba/stopGroups';
 import vehicles from 'reducers/oba/vehicles';
+import stopsForLocation from 'reducers/oba/stopsForLocation';
 
 export default combineReducers({
   references,
@@ -12,4 +13,5 @@ export default combineReducers({
   nearbyTrips,
   stopGroups,
   vehicles,
+  stopsForLocation,
 });

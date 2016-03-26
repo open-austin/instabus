@@ -1,11 +1,17 @@
 export default {
   ui: {
     currentTab: 'RouteList',
-    currentAgency: '1',
+    currentAgency: 'GATECH',
     currentRoute: null,
     userLocation: null,
     userLocationError: null,
     globalError: null,
+    map: {
+      lat: null,
+      lon: null,
+      latSpan: 0.03500879999999995 / 10,
+      lonSpan: 0.0889021999999926 / 10,
+    },
     stopList: {
       currentStopGroup: null,
     },
@@ -22,6 +28,7 @@ export default {
   },
   oba: {
     vehicles: {},
+    stopsForLocation: {},
     arrivalsAndDepartures: {
       '1_2606': {
         arrivalsAndDepartures: [{
@@ -176,6 +183,7 @@ export default {
           tripShortName: '',
         },
       },
+      situations: {},
     },
   },
 };

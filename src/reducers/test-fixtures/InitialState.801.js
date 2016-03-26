@@ -15,12 +15,19 @@ export default {
       stopsForRouteLoading: true,
       vehiclesLoading: true,
     },
+    map: {
+      lat: 69,
+      lon: 96,
+      latSpan: 0.39840300000000184,
+      lonSpan: 0.4220969999999937,
+    },
     recent: [
       { type: 'route', id: '1_801' },
       { type: 'stop', id: '1_2606' },
     ],
   },
   oba: {
+    stopsForLocation: {},
     vehicles: {
       '1_5008': {
         lastLocationUpdateTime: 0,
@@ -266,6 +273,37 @@ export default {
           timeZone: '',
           tripHeadsign: '20-Manor Rd/Riverside-SB',
           tripShortName: '',
+        },
+      },
+      situations: {
+        '1_111': {
+          activeWindows: [{ from: 1457667000, to: 0 }],
+          allAffects: [{
+            agencyId: '',
+            applicationId: '',
+            directionId: '',
+            routeId: '1_801',
+            stopId: '1_2606',
+            tripId: '',
+          }],
+          consequences: [{
+            condition: 'detour',
+            conditionDetails: null,
+          }],
+          creationTime: 1458581004910,
+          description: null,
+          id: '1_111',
+          publicationWindows: [],
+          reason: 'OTHER_CAUSE',
+          severity: '',
+          summary: {
+            lang: 'en',
+            value: 'SXSW - 2016',
+          },
+          url: {
+            lang: 'en',
+            value: 'http://www.capmetro.org/planner',
+          },
         },
       },
     },

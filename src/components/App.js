@@ -7,9 +7,9 @@ import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
 import BackgroundMap from 'components/BackgroundMap';
 
-import { CoordinatePointType } from 'constants/OBAPropTypes';
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
+import { getNearbyTrips } from 'actions/oba/nearby';
 
 
 class App extends Component {
@@ -23,10 +23,13 @@ class App extends Component {
 
     watchVehicles: PropTypes.func.isRequired,
     stopWatchingVehicles: PropTypes.func.isRequired,
+
+    getNearbyTrips: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    this.props.watchUserLocation();
+    this.props.watchUserLocation()
+      .then(() => this.props.getNearbyTrips());
     this.props.watchVehicles();
   }
 
@@ -69,8 +72,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   watchUserLocation,
   stopWatchingUserLocation,
+
   watchVehicles,
   stopWatchingVehicles,
+
+  getNearbyTrips,
 };
 
 export default cssmodules(connect(mapStateToProps, mapDispatchToProps)(App), styles);

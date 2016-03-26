@@ -55,7 +55,7 @@ export function getVehicles() {
         const vehicles = _.keyBy(json.data.list, 'vehicleId');
         dispatch(setVehicles(vehicles));
       })
-      .catch((err) => handleError(dispatch, err))
+      // .catch((err) => handleError(dispatch, err))
       .then(() => {
         dispatch(setVehiclesLoading(false));
       });
