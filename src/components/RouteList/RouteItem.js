@@ -14,17 +14,28 @@ class RouteItem extends Component {
 
   constructor(props) {
     super(props);
-    this.onClick = () => {
+
+    this.showStops = () => {
       this.props.setCurrentRoute(this.props.route.id);
       this.props.setCurrentTab('StopList');
+    };
+
+    this.showMap = () => {
+      this.props.setCurrentRoute(this.props.route.id);
+
+      // FIXME: I'm not sure what to do here
+      // Maybe just fill out more details in the background map?
+      // this.props.setCurrentTab('RouteMap');
     };
   }
 
   render() {
     const { route } = this.props;
     return (
-      <div key={route.id} onClick={this.onClick}>
+      <div key={route.id}>
         <b>{route.shortName}</b> - {route.longName}
+        <button onClick={this.showStops}>Stops</button>
+        <button onClick={this.showMap}>Map</button>
       </div>
     );
   }

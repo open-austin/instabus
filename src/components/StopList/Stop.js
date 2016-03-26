@@ -23,8 +23,8 @@ class Stop extends Component {
     if (!stop) {
       return null;
     }
-    const routeItems = stop.routeIds.map((routeId) => (
-      <StopRouteItem routeId={routeId} />
+    const routeItems = stop.routeIds.map((routeId, i) => (
+      <StopRouteItem key={i} routeId={routeId} />
     ));
 
     return (

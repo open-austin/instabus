@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import RouteItem from 'components/RouteItem';
 import { RouteType } from 'constants/OBAPropTypes';
 import { getAllRoutes } from 'actions/oba';
 import { sortedRoutesSelector } from 'selectors/oba';
+import RouteItem from 'components/RouteList/RouteItem';
 
 class RouteList extends Component {
   static propTypes = {

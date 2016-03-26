@@ -5,38 +5,34 @@ import { connect } from 'react-redux';
 import styles from 'styles/base.scss';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
-
+import BackgroundMap from 'components/BackgroundMap';
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
+import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
 
 
 class App extends Component {
   static propTypes = {
     currentTab: PropTypes.string.isRequired,
-    userLocation: CoordinatePointType,
+    globalError: PropTypes.string,
+
     watchUserLocation: PropTypes.func.isRequired,
     stopWatchingUserLocation: PropTypes.func.isRequired,
     userLocationError: PropTypes.string,
-    globalError: PropTypes.string,
+
+    watchVehicles: PropTypes.func.isRequired,
+    stopWatchingVehicles: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
     this.props.watchUserLocation();
+    this.props.watchVehicles();
   }
 
   componentWillUnmount() {
     this.props.stopWatchingUserLocation();
-  }
-
-  renderUserLocation() {
-    if (this.props.userLocationError) {
-      return <div>Can't get your location: ${this.props.userLocationError}</div>;
-    }
-    else if (this.props.userLocation) {
-      return <div>You are at {this.props.userLocation.lat}, {this.props.userLocation.lon}</div>;
-    }
-    return <div>Finding your location...</div>;
+    this.props.stopWatchingVehicles();
   }
 
   renderCurrent() {
@@ -58,7 +54,7 @@ class App extends Component {
     return (
       <div>
         {this.renderGlobalError()}
-        {this.renderUserLocation()}
+        <BackgroundMap />
         {this.renderCurrent()}
       </div>
     );
@@ -66,8 +62,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userLocation: state.ui.userLocation,
-  userLocationError: state.ui.userLocationError,
   currentTab: state.ui.currentTab,
   globalError: state.ui.globalError,
 });
@@ -75,6 +69,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   watchUserLocation,
   stopWatchingUserLocation,
+  watchVehicles,
+  stopWatchingVehicles,
 };
 
 export default cssmodules(connect(mapStateToProps, mapDispatchToProps)(App), styles);
