@@ -68,12 +68,17 @@ export function getArrivalsAndDeparturesForStop(stop) {
 // server to make these requests so we don't waste users bandwidth.
 export function getNearbyTrips() {
   return (dispatch, getState) => {
+    const { lat, lon, latSpan, lonSpan } = getState().ui.map;
+
+    if (!lat || !lat) {
+      return Promise.resolve();
+    }
+
     dispatch(setNearbyTripsLoading(true));
     // FIXME: We could do some optimization here and check that we
     // don't already have data for this location. Specifically,
     // check if the bounds fit in a previous bounding box.
 
-    const { lat, lon, latSpan, lonSpan } = getState().ui.map;
     const location = { lat, lon, latSpan, lonSpan };
     const query = { ...location };
 

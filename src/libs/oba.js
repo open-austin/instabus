@@ -5,11 +5,10 @@ const validStatusCode = new RegExp('^[4-5][0-9][0-9]$');
 
 export default function oba(endpoint, query = {}) {
   // const url = `http://localhost:8080/api/where/${endpoint}.json`;
-  // const url = `http://52.88.82.199:8080/onebusaway-api-webapp/api/where/${endpoint}.json`;
-  const url = `http://atlanta.onebusaway.org/api/api/where/${endpoint}.json`;
-
-
+  const url = `http://52.88.82.199:8080/onebusaway-api-webapp/api/where/${endpoint}.json`;
+  // const url = `http://atlanta.onebusaway.org/api/api/where/${endpoint}.json`;
   // const url = `http://api.tampa.onebusaway.org/api/where/${endpoint}.json`;
+
   const qs = queryString.stringify({
     key: 'TEST',
     ...query,
