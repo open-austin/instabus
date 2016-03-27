@@ -30,6 +30,7 @@ class App extends Component {
   componentWillMount() {
     this.props.watchUserLocation()
       .then(() => this.props.getNearbyTrips());
+
     this.props.watchVehicles();
   }
 

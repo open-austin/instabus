@@ -35,8 +35,8 @@ export function getArrivalsAndDeparturesForStop(stop) {
   return (dispatch) => {
     const stopId = stop.id;
     const query = {
-      minutesBefore: 100,
-      minutesAfter: 300,
+      minutesBefore: 15,
+      minutesAfter: 60,
     };
 
     return oba(`arrivals-and-departures-for-stop/${stopId}`, query)
@@ -84,9 +84,9 @@ export function getNearbyTrips() {
         const stops = json.data.list;
         dispatch(setStopsForLocation(location, _.keyBy(stops, 'id')));
 
-        // const promises = stops.map((stop) => getArrivalsAndDeparturesForStop(stop)(dispatch, getState));
-        //
-        // return Promise.all(promises);
+        const promises = stops.map((stop) => getArrivalsAndDeparturesForStop(stop)(dispatch, getState));
+
+        return Promise.all(promises);
       })
       // .catch((err) => handleError(dispatch, err))
       .then(() => {
@@ -94,5 +94,3 @@ export function getNearbyTrips() {
       });
   };
 }
-
-// arrivals-and-departures-for-stop/1_857.json?key=TEST&minutesBefore=100&minutesAfter=300

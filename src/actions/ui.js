@@ -12,10 +12,10 @@ export function setGlobalError(errorMessage) {
   };
 }
 
-export function setCurrentRoute(routeID) {
+export function setCurrentRoute(routeId) {
   return {
     type: SET_CURRENT_ROUTE,
-    payload: routeID,
+    payload: routeId,
   };
 }
 

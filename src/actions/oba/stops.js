@@ -13,10 +13,10 @@ import {
 } from 'constants/ActionTypes';
 
 
-export function setStopGroups(routeID, payload) {
+export function setStopGroups(routeId, payload) {
   return {
     type: SET_STOP_GROUPS,
-    payload: { routeID, payload },
+    payload: { routeId, payload },
   };
 }
 
@@ -27,16 +27,16 @@ export function setStopsForRouteLoading(payload) {
   };
 }
 
-export function getStopsForRoute(routeID) {
+export function getStopsForRoute(routeId) {
   return (dispatch) => {
     dispatch(setStopsForRouteLoading(true));
 
-    return oba(`stops-for-route/${routeID}`)
+    return oba(`stops-for-route/${routeId}`)
       .then(json => {
         dispatch(setReferences(json.data.references));
 
         const stopGroups = json.data.entry.stopGroupings[0].stopGroups;
-        dispatch(setStopGroups(routeID, stopGroups));
+        dispatch(setStopGroups(routeId, stopGroups));
         dispatch(setCurrentStopGroup(stopGroups[0].id));
       })
       // .catch((err) => handleError(dispatch, err))
