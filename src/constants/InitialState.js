@@ -27,7 +27,6 @@ export default {
     ],
   },
   oba: {
-    routesForAgency: {},
     vehicles: {},
     stopsForLocation: {},
     arrivalsAndDepartures: {

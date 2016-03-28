@@ -4,9 +4,8 @@ import { createSelector } from 'reselect';
 import { keyForLocation } from 'libs/oba';
 
 export const sortedRoutesSelector = createSelector(
-  (state) => state.ui.currentAgency,
-  (state) => state.oba.routesForAgency,
-  (agencyId, routes) => _.sortBy(routes[agencyId], ['shortName'])
+  (state) => state.oba.references.routes,
+  (routes) => _.sortBy(routes, ['shortName'])
 );
 
 export const currentRouteSelector = createSelector(

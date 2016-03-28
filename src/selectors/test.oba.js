@@ -6,6 +6,9 @@ describe('selectors/oba', () => {
   describe('sortedRoutesSelector', () => {
     it('should sort the routes', () => {
       const state = {
+        ui: {
+          currentAgency: 1,
+        },
         oba: {
           references: {
             routes: {

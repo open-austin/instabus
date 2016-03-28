@@ -5,7 +5,7 @@ import InitialState from 'constants/InitialState';
 
 import {
   SET_REFERENCES,
-  SET_ROUTES_FOR_AGENCY,
+  SET_ROUTES,
 } from 'constants/ActionTypes';
 
 const BaseState = InitialState.oba.references;
@@ -15,7 +15,7 @@ function routes(state = BaseState.routes, action = {}) {
     const routesById = _.keyBy((action.payload.routes), 'id');
     return { ...state, ...routesById };
   }
-  if (action.type === SET_ROUTES_FOR_AGENCY) {
+  if (action.type === SET_ROUTES) {
     const routesById = _.keyBy((action.payload.payload), 'id');
     return { ...state, ...routesById };
   }

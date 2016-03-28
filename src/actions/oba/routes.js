@@ -8,16 +8,16 @@ import {
 
 import {
   SET_ROUTES_FOR_AGENCY_LOADING,
-  SET_ROUTES_FOR_AGENCY,
+  SET_ROUTES,
 } from 'constants/ActionTypes';
 
-export function setRoutesForAgency(agencyId, payload) {
+
+export function setRoutes(payload) {
   return {
-    type: SET_ROUTES_FOR_AGENCY,
-    payload: { agencyId, payload },
+    type: SET_ROUTES,
+    payload,
   };
 }
-
 
 export function setRoutesForAgencyLoading(payload) {
   return {
@@ -37,7 +37,7 @@ export function getRoutesForAgency() {
         dispatch(setReferences(json.data.references));
 
         const routesById = _.keyBy((json.data.list), 'id');
-        dispatch(setRoutesForAgency(agencyId, routesById));
+        dispatch(setRoutes(routesById));
       })
       // .catch((err) => handleError(dispatch, err))
       .then(() => {
