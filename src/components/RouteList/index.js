@@ -3,19 +3,19 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { RouteType } from 'constants/OBAPropTypes';
-import { getAllRoutes } from 'actions/oba';
+import { getRoutesForAgency } from 'actions/oba/routes';
 import { sortedRoutesSelector } from 'selectors/oba';
 import RouteItem from 'components/RouteList/RouteItem';
 
 class RouteList extends Component {
   static propTypes = {
     routes: PropTypes.arrayOf(RouteType).isRequired,
-    getAllRoutes: PropTypes.func.isRequired,
-    allRoutesLoading: PropTypes.bool.isRequired,
+    getRoutesForAgency: PropTypes.func.isRequired,
+    routesForAgencyLoading: PropTypes.bool.isRequired,
   };
 
   componentWillMount() {
-    this.props.getAllRoutes();
+    this.props.getRoutesForAgency();
   }
 
   renderRoute(route, i) {
@@ -30,7 +30,7 @@ class RouteList extends Component {
     return (
       <div>
         <h1>Route List</h1>
-        {this.props.allRoutesLoading && <div>Loading routes</div>}
+        {this.props.routesForAgencyLoading && <div>Loading routes</div>}
         {items}
       </div>
     );
@@ -39,11 +39,11 @@ class RouteList extends Component {
 
 const mapStateToProps = createStructuredSelector({
   routes: sortedRoutesSelector,
-  allRoutesLoading: (state) => state.ui.loading.allRoutesLoading,
+  routesForAgencyLoading: (state) => state.ui.loading.routesForAgencyLoading,
 });
 
 const mapDispatchToProps = {
-  getAllRoutes,
+  getRoutesForAgency,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteList);

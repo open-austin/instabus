@@ -3,14 +3,14 @@ import { combineReducers } from 'redux';
 import InitialState from 'constants/InitialState';
 
 import {
-  SET_ALL_ROUTES_LOADING,
+  SET_ROUTES_FOR_AGENCY_LOADING,
   SET_NEARBY_TRIPS_LOADING,
   SET_STOPS_FOR_ROUTE_LOADING,
   SET_VEHICLES_LOADING,
 } from 'constants/ActionTypes';
 
-function allRoutesLoading(state = InitialState.ui.loading.allRoutesLoading, action = {}) {
-  if (action.type === SET_ALL_ROUTES_LOADING) {
+function routesForAgencyLoading(state = InitialState.ui.loading.routesForAgencyLoading, action = {}) {
+  if (action.type === SET_ROUTES_FOR_AGENCY_LOADING) {
     return action.payload;
   }
   return state;
@@ -38,7 +38,7 @@ function vehiclesLoading(state = InitialState.ui.loading.vehiclesLoading, action
 }
 
 export default combineReducers({
-  allRoutesLoading,
+  routesForAgencyLoading,
   nearbyTripsLoading,
   stopsForRouteLoading,
   vehiclesLoading,

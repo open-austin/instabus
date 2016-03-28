@@ -50,12 +50,12 @@ export function getVehicles() {
 
     return oba(`vehicles-for-agency/${agencyId}`)
       .then(json => {
-        setReferences(json.data.references)(dispatch);
+        dispatch(setReferences(json.data.references));
 
         const vehicles = _.keyBy(json.data.list, 'vehicleId');
         dispatch(setVehicles(vehicles));
       })
-      .catch((err) => handleError(dispatch, err))
+      // .catch((err) => handleError(dispatch, err))
       .then(() => {
         dispatch(setVehiclesLoading(false));
       });

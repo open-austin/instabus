@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 
+import { keyForLocation } from 'libs/oba';
+
 export const sortedRoutesSelector = createSelector(
   (state) => state.oba.references.routes,
   (routes) => _.sortBy(routes, ['shortName'])
@@ -40,4 +42,19 @@ export const routeForStopSelector = createSelector(
   (state) => state.oba.references.routes,
   (state, props) => props.routeId,
   (routes, routeId) => routes[routeId]
+);
+
+export const stopsInMapSelector = createSelector(
+  (state) => keyForLocation(state.ui.map),
+  (state) => state.oba.stopsForLocation,
+  (locationKey, stopsForLocation) => _.sortBy(stopsForLocation[locationKey], 'id')
+);
+
+export const arrivalsInMapSelector = createSelector(
+  stopsInMapSelector,
+  (state) => state.oba.arrivalsAndDepartures,
+  (stops, arrivalsAndDepartures) => stops.reduce((prev, stop) => [
+    ...prev,
+    ...(arrivalsAndDepartures[stop.id] || []),
+  ], [])
 );

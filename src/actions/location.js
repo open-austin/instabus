@@ -21,7 +21,7 @@ export function setUserLocationError(payload) {
 
 export function watchUserLocation() {
   return (dispatch) => {
-    watchPosition()
+    return watchPosition()
       .then((location) => {
         dispatch(setUserLocation(location));
       })

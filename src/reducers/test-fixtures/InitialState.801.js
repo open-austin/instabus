@@ -10,10 +10,16 @@ export default {
       currentStopGroup: '0',
     },
     loading: {
-      allRoutesLoading: true,
+      routesForAgencyLoading: true,
       nearbyTripsLoading: true,
       stopsForRouteLoading: true,
       vehiclesLoading: true,
+    },
+    map: {
+      lat: 69,
+      lon: 96,
+      latSpan: 0.39840300000000184,
+      lonSpan: 0.4220969999999937,
     },
     recent: [
       { type: 'route', id: '1_801' },
@@ -21,6 +27,7 @@ export default {
     ],
   },
   oba: {
+    stopsForLocation: {},
     vehicles: {
       '1_5008': {
         lastLocationUpdateTime: 0,
@@ -138,47 +145,6 @@ export default {
         stopId: '1_2606',
       },
     },
-    nearbyTrips: [
-      {
-        frequency: null,
-        schedule: null,
-        serviceDate: 1458450000000,
-        situationIds: [],
-        status: {
-          activeTripId: '1_1538496',
-          blockTripSequence: 10,
-          closestStop: '1_2606',
-          closestStopTimeOffset: 13,
-          distanceAlongTrip: 11486.18365503769,
-          frequency: null,
-          lastKnownDistanceAlongTrip: 0,
-          lastKnownLocation: {
-            lat: 30.28026580810547,
-            lon: -97.73486328125,
-          },
-          lastKnownOrientation: 0,
-          lastLocationUpdateTime: 0,
-          lastUpdateTime: 1458522665000,
-          nextStop: '1_2606',
-          nextStopTimeOffset: 13,
-          orientation: 164.73151421272067,
-          phase: '',
-          position: {
-            lat: 30.271960291732046,
-            lon: -97.73827642223726,
-          },
-          predicted: true,
-          scheduleDeviation: 60,
-          scheduledDistanceAlongTrip: 11486.18365503769,
-          serviceDate: 1458450000000,
-          situationIds: [],
-          status: 'default',
-          totalDistanceAlongTrip: 22529.47702655043,
-          vehicleId: '1_8942',
-        },
-        tripId: '1_1538496',
-      },
-    ],
     stopGroups: {
       '1_801': {
         0: {
@@ -266,6 +232,37 @@ export default {
           timeZone: '',
           tripHeadsign: '20-Manor Rd/Riverside-SB',
           tripShortName: '',
+        },
+      },
+      situations: {
+        '1_111': {
+          activeWindows: [{ from: 1457667000, to: 0 }],
+          allAffects: [{
+            agencyId: '',
+            applicationId: '',
+            directionId: '',
+            routeId: '1_801',
+            stopId: '1_2606',
+            tripId: '',
+          }],
+          consequences: [{
+            condition: 'detour',
+            conditionDetails: null,
+          }],
+          creationTime: 1458581004910,
+          description: null,
+          id: '1_111',
+          publicationWindows: [],
+          reason: 'OTHER_CAUSE',
+          severity: '',
+          summary: {
+            lang: 'en',
+            value: 'SXSW - 2016',
+          },
+          url: {
+            lang: 'en',
+            value: 'http://www.capmetro.org/planner',
+          },
         },
       },
     },

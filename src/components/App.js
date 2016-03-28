@@ -6,15 +6,20 @@ import styles from 'styles/base.scss';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
 import BackgroundMap from 'components/BackgroundMap';
+import Nearby from 'components/Nearby';
 
-import { CoordinatePointType } from 'constants/OBAPropTypes';
+import { setCurrentTab } from 'actions/ui';
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
 
 
 class App extends Component {
   static propTypes = {
+    currentAgency: PropTypes.string,
+    currentRoute: PropTypes.string,
+
     currentTab: PropTypes.string.isRequired,
+    setCurrentTab: PropTypes.func.isRequired,
     globalError: PropTypes.string,
 
     watchUserLocation: PropTypes.func.isRequired,
@@ -27,6 +32,7 @@ class App extends Component {
 
   componentWillMount() {
     this.props.watchUserLocation();
+
     this.props.watchVehicles();
   }
 
@@ -43,7 +49,25 @@ class App extends Component {
     if (this.props.currentTab === 'StopList') {
       return <StopList />;
     }
-    return <div>404</div>;
+    if (this.props.currentTab === 'BackgroundMap') {
+      return <BackgroundMap />;
+    }
+    if (this.props.currentTab === 'Nearby') {
+      return <Nearby />;
+    }
+    return null;
+  }
+
+  renderNav() {
+    return (
+      <div>
+        <div>{this.props.currentTab}</div>
+        <button onClick={() => this.props.setCurrentTab('RouteList')}> RouteList </button>
+        {this.props.currentRoute && <button onClick={() => this.props.setCurrentTab('StopList')}> StopList </button>}
+        <button onClick={() => this.props.setCurrentTab('BackgroundMap')}> BackgroundMap </button>
+        <button onClick={() => this.props.setCurrentTab('Nearby')}> Nearby </button>
+      </div>
+    );
   }
 
   renderGlobalError() {
@@ -53,8 +77,10 @@ class App extends Component {
   render() {
     return (
       <div>
+        <div>Current agency: {this.props.currentAgency}</div>
+        <div>Current route: {this.props.currentRoute}</div>
         {this.renderGlobalError()}
-        <BackgroundMap />
+        {this.renderNav()}
         {this.renderCurrent()}
       </div>
     );
@@ -62,13 +88,18 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  currentAgency: state.ui.currentAgency,
+  currentRoute: state.ui.currentRoute,
   currentTab: state.ui.currentTab,
   globalError: state.ui.globalError,
 });
 
 const mapDispatchToProps = {
+  setCurrentTab,
+
   watchUserLocation,
   stopWatchingUserLocation,
+
   watchVehicles,
   stopWatchingVehicles,
 };

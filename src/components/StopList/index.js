@@ -6,7 +6,7 @@ import {
   RouteType,
   StopGroupType,
 } from 'constants/OBAPropTypes';
-import { getStopsForRoute } from 'actions/oba';
+import { getStopsForRoute } from 'actions/oba/stops';
 import {
   currentRouteSelector,
   currentStopGroupSelector,

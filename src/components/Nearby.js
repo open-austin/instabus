@@ -3,66 +3,51 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getNearbyTrips } from 'trips/Nearby/NearbyActions';
-import { TripDetailsType, CoordinatePointType } from 'constants/OBAPropTypes';
+import { StopType, CoordinatePointType } from 'constants/OBAPropTypes';
+import { getNearbyTrips } from 'actions/oba/nearby';
+import { stopsInMapSelector, arrivalsInMapSelector } from 'selectors/oba';
 
-
-class NearbyTrips extends Component {
+class Nearby extends Component {
   static propTypes = {
-    userLocation: CoordinatePointType,
-    nearbyTrips: PropTypes.arrayOf(TripDetailsType).isRequired,
     getNearbyTrips: PropTypes.func.isRequired,
+    nearbyStops: PropTypes.arrayOf(StopType).isRequired,
+    nearbyArrivals: PropTypes.arrayOf(StopType).isRequired,
     nearbyTripsLoading: PropTypes.bool.isRequired,
-  };
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.userLocation && this.props.userLocation) {
-      this.props.getNearbyTrips(this.props.userLocation);
-    }
+    map: PropTypes.object,  // FIXME: Turn this into a type
   }
 
-  renderTrip(trip) {
-    return (
-      <div key={trip.tripId}>
-        <b>{trip.tripId}</b>
-      </div>
-    );
+  componentWillMount() {
+    this.props.getNearbyTrips();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.map !== nextProps.map) {
+      this.props.getNearbyTrips();
+    }
   }
 
   render() {
-    if (this.props.userLocation) {
-      const items = this.props.nearbyTrips.map(this.renderTrip);
-      return (
-        <div>
-          <h1>Nearby Trips</h1>
-          {this.props.nearbyTripsLoading && <div>Loading trips</div>}
-          {items}
-        </div>
-      );
-    }
-
     return (
       <div>
         <h1>Nearby Trips</h1>
-        {this.props.nearbyTripsLoading && <div>Loading trips</div>}
+        <div>Loading: {JSON.stringify(this.props.nearbyTripsLoading)}</div>
+        <div>Nearby stops count: {this.props.nearbyStops.length}</div>
+        <div>Nearby arrivals count: {JSON.stringify(this.props.nearbyArrivals.length)}</div>
       </div>
     );
   }
 }
 
-export const nearbyTripsSelector = createSelector(
-  (state) => state.trips.nearbyTrips,
-  (trips) => _.sortBy(trips, ['id'])
-);
 
 const mapStateToProps = createStructuredSelector({
-  userLocation: (state) => state.ui.userLocation,
-  nearbyTrips: nearbyTripsSelector,
-  nearbyTripsLoading: (state) => state.trips.nearbyTripsLoading,
+  nearbyTripsLoading: (state) => state.ui.loading.nearbyTripsLoading,
+  nearbyStops: stopsInMapSelector,
+  nearbyArrivals: arrivalsInMapSelector,
+  map: (state) => state.ui.map,
 });
 
 const mapDispatchToProps = {
   getNearbyTrips,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NearbyTrips);
+export default connect(mapStateToProps, mapDispatchToProps)(Nearby);
