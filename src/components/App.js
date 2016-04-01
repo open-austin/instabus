@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import cssmodules from 'react-css-modules';
 import { connect } from 'react-redux';
 
 import styles from 'styles/base.scss';
@@ -49,9 +48,6 @@ class App extends Component {
     if (this.props.currentTab === 'StopList') {
       return <StopList />;
     }
-    if (this.props.currentTab === 'BackgroundMap') {
-      return <BackgroundMap />;
-    }
     if (this.props.currentTab === 'Nearby') {
       return <Nearby />;
     }
@@ -64,7 +60,6 @@ class App extends Component {
         <div>{this.props.currentTab}</div>
         <button onClick={() => this.props.setCurrentTab('RouteList')}> RouteList </button>
         {this.props.currentRoute && <button onClick={() => this.props.setCurrentTab('StopList')}> StopList </button>}
-        <button onClick={() => this.props.setCurrentTab('BackgroundMap')}> BackgroundMap </button>
         <button onClick={() => this.props.setCurrentTab('Nearby')}> Nearby </button>
       </div>
     );
@@ -76,12 +71,19 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <div>Current agency: {this.props.currentAgency}</div>
-        <div>Current route: {this.props.currentRoute}</div>
-        {this.renderGlobalError()}
-        {this.renderNav()}
-        {this.renderCurrent()}
+      <div className={styles.container}>
+        <BackgroundMap />
+        <div className={styles.wideNav} />
+        <div className={styles.context}>
+          <div>Current agency: {this.props.currentAgency}</div>
+          <div>Current route: {this.props.currentRoute}</div>
+          {this.renderGlobalError()}
+          {this.renderNav()}
+          {this.renderCurrent()}
+        </div>
+        <div className={styles.zoom} />
+        <div className={styles.key} />
+        <div className={styles.mobileNav} />
       </div>
     );
   }
@@ -104,4 +106,4 @@ const mapDispatchToProps = {
   stopWatchingVehicles,
 };
 
-export default cssmodules(connect(mapStateToProps, mapDispatchToProps)(App), styles);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

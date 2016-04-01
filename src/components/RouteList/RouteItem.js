@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { RouteType } from 'constants/OBAPropTypes';
 import { setCurrentRoute } from 'actions/ui';
 
+import styles from './styles.scss'
 
 class RouteItem extends Component {
   static propTypes = {
@@ -22,9 +23,12 @@ class RouteItem extends Component {
   render() {
     const { route } = this.props;
     return (
-      <div key={route.id}>
-        <b>{route.shortName}</b> - {route.longName}
-        <button onClick={this.setCurrentRoute}>Set Current Route to {route.shortName}</button>
+      <div key={route.id} className={styles.item} onClick={this.setCurrentRoute}>
+        <div className={styles.id}>{route.shortName}</div>
+        <div className={styles.info}>
+          <div className={styles.name}>{route.longName}</div>
+          <div className={styles.trips}>8 buses running</div>
+        </div>
       </div>
     );
   }

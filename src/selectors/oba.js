@@ -5,7 +5,7 @@ import { keyForLocation } from 'libs/oba';
 
 export const sortedRoutesSelector = createSelector(
   (state) => state.oba.references.routes,
-  (routes) => _.sortBy(routes, ['shortName'])
+  (routes) => _.sortBy(routes, (o) => parseInt(o.shortName, 10))
 );
 
 export const currentRouteSelector = createSelector(
