@@ -1,19 +1,22 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
+import { browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import rootReducer from 'reducers';
-import DevTools from './DevTools';
+import DevTools from 'redux/DevTools';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
   applyMiddleware(createLogger()),
-  DevTools.instrument()
+  DevTools.instrument(),
 )(createStore);
 
 export default function configureStore() {
   const InitialState = {};
   const store = finalCreateStore(rootReducer, InitialState);
+  const history = syncHistoryWithStore(browserHistory, store);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
@@ -23,5 +26,5 @@ export default function configureStore() {
     });
   }
 
-  return store;
+  return { store, history };
 }

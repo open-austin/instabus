@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
-    "dev": "webpack-dev-server --progress --port 3333",
+    "dev": "webpack-dev-server --progress --port 3333 --history-api-fallback --no-info --open",
     "test": "NODE_PATH=./src mocha \"src/**/test.*.js\" --compilers js:babel-register",
     "build": "rm -rf dist/* && ls -Falth && NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.production.config.js --progress",
     "deploy": "npm run build && node deploy.js"
@@ -66,6 +66,8 @@
     "react-css-modules": "^3.7.5",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.0",
+    "react-router": "^2.0.1",
+    "react-router-redux": "^4.0.1",
     "redux": "^3.3.1",
     "redux-devtools": "^3.1.1",
     "redux-devtools-dock-monitor": "^1.1.0",

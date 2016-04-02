@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import styles from 'styles/base.scss';
-import RouteList from 'components/RouteList';
-import StopList from 'components/StopList';
 import BackgroundMap from 'components/BackgroundMap';
 import Nearby from 'components/Nearby';
 
@@ -14,6 +13,8 @@ import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
 
 class App extends Component {
   static propTypes = {
+    children: PropTypes.node,
+
     currentAgency: PropTypes.string,
     currentRoute: PropTypes.string,
 
@@ -40,27 +41,12 @@ class App extends Component {
     this.props.stopWatchingVehicles();
   }
 
-  renderCurrent() {
-    // FIXME: add proper routing
-    if (this.props.currentTab === 'RouteList') {
-      return <RouteList />;
-    }
-    if (this.props.currentTab === 'StopList') {
-      return <StopList />;
-    }
-    if (this.props.currentTab === 'Nearby') {
-      return <Nearby />;
-    }
-    return null;
-  }
-
   renderNav() {
     return (
       <div>
         <div>{this.props.currentTab}</div>
-        <button onClick={() => this.props.setCurrentTab('RouteList')}> RouteList </button>
-        {this.props.currentRoute && <button onClick={() => this.props.setCurrentTab('StopList')}> StopList </button>}
-        <button onClick={() => this.props.setCurrentTab('Nearby')}> Nearby </button>
+        <Link to="/route"> RouteList </Link>
+        <Link to="/nearby"> Nearby </Link>
       </div>
     );
   }
@@ -79,7 +65,7 @@ class App extends Component {
           <div>Current route: {this.props.currentRoute}</div>
           {this.renderGlobalError()}
           {this.renderNav()}
-          {this.renderCurrent()}
+          {this.props.children}
         </div>
         <div className={styles.zoom} />
         <div className={styles.key} />

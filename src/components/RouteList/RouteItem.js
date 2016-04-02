@@ -1,29 +1,29 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 import { RouteType } from 'constants/OBAPropTypes';
-import { setCurrentRoute } from 'actions/ui';
 
-import styles from './styles.scss'
+import styles from './styles.scss';
 
-class RouteItem extends Component {
+
+export default class RouteItem extends Component {
   static propTypes = {
     route: RouteType.isRequired,
-    setCurrentRoute: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
 
-    this.setCurrentRoute = () => {
-      this.props.setCurrentRoute(this.props.route.id);
+    this.showRoute = () => {
+      const routeId = this.props.route.id;
+      browserHistory.push(`/route/${routeId}`);
     };
   }
 
   render() {
     const { route } = this.props;
     return (
-      <div key={route.id} className={styles.item} onClick={this.setCurrentRoute}>
+      <div key={route.id} className={styles.item} onClick={this.showRoute}>
         <div className={styles.id}>{route.shortName}</div>
         <div className={styles.info}>
           <div className={styles.name}>{route.longName}</div>
@@ -34,8 +34,4 @@ class RouteItem extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  setCurrentRoute,
-};
-
-export default connect(null, mapDispatchToProps)(RouteItem);
+// export default connect()(RouteItem);

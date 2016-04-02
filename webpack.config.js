@@ -8,7 +8,8 @@ module.exports = {
   entry: __dirname + '/src/index.js',
   output: {
     path: __dirname + '/dist',
-    filename: 'app.js',
+    filename: 'bundle.js',
+    publicPath: '/',
   },
   resolve: {
     root: path.resolve(__dirname, 'src'),
