@@ -2,12 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import {
-  StopGroupType,
-} from 'constants/OBAPropTypes';
-import {
-  stopGroupSelector,
-} from 'selectors/oba';
+import { StopGroupType } from 'constants/OBAPropTypes';
+import { stopGroupSelector } from 'selectors/oba';
 
 import Stop from 'components/StopList/Stop';
 
@@ -15,13 +11,14 @@ class StopGroup extends Component {
   static propTypes = {
     stopGroup: StopGroupType,
 
-    params: PropTypes.shape({
-      routeId: PropTypes.string.isRequired,
-      stopGroupId: PropTypes.string,
-    }).isRequired,
+    routeId: PropTypes.string.isRequired,
   };
 
   render() {
+    if (!this.props.stopGroup) {
+      return null;
+    }
+
     const stops = this.props.stopGroup.stopIds.map((stopId, i) => (
       <Stop stopId={stopId} key={i} />
     ));
@@ -35,6 +32,7 @@ class StopGroup extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  routeId: (state) => state.routing.routeId,
   stopGroup: stopGroupSelector,
 });
 

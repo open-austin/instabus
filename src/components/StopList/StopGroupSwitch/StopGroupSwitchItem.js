@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { GlobalHistory } from 'libs/routing';
 
 import { RouteType, StopGroupType } from 'constants/OBAPropTypes';
 import { setCurrentStopGroup } from 'actions/ui';
@@ -9,7 +9,7 @@ import { setCurrentStopGroup } from 'actions/ui';
 export default class StopGroupSwitchItem extends Component {
   static propTypes = {
     stopGroup: StopGroupType.isRequired,
-    routeId: RouteType.isRequired,
+    routeId: PropTypes.string.isRequired,
     checked: PropTypes.bool.isRequired,
   };
 
@@ -19,7 +19,7 @@ export default class StopGroupSwitchItem extends Component {
     this.setCurrentStopGroup = () => {
       const routeId = this.props.routeId;
       const stopGroupId = this.props.stopGroup.id;
-      browserHistory.push(`/route/${routeId}/${stopGroupId}`);
+      GlobalHistory.push(`/route/${routeId}/stop/${stopGroupId}`);
     };
   }
 

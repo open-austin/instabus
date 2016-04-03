@@ -10,38 +10,26 @@ export const sortedRoutesSelector = createSelector(
 
 export const currentRouteSelector = createSelector(
   (state) => state.oba.references.routes,
-  (state, props) => props.params.routeId,
+  (state) => state.routing.routeId,
   (allRoutes, currentRoute) => allRoutes[currentRoute]
 );
 
 export const stopGroupsForCurrentRouteSelector = createSelector(
   (state) => state.oba.stopGroups,
-  (state, props) => props.params.routeId,
+  (state) => state.routing.routeId,
   (stopGroups, routeId) => _.sortBy(stopGroups[routeId], 'id') || [],
 );
 
 export const stopGroupSelector = createSelector(
   stopGroupsForCurrentRouteSelector,
-  (state, props) => props.params.stopGroupId,
+  (state) => state.routing.stopGroupId,
   (stopGroups, stopGroupId) => stopGroups[stopGroupId]
 );
 
 export const currentStopGroupSelector = createSelector(
   stopGroupsForCurrentRouteSelector,
-  (state, props) => props.params.stopGroupId,
+  (state) => state.routing.stopGroupId,
   (stopGroups, stopGroupId) => stopGroups[stopGroupId]
-);
-
-export const stopSelector = createSelector(
-  (state) => state.oba.references.stops,
-  (state, props) => props.stopId,
-  (stops, stopId) => stops[stopId]
-);
-
-export const routeForStopSelector = createSelector(
-  (state) => state.oba.references.routes,
-  (state, props) => props.routeId,
-  (routes, routeId) => routes[routeId]
 );
 
 export const stopsInMapSelector = createSelector(

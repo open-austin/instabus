@@ -6,6 +6,7 @@ import { RouteType } from 'constants/OBAPropTypes';
 import { getRoutesForAgency } from 'actions/oba/routes';
 import { sortedRoutesSelector } from 'selectors/oba';
 import RouteItem from 'components/RouteList/RouteItem';
+import { ROUTE_LIST_TAB } from 'constants/TabNames';
 
 class RouteList extends Component {
   static propTypes = {
@@ -13,6 +14,8 @@ class RouteList extends Component {
     getRoutesForAgency: PropTypes.func.isRequired,
     routesForAgencyLoading: PropTypes.bool.isRequired,
   };
+
+  static TAB_NAME = ROUTE_LIST_TAB.name;
 
   componentWillMount() {
     this.props.getRoutesForAgency();

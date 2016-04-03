@@ -16,22 +16,17 @@ class StopGroupSwitch extends Component {
   static propTypes = {
     stopGroups: PropTypes.arrayOf(StopGroupType),
     currentStopGroup: StopGroupType,
-    route: RouteType.isRequired,
-
-    params: PropTypes.shape({
-      routeId: PropTypes.string.isRequired,
-      stopGroupId: PropTypes.string,
-    }).isRequired,
+    routeId: PropTypes.string.isRequired,
   };
 
   render() {
-    const { stopGroups, currentStopGroup, route } = this.props;
+    const { stopGroups, currentStopGroup, routeId } = this.props;
 
     const groupToggles = stopGroups.map((stopGroup, i) => (
       <StopGroupSwitchItem
         key={i}
         stopGroup={stopGroup}
-        routeId={route.id}
+        routeId={routeId}
         checked={!currentStopGroup ? false : stopGroup.id === currentStopGroup.id}
       />
     ));
@@ -44,7 +39,7 @@ class StopGroupSwitch extends Component {
 
 const mapStateToProps = createStructuredSelector({
   currentStopGroup: currentStopGroupSelector,
-  route: currentRouteSelector,
+  routeId: (state) => state.routing.routeId,
   stopGroups: stopGroupsForCurrentRouteSelector,
 });
 

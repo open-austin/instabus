@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+import { GlobalHistory } from 'libs/routing';
 
 import oba from 'libs/oba';
 
@@ -38,7 +38,7 @@ export function getStopsForRoute(routeId) {
         dispatch(setStopGroups(routeId, stopGroups));
 
         const stopGroupId = stopGroups[0].id;
-        browserHistory.push(`/route/${routeId}/${stopGroupId}`);
+        GlobalHistory.push(`/route/${routeId}/stop/${stopGroupId}`);
       })
       // .catch((err) => handleError(dispatch, err))
       .then(() => {

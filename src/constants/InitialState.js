@@ -1,4 +1,10 @@
 export default {
+  routing: {
+    tab: null,
+    routeId: null,
+    stopGroupId: null,
+    stopId: null,
+  },
   ui: {
     currentAgency: '1',
     userLocationError: null,
@@ -23,8 +29,7 @@ export default {
   oba: {
     vehicles: {},
     stopsForLocation: {},
-    arrivalsAndDepartures: {
-    },
+    arrivalsAndDepartures: {},
     stopGroups: {},
     references: {
       agencies: {

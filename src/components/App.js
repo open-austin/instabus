@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
 import styles from 'styles/base.scss';
 import BackgroundMap from 'components/BackgroundMap';
-import Nearby from 'components/Nearby';
+import TabBar from 'components/TabBar';
+import CurrentTab from 'components/CurrentTab';
 
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
@@ -12,10 +12,6 @@ import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
 
 class App extends Component {
   static propTypes = {
-    children: PropTypes.node,
-
-    currentAgency: PropTypes.string,
-
     globalError: PropTypes.string,
 
     watchUserLocation: PropTypes.func.isRequired,
@@ -37,15 +33,6 @@ class App extends Component {
     this.props.stopWatchingVehicles();
   }
 
-  renderNav() {
-    return (
-      <div>
-        <Link to="/route"> Routes </Link>
-        <Link to="/nearby"> Nearby </Link>
-      </div>
-    );
-  }
-
   renderGlobalError() {
     return <div>{this.props.globalError}</div>;
   }
@@ -53,13 +40,12 @@ class App extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <BackgroundMap params={this.props.params} />
+        <BackgroundMap />
         <div className={styles.wideNav} />
         <div className={styles.context}>
-          <div>Current agency: {this.props.currentAgency}</div>
           {this.renderGlobalError()}
-          {this.renderNav()}
-          {this.props.children}
+          <TabBar />
+          <CurrentTab />
         </div>
         <div className={styles.zoom} />
         <div className={styles.key} />

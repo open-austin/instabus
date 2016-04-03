@@ -1,35 +1,43 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 
+import { GlobalHistory } from 'libs/routing';
 import { RouteType } from 'constants/OBAPropTypes';
 
 import styles from './styles.scss';
 
 
-export default class RouteItem extends Component {
+class RouteItem extends Component {
   static propTypes = {
     route: RouteType.isRequired,
+    vehicleCount: PropTypes.number,
   };
 
   constructor(props) {
     super(props);
 
-    this.showRoute = () => {
+    this.showStops = () => {
       const routeId = this.props.route.id;
-      browserHistory.push(`/route/${routeId}`);
+      GlobalHistory.push(`/route/${routeId}/stop`);
     };
   }
 
   render() {
-    const { route } = this.props;
+    const { route, vehicleCount } = this.props;
     return (
-      <div key={route.id} className={styles.item} onClick={this.showRoute}>
+      <div key={route.id} className={styles.item} onClick={this.showStops}>
         <div className={styles.id}>{route.shortName}</div>
         <div className={styles.info}>
           <div className={styles.name}>{route.longName}</div>
-          <div className={styles.trips}>8 buses running</div>
+          <div className={styles.trips}>{vehicleCount} buses running</div>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = () => ({
+  vehicleCount: 8,
+});
+
+export default connect(mapStateToProps)(RouteItem);

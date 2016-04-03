@@ -2,42 +2,36 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import {
-  RouteType,
-} from 'constants/OBAPropTypes';
+import { STOP_LIST_TAB } from 'constants/TabNames';
 import { getStopsForRoute } from 'actions/oba/stops';
-import {
-  currentRouteSelector,
-} from 'selectors/oba';
 
+import StopGroup from 'components/StopList/StopGroup';
 import StopGroupSwitch from 'components/StopList/StopGroupSwitch';
 
 class StopList extends Component {
   static propTypes = {
     children: PropTypes.node,
-    params: PropTypes.shape({
-      routeId: PropTypes.string.isRequired,
-    }).isRequired,
+    routeId: PropTypes.string.isRequired,
 
     stopsForRouteLoading: PropTypes.bool.isRequired,
-    route: RouteType,
 
     getStopsForRoute: PropTypes.func.isRequired,
   };
+
+  static TAB_NAME = STOP_LIST_TAB.name;
 
   componentWillMount() {
     this.load();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.params.routeId !== nextProps.params.routeId) {
+    if (this.props.routeId !== nextProps.routeId) {
       this.load();
     }
   }
 
   load() {
-    console.log('loading stops for route', this.props.params.routeId);
-    this.props.getStopsForRoute(this.props.params.routeId);
+    this.props.getStopsForRoute(this.props.routeId);
   }
 
   render() {
@@ -50,17 +44,17 @@ class StopList extends Component {
     return (
       <div>
         <h1>Stop List</h1>
-        <h2>{this.props.route && this.props.route.shortName}</h2>
         {stopsForRouteLoading && <div>Loading Stop List</div>}
-        <StopGroupSwitch params={this.props.params} />
-        {this.props.children}
+        <StopGroupSwitch />
+        {this.props.stopGroupId && <StopGroup />}
       </div>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  route: currentRouteSelector,
+  routeId: (state) => state.routing.routeId,
+  stopGroupId: (state) => state.routing.stopGroupId,
   stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,
 });
 
