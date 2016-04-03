@@ -9,6 +9,7 @@ import configureStore from 'redux/configureStore';
 import App from 'components/App';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
+import StopGroup from 'components/StopList/StopGroup';
 import Nearby from 'components/Nearby';
 
 
@@ -21,7 +22,9 @@ render(
       <Router history={history}>
         <Route path="/" component={App}>
           <Route path="route" component={RouteList} />
-          <Route path="route/:id" component={StopList} />
+          <Route path="route/:routeId" component={StopList}>
+            <Route path=":stopGroupId" component={StopGroup} />
+          </Route>
           <Route path="nearby" component={Nearby} />
         </Route>
       </Router>

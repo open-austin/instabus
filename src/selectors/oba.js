@@ -10,25 +10,25 @@ export const sortedRoutesSelector = createSelector(
 
 export const currentRouteSelector = createSelector(
   (state) => state.oba.references.routes,
-  (state) => state.ui.currentRoute,
+  (state, props) => props.params.routeId,
   (allRoutes, currentRoute) => allRoutes[currentRoute]
 );
 
 export const stopGroupsForCurrentRouteSelector = createSelector(
   (state) => state.oba.stopGroups,
-  (state) => state.ui.currentRoute,
-  (stopGroups, currentRoute) => _.sortBy(stopGroups[currentRoute], 'id') || [],
+  (state, props) => props.params.routeId,
+  (stopGroups, routeId) => _.sortBy(stopGroups[routeId], 'id') || [],
 );
 
 export const stopGroupSelector = createSelector(
   stopGroupsForCurrentRouteSelector,
-  (state, props) => props.stopGroupId,
+  (state, props) => props.params.stopGroupId,
   (stopGroups, stopGroupId) => stopGroups[stopGroupId]
 );
 
 export const currentStopGroupSelector = createSelector(
   stopGroupsForCurrentRouteSelector,
-  (state) => state.ui.stopList.currentStopGroup,
+  (state, props) => props.params.stopGroupId,
   (stopGroups, stopGroupId) => stopGroups[stopGroupId]
 );
 

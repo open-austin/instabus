@@ -33,5 +33,3 @@ export default class RouteItem extends Component {
     );
   }
 }
-
-// export default connect()(RouteItem);

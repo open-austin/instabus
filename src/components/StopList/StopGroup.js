@@ -13,8 +13,12 @@ import Stop from 'components/StopList/Stop';
 
 class StopGroup extends Component {
   static propTypes = {
-    stopGroupId: PropTypes.string.isRequired,
     stopGroup: StopGroupType,
+
+    params: PropTypes.shape({
+      routeId: PropTypes.string.isRequired,
+      stopGroupId: PropTypes.string,
+    }).isRequired,
   };
 
   render() {

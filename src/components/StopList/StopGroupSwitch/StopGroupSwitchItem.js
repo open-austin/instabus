@@ -1,19 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
-import { StopGroupType } from 'constants/OBAPropTypes';
+import { RouteType, StopGroupType } from 'constants/OBAPropTypes';
 import { setCurrentStopGroup } from 'actions/ui';
 
-class StopGroupSwitchItem extends Component {
+
+export default class StopGroupSwitchItem extends Component {
   static propTypes = {
     stopGroup: StopGroupType.isRequired,
+    routeId: RouteType.isRequired,
     checked: PropTypes.bool.isRequired,
-    setCurrentStopGroup: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.setCurrentStopGroup = () => this.props.setCurrentStopGroup(this.props.stopGroup.id);
+
+    this.setCurrentStopGroup = () => {
+      const routeId = this.props.routeId;
+      const stopGroupId = this.props.stopGroup.id;
+      browserHistory.push(`/route/${routeId}/${stopGroupId}`);
+    };
   }
 
   render() {
@@ -32,9 +39,3 @@ class StopGroupSwitchItem extends Component {
     );
   }
 }
-
-const mapDispatchToProps = {
-  setCurrentStopGroup,
-};
-
-export default connect(null, mapDispatchToProps)(StopGroupSwitchItem);

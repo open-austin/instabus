@@ -25,7 +25,7 @@ export function watchUserLocation() {
       .then((location) => {
         dispatch(setUserLocation(location));
       })
-      .catch((err) => dispatch(setUserLocationError(err)));
+      .catch((err) => dispatch(setUserLocationError(err.message)));
   };
 }
 

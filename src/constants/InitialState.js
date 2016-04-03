@@ -1,9 +1,6 @@
 export default {
   ui: {
-    currentTab: 'Nearby',
     currentAgency: '1',
-    currentRoute: null,
-    userLocation: null,
     userLocationError: null,
     globalError: null,
     map: {
@@ -11,9 +8,6 @@ export default {
       lon: null,
       latSpan: 0.03500879999999995 / 10,
       lonSpan: 0.0889021999999926 / 10,
-    },
-    stopList: {
-      currentStopGroup: null,
     },
     loading: {
       routesForAgencyLoading: false,

@@ -6,7 +6,6 @@ import styles from 'styles/base.scss';
 import BackgroundMap from 'components/BackgroundMap';
 import Nearby from 'components/Nearby';
 
-import { setCurrentTab } from 'actions/ui';
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
 
@@ -16,10 +15,7 @@ class App extends Component {
     children: PropTypes.node,
 
     currentAgency: PropTypes.string,
-    currentRoute: PropTypes.string,
 
-    currentTab: PropTypes.string.isRequired,
-    setCurrentTab: PropTypes.func.isRequired,
     globalError: PropTypes.string,
 
     watchUserLocation: PropTypes.func.isRequired,
@@ -44,8 +40,7 @@ class App extends Component {
   renderNav() {
     return (
       <div>
-        <div>{this.props.currentTab}</div>
-        <Link to="/route"> RouteList </Link>
+        <Link to="/route"> Routes </Link>
         <Link to="/nearby"> Nearby </Link>
       </div>
     );
@@ -58,11 +53,10 @@ class App extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <BackgroundMap />
+        <BackgroundMap params={this.props.params} />
         <div className={styles.wideNav} />
         <div className={styles.context}>
           <div>Current agency: {this.props.currentAgency}</div>
-          <div>Current route: {this.props.currentRoute}</div>
           {this.renderGlobalError()}
           {this.renderNav()}
           {this.props.children}
@@ -76,15 +70,10 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentAgency: state.ui.currentAgency,
-  currentRoute: state.ui.currentRoute,
-  currentTab: state.ui.currentTab,
   globalError: state.ui.globalError,
 });
 
 const mapDispatchToProps = {
-  setCurrentTab,
-
   watchUserLocation,
   stopWatchingUserLocation,
 

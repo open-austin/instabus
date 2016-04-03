@@ -4,52 +4,62 @@ import { createStructuredSelector } from 'reselect';
 
 import {
   RouteType,
-  StopGroupType,
 } from 'constants/OBAPropTypes';
 import { getStopsForRoute } from 'actions/oba/stops';
 import {
   currentRouteSelector,
-  currentStopGroupSelector,
 } from 'selectors/oba';
 
 import StopGroupSwitch from 'components/StopList/StopGroupSwitch';
-import StopGroup from 'components/StopList/StopGroup';
 
 class StopList extends Component {
   static propTypes = {
+    children: PropTypes.node,
+    params: PropTypes.shape({
+      routeId: PropTypes.string.isRequired,
+    }).isRequired,
+
     stopsForRouteLoading: PropTypes.bool.isRequired,
+    route: RouteType,
 
-    currentStopGroup: StopGroupType,
-
-    route: RouteType.isRequired,
     getStopsForRoute: PropTypes.func.isRequired,
   };
 
   componentWillMount() {
-    this.props.getStopsForRoute(this.props.route.id);
+    this.load();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.params.routeId !== nextProps.params.routeId) {
+      this.load();
+    }
+  }
+
+  load() {
+    console.log('loading stops for route', this.props.params.routeId);
+    this.props.getStopsForRoute(this.props.params.routeId);
   }
 
   render() {
-    const { currentStopGroup, stopsForRouteLoading } = this.props;
+    const { stopsForRouteLoading } = this.props;
 
     if (stopsForRouteLoading) {
       return <div>Loading</div>;
     }
 
-
     return (
       <div>
         <h1>Stop List</h1>
+        <h2>{this.props.route && this.props.route.shortName}</h2>
         {stopsForRouteLoading && <div>Loading Stop List</div>}
-        <StopGroupSwitch />
-        {currentStopGroup && <StopGroup stopGroupId={currentStopGroup.id} />}
+        <StopGroupSwitch params={this.props.params} />
+        {this.props.children}
       </div>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentStopGroup: currentStopGroupSelector,
   route: currentRouteSelector,
   stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,
 });
