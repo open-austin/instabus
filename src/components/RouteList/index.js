@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { RouteType } from 'constants/OBAPropTypes';
+import { ROUTE_LIST_TAB } from 'constants/TabNames';
 import { getRoutesForAgency } from 'actions/oba/routes';
 import { sortedRoutesSelector } from 'selectors/oba';
+
+import Spinner from 'components/Spinner';
 import RouteItem from 'components/RouteList/RouteItem';
-import { ROUTE_LIST_TAB } from 'constants/TabNames';
 
 class RouteList extends Component {
   static propTypes = {
@@ -33,7 +35,7 @@ class RouteList extends Component {
     return (
       <div>
         <h1>Route List</h1>
-        {this.props.routesForAgencyLoading && <div>Loading routes</div>}
+        {this.props.routesForAgencyLoading && <Spinner />}
         {items}
       </div>
     );

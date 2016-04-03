@@ -20,18 +20,6 @@ export const stopGroupsForCurrentRouteSelector = createSelector(
   (stopGroups, routeId) => _.sortBy(stopGroups[routeId], 'id') || [],
 );
 
-export const stopGroupSelector = createSelector(
-  stopGroupsForCurrentRouteSelector,
-  (state) => state.routing.stopGroupId,
-  (stopGroups, stopGroupId) => stopGroups[stopGroupId]
-);
-
-export const currentStopGroupSelector = createSelector(
-  stopGroupsForCurrentRouteSelector,
-  (state) => state.routing.stopGroupId,
-  (stopGroups, stopGroupId) => stopGroups[stopGroupId]
-);
-
 export const stopsInMapSelector = createSelector(
   (state) => keyForLocation(state.ui.map),
   (state) => state.oba.stopsForLocation,

@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { STOP_LIST_TAB } from 'constants/TabNames';
 import { getStopsForRoute } from 'actions/oba/stops';
 
+import Spinner from 'components/Spinner';
 import StopGroup from 'components/StopList/StopGroup';
 import StopGroupSwitch from 'components/StopList/StopGroupSwitch';
 
@@ -37,16 +38,12 @@ class StopList extends Component {
   render() {
     const { stopsForRouteLoading } = this.props;
 
-    if (stopsForRouteLoading) {
-      return <div>Loading</div>;
-    }
-
     return (
       <div>
         <h1>Stop List</h1>
-        {stopsForRouteLoading && <div>Loading Stop List</div>}
+        {stopsForRouteLoading && <Spinner />}
         <StopGroupSwitch />
-        {this.props.stopGroupId && <StopGroup />}
+        <StopGroup />
       </div>
     );
   }
