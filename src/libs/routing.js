@@ -3,7 +3,6 @@ import { createHistory } from 'history';
 
 export const GlobalHistory = createHistory();
 
-
 export const locationCache = {};
 
 export function locationParser(locationPath, locationToMatch) {

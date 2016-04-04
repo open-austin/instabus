@@ -7,6 +7,7 @@ export default {
   },
   ui: {
     currentAgency: '1',
+    userLocation: null,
     userLocationError: null,
     globalError: null,
     map: {

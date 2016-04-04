@@ -1,14 +1,15 @@
 export default {
-  ui: {
-    currentTab: 'RouteList',
-    currentAgency: '1',
+  routing: {
+    currentTab: 'route',
     currentRoute: '1_801',
+    currentStopGroup: '0',
+    stopId: '5',
+  },
+  ui: {
+    currentAgency: '1',
     userLocation: { lat: 33.7820307, lon: -84.39685250000001 },
     userLocationError: 'chump',
     globalError: 'wow m8',
-    stopList: {
-      currentStopGroup: '0',
-    },
     loading: {
       routesForAgencyLoading: true,
       nearbyTripsLoading: true,
