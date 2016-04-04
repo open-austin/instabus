@@ -9,9 +9,7 @@ import {
 describe('BackgroundMap/BackgroundMapSelectors', () => {
   describe('vehiclesSelector', () => {
     const state = {
-      ui: {
-        currentRoute: 'route_69',
-      },
+      routing: { routeId: 'route_69' },
       oba: {
         vehicles: {
           vehicle_5: { vehicleId: 'vehicle_5', tripId: 'trip_5' },
@@ -31,7 +29,7 @@ describe('BackgroundMap/BackgroundMapSelectors', () => {
     it('should select all the vehicles', () => {
       expect(vehiclesSelector({
         ...state,
-        ui: { currentRoute: null },
+        routing: { routeId: null },
       }))
         .toEqual([
           { vehicleId: 'vehicle_5', tripId: 'trip_5' },
@@ -51,9 +49,7 @@ describe('BackgroundMap/BackgroundMapSelectors', () => {
 
   describe('stopGroups', () => {
     const state = {
-      ui: {
-        currentRoute: 'route_69',
-      },
+      routing: { routeId: 'route_69' },
       oba: {
         stopGroups: {
           route_69: {
@@ -74,7 +70,7 @@ describe('BackgroundMap/BackgroundMapSelectors', () => {
       it('should select nothing', () => {
         expect(stopIdsSelector({
           ...state,
-          ui: { currentRoute: null },
+          routing: { routeId: null },
         }))
           .toEqual([]);
       });
@@ -89,7 +85,7 @@ describe('BackgroundMap/BackgroundMapSelectors', () => {
       it('should select nothing', () => {
         expect(polylinesSelector({
           ...state,
-          ui: { currentRoute: null },
+          routing: { routeId: null },
         }))
           .toEqual([]);
       });

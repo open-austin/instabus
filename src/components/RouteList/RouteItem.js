@@ -1,37 +1,43 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { GlobalHistory } from 'libs/routing';
 import { RouteType } from 'constants/OBAPropTypes';
-import { setCurrentRoute } from 'actions/ui';
+
+import styles from './styles.scss';
 
 
 class RouteItem extends Component {
   static propTypes = {
     route: RouteType.isRequired,
-    setCurrentRoute: PropTypes.func.isRequired,
+    vehicleCount: PropTypes.number,
   };
 
   constructor(props) {
     super(props);
 
-    this.setCurrentRoute = () => {
-      this.props.setCurrentRoute(this.props.route.id);
+    this.showStops = () => {
+      const routeId = this.props.route.id;
+      GlobalHistory.push(`/route/${routeId}/stop`);
     };
   }
 
   render() {
-    const { route } = this.props;
+    const { route, vehicleCount } = this.props;
     return (
-      <div key={route.id}>
-        <b>{route.shortName}</b> - {route.longName}
-        <button onClick={this.setCurrentRoute}>Set Current Route to {route.shortName}</button>
+      <div key={route.id} className={styles.item} onClick={this.showStops}>
+        <div className={styles.id}>{route.shortName}</div>
+        <div className={styles.info}>
+          <div className={styles.name}>{route.longName}</div>
+          <div className={styles.trips}>{vehicleCount} buses running</div>
+        </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = {
-  setCurrentRoute,
-};
+const mapStateToProps = () => ({
+  vehicleCount: 8,
+});
 
-export default connect(null, mapDispatchToProps)(RouteItem);
+export default connect(mapStateToProps)(RouteItem);

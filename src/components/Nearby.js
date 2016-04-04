@@ -7,6 +7,8 @@ import { StopType, CoordinatePointType } from 'constants/OBAPropTypes';
 import { getNearbyTrips } from 'actions/oba/nearby';
 import { stopsInMapSelector, arrivalsInMapSelector } from 'selectors/oba';
 
+import { NEARBY_TAB } from 'constants/TabNames';
+
 class Nearby extends Component {
   static propTypes = {
     getNearbyTrips: PropTypes.func.isRequired,
@@ -15,6 +17,8 @@ class Nearby extends Component {
     nearbyTripsLoading: PropTypes.bool.isRequired,
     map: PropTypes.object,  // FIXME: Turn this into a type
   }
+
+  static TAB_NAME = NEARBY_TAB.name;
 
   componentWillMount() {
     this.props.getNearbyTrips();

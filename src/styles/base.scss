@@ -1,4 +1,8 @@
 @import 'reset';
+@import 'globals';
+
+$iphone: 375px;
+$desktop: 960px;
 
 html {
   box-sizing: border-box;
@@ -22,4 +26,90 @@ html {
   left: 0;
   right: 0;
   overflow: hidden;
+}
+
+.context {
+  @extend .whiteBox;
+  position: fixed;
+  bottom: 70px;
+  right: 10px;
+  width: calc(100% - 20px);
+  max-width: 354px;
+  height: auto;
+  max-height: calc(100% - 80px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 4px;
+  -webkit-overflow-scrolling: touch;
+  @media (min-width: $iphone) {
+    right: calc(50% - 177px);
+  }
+  @media (min-width: $desktop) {
+    right: 10px;
+    top: 70px;
+    width: 300px;
+    bottom: auto;
+    max-height: calc(100% - 200px);
+  }
+}
+
+.nav {
+  @extend .whiteBox;
+  position: fixed;
+  height: 50px;
+  border-radius: 4px;
+  overflow: hidden;
+  width: calc(100% - 20px);
+  max-width: 354px;
+}
+
+.wideNav {
+  @extend .nav;
+  display: none;
+  top: 10px;
+  right: 10px;
+  width: 300px;
+  @media (min-width: $desktop) {
+    display: block;
+  }
+}
+
+.mobileNav {
+  @extend .nav;
+  bottom: 10px;
+  right: 10px;
+  @media (min-width: $iphone) {
+    right: calc(50% - 177px);
+  }
+  @media (min-width: $desktop) {
+    display: none;
+  }
+}
+
+.key {
+  @extend .whiteBox;
+  position: fixed;
+  display: none;
+  bottom: 10px;
+  right: 10px;
+  height: 110px;
+  width: 235px;
+  border-radius: 4px;
+  @media (min-width: $desktop) {
+    display: block;
+  }
+}
+
+.zoom {
+  @extend .whiteBox;
+  position: fixed;
+  display: none;
+  bottom: 10px;
+  right: 255px;
+  height: 110px;
+  width: 55px;
+  border-radius: 4px;
+  @media (min-width: $desktop) {
+    display: block;
+  }
 }

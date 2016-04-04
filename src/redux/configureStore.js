@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 import rootReducer from 'reducers';
-import DevTools from './DevTools';
+import DevTools from 'redux/DevTools';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
   applyMiddleware(createLogger()),
-  DevTools.instrument()
+  DevTools.instrument(),
 )(createStore);
 
 export default function configureStore() {

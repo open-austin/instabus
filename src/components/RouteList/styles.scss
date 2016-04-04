@@ -1,0 +1,45 @@
+.item {
+  width: 100%;
+  height: 101px;
+  border-top: 1px #e0e0e0 solid;
+  line-height: 0;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.item:first-of-type {
+  border-top: none;
+  height: 100px;
+}
+
+.id {
+  height: 60px;
+  width: 70px;
+  font-size: 24px;
+  line-height: 60px;
+  display: inline-block;
+  text-align: center;
+}
+
+.info {
+  vertical-align: top;
+  display: inline-block;
+  height: 60px;
+  width: calc(100% - 70px);
+  padding: 8px 0;
+}
+
+.name {
+  font-size: 14px;
+  height: 22px;
+  line-height: 22px;
+  width: 100%;
+}
+
+.trips {
+  font-size: 14px;
+  height: 22px;
+  line-height: 22px;
+  width: 100%;
+  color: #7A7A7A;
+}
