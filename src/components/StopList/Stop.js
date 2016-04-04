@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
   StopType,
   RouteType,
 } from 'constants/OBAPropTypes';
-import {
-  stopSelector,
-} from 'selectors/oba';
 import StopRouteItem from 'components/StopList/StopRouteItem';
+
 
 class Stop extends Component {
   static propTypes = {
@@ -38,7 +36,11 @@ class Stop extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  stop: stopSelector,
+  stop: createSelector(
+    (state) => state.oba.references.stops,
+    (state, props) => props.stopId,
+    (stops, stopId) => stops[stopId]
+  ),
 });
 
 export default connect(mapStateToProps)(Stop);

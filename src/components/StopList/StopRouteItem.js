@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
   RouteType,
@@ -29,7 +29,11 @@ class StopRouteItem extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  route: routeForStopSelector,
+  route: createSelector(
+    (state) => state.oba.references.routes,
+    (state, props) => props.routeId,
+    (routes, routeId) => routes[routeId]
+  ),
 });
 
 export default connect(mapStateToProps)(StopRouteItem);

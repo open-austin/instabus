@@ -9,7 +9,7 @@ export const vehiclesArraySelector = createSelector(
 );
 
 export const vehiclesSelector = createSelector(
-  (state) => state.ui.currentRoute,
+  (state) => state.routing.routeId,
   vehiclesArraySelector,
   (state) => state.oba.references.trips,
   (routeId, vehicles, trips) => {
@@ -28,7 +28,7 @@ export const flattenedStopGroupsSelector = createSelector(
 );
 
 export const stopIdsSelector = createSelector(
-  (state) => state.ui.currentRoute,
+  (state) => state.routing.routeId,
   flattenedStopGroupsSelector,
   (routeId, stopGroups) => stopGroups.reduce((prev, stopGroup) => [
     ...prev, ...stopGroup.stopIds,
@@ -36,7 +36,7 @@ export const stopIdsSelector = createSelector(
 );
 
 export const polylinesSelector = createSelector(
-  (state) => state.ui.currentRoute,
+  (state) => state.routing.routeId,
   flattenedStopGroupsSelector,
   (routeId, stopGroups) => stopGroups.reduce((prev, stopGroup) => [
     ...prev, ...stopGroup.polylines,

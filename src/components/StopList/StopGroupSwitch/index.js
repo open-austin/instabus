@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { StopGroupType } from 'constants/OBAPropTypes';
-import {
-  stopGroupsForCurrentRouteSelector,
-  currentStopGroupSelector,
-} from 'selectors/oba';
+import { stopGroupsForCurrentRouteSelector } from 'selectors/oba';
 
 import StopGroupSwitchItem from './StopGroupSwitchItem';
 
@@ -14,17 +11,19 @@ import StopGroupSwitchItem from './StopGroupSwitchItem';
 class StopGroupSwitch extends Component {
   static propTypes = {
     stopGroups: PropTypes.arrayOf(StopGroupType),
-    currentStopGroup: StopGroupType,
+    currentStopGroupId: PropTypes.string,
+    routeId: PropTypes.string.isRequired,
   };
 
   render() {
-    const { stopGroups, currentStopGroup } = this.props;
+    const { stopGroups, currentStopGroupId, routeId } = this.props;
 
     const groupToggles = stopGroups.map((stopGroup, i) => (
       <StopGroupSwitchItem
         key={i}
         stopGroup={stopGroup}
-        checked={currentStopGroup && stopGroup.id === currentStopGroup.id}
+        routeId={routeId}
+        checked={!!currentStopGroupId ? stopGroup.id === currentStopGroupId : false}
       />
     ));
 
@@ -35,7 +34,8 @@ class StopGroupSwitch extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentStopGroup: currentStopGroupSelector,
+  currentStopGroupId: (state) => state.routing.stopGroupId,
+  routeId: (state) => state.routing.routeId,
   stopGroups: stopGroupsForCurrentRouteSelector,
 });
 

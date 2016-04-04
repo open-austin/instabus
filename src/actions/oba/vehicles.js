@@ -42,6 +42,8 @@ export function setVehiclesLoading(payload) {
   };
 }
 
+// FIXME: Instead of just getting the vehicles for the current agency
+// We should get the vehicles for every agency
 export function getVehicles() {
   return (dispatch, getState) => {
     dispatch(setVehiclesLoading(true));

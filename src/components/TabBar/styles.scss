@@ -1,0 +1,11 @@
+.item {
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.active {
+    composes: item;
+    font-weight: bold;
+    border-width: 2px;
+    background: #ddd;
+}

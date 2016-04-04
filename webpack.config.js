@@ -4,11 +4,12 @@ var cssnano = require('cssnano');
 var path = require('path');
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'cheap-eval-source-map',
   entry: __dirname + '/src/index.js',
   output: {
     path: __dirname + '/dist',
-    filename: 'app.js',
+    filename: 'bundle.js',
+    publicPath: '/',
   },
   resolve: {
     root: path.resolve(__dirname, 'src'),
