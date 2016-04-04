@@ -4,41 +4,40 @@ import { locationParser } from 'libs/routing';
 import InitialState from 'constants/InitialState';
 import { SET_PATHNAME } from 'constants/ActionTypes';
 
-import { STOP_LIST_TAB } from 'constants/TabNames';
+import { STOP_LIST_TAB, NOT_FOUND_TAB } from 'constants/TabNames';
 import * as TAB_NAMES from 'constants/TabNames';
+
+
+function stopListReducer(pathname) {
+  const match = locationParser('/route/:routeId?/stop/:stopGroupId?/:stopId?', pathname);
+  if (match) {
+    return _.omitBy({
+      tab: STOP_LIST_TAB.name,
+      routeId: match.routeId,
+      stopGroupId: match.stopGroupId,
+      stopId: match.stopId,
+    }, _.isUndefined);
+  }
+}
+
+function tabReducer(pathname) {
+  const tabRoute = locationParser('/:tab', pathname);
+  if (tabRoute) {
+    const matchingTab = _.find(
+      TAB_NAMES,
+      (tab) => tab.name === tabRoute.tab
+    ) || NOT_FOUND_TAB;
+
+    return {
+      tab: matchingTab.name,
+    };
+  }
+}
 
 export default function reducer(state = InitialState.routing, action = {}) {
   if (action.type === SET_PATHNAME) {
-    console.log('SET_PATHNAME', action.payload)
-    // /route/:routeId/stops
-    // /route/:routeId/stops/:stopGroupId
-    // /route/:routeId/stops/:stopGroupId/:stopId
-    const stopListMatch = locationParser('/route/:routeId?/stop/:stopGroupId?/:stopId?', action.payload);
-    if (stopListMatch) {
-      return {
-        ...state,
-        tab: STOP_LIST_TAB.name,
-        routeId: stopListMatch.routeId,
-        stopGroupId: stopListMatch.stopGroupId,
-        stopId: stopListMatch.stopId,
-      };
-    }
-
-    // /route
-    // /help
-    // /saved
-    // /nearby
-    // /recent
-    const tabMatch = locationParser('/:tab', action.payload);
-    console.log('tabMatch', tabMatch);
-    if (tabMatch) {
-      return {
-        ...state,
-        tab: _.find(TAB_NAMES, (tab) => tab.name === tabMatch.tab).name,
-      };
-    }
-
-    return state;
+    const pathname = action.payload;
+    return stopListReducer(pathname) || tabReducer(pathname) || state;
   }
 
   return state;
