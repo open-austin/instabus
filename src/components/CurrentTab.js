@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
 import Nearby from 'components/Nearby';
+import NotFound from 'components/NotFound';
 
 
 class CurrentTab extends Component {
@@ -22,6 +23,9 @@ class CurrentTab extends Component {
     }
     if (tab === Nearby.TAB_NAME) {
       return <Nearby />;
+    }
+    if (tab === NotFound.TAB_NAME) {
+      return <NotFound />;
     }
 
     return null;

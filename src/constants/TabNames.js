@@ -17,3 +17,8 @@ export const SAVED_TAB = {
   name: 'saved',
   text: 'Saved',
 };
+
+export const NOT_FOUND_TAB = {
+  name: '404',
+  text: 'Not found',
+};

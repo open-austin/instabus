@@ -25,7 +25,7 @@ const TabBar = ({ currentTab }) => (
 );
 
 TabBar.propTypes = {
-  currentTab: PropTypes.string.isRequired,
+  currentTab: PropTypes.string,
 };
 
 export default connect((state) => ({
