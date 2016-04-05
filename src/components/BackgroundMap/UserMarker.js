@@ -4,6 +4,7 @@ import { marker, DivIcon } from 'leaflet';
 import styles from './styles.scss';
 
 export default class UserMarker extends Marker {
+
   componentWillMount() {
     this.leafletElement = marker(this.props.position, {
       ...this.props,
@@ -14,4 +15,14 @@ export default class UserMarker extends Marker {
       }),
     });
   }
+
+  componentDidUpdate(prevProps) {
+    const [lat, lng] = this.props.position;
+    const [prevLat, prevLng] = prevProps.position;
+
+    if (lat !== prevLat && lng !== prevLng) {
+      this.leafletElement.setLatLng(this.props.position);
+    }
+  }
+
 }

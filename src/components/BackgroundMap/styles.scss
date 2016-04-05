@@ -8,15 +8,20 @@
   bottom: 0;
 }
 
-.marker {
+.divicon {
   height: 24px;
   width: 24px;
   border-radius: 50%;
   position: relative;
+  transition: all 200ms linear;
 }
 
 .user, .vehicle {
-  composes: marker;
+  composes: divicon;
+}
+
+.vehicle {
+  transition: all 1000ms ease-out;
 }
 
 @keyframes userPulse {
