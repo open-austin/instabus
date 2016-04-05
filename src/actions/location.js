@@ -19,7 +19,6 @@ export function setUserLocationError(payload) {
   };
 }
 
-
 export function watchUserLocation() {
   return (dispatch) => {
     return watchPosition()
