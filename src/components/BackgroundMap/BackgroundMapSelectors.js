@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
-import { stopGroupsForCurrentRouteSelector } from 'selectors/oba';
+import polyline from 'polyline';
 
+import { stopGroupsForCurrentRouteSelector } from 'selectors/oba';
 
 export const vehiclesArraySelector = createSelector(
   (state) => state.oba.vehicles,
@@ -35,10 +36,15 @@ export const stopIdsSelector = createSelector(
   ], [])
 );
 
-export const polylinesSelector = createSelector(
+export const rawPolylinesSelector = createSelector(
   (state) => state.routing.routeId,
   flattenedStopGroupsSelector,
   (routeId, stopGroups) => stopGroups.reduce((prev, stopGroup) => [
     ...prev, ...stopGroup.polylines,
   ], [])
+);
+
+export const polylinesSelector = createSelector(
+  rawPolylinesSelector,
+  (polylines) => polylines.map(shape => polyline.decode(shape.points))
 );

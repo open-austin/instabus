@@ -8,15 +8,17 @@ import {
   TileLayer,
   Marker,
   CircleMarker,
+  PropTypes as LeafletPropTypes,
 } from 'react-leaflet';
 
 import {
   CoordinatePointType,
   VehicleStatusType,
   StopType,
+  EncodedPolylineType,
 } from 'constants/OBAPropTypes';
 
-import { vehiclesArraySelector, stopsSelector } from './BackgroundMapSelectors';
+import { vehiclesArraySelector, stopsSelector, polylinesSelector } from './BackgroundMapSelectors';
 import { stopsInMapSelector } from 'selectors/oba';
 
 import UserMarker from './UserMarker';
@@ -25,14 +27,15 @@ import StopMarker from './StopMarker';
 
 import styles from './styles.scss';
 
+
 class BackgroundMap extends Component {
 
   static propTypes = {
     userLocation: CoordinatePointType,
     vehicles: PropTypes.arrayOf(VehicleStatusType),
     stops: PropTypes.arrayOf(StopType),
+    polylines: PropTypes.arrayOf(LeafletPropTypes.latlng),
   };
-
 
   renderVehicles() {
     return this.props.vehicles.map((vehicle, i) => {
@@ -57,6 +60,20 @@ class BackgroundMap extends Component {
     ));
   }
 
+  renderPolylines() {
+    return this.props.polylines.map((poly, i) => (
+      <Polyline
+        positions={poly}
+        key={i}
+        color="#157AFC"
+        stroke
+        weight={5}
+        opacity={0.7}
+        smoothFactor={1}
+      />
+  ));
+  }
+
   render() {
     const retinaParam = window.devicePixelRatio && window.devicePixelRatio > 1 ? '@2x' : null;
     const url = `http://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}${retinaParam}.png?access_token=pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw`;
@@ -78,6 +95,7 @@ class BackgroundMap extends Component {
         }
         {this.renderStops()}
         {this.renderVehicles()}
+        {this.renderPolylines()}
       </ReactLeafletMap>
     );
   }
@@ -88,6 +106,7 @@ const mapStateToProps = createStructuredSelector({
   userLocation: (state) => state.ui.userLocation,
   vehicles: vehiclesArraySelector,
   stops: stopsInMapSelector,
+  polylines: polylinesSelector,
 });
 
 export default connect(mapStateToProps)(BackgroundMap);
