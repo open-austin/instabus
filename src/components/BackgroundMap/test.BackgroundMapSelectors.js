@@ -3,7 +3,7 @@ import expect from 'expect';
 import {
   vehiclesSelector,
   stopIdsSelector,
-  polylinesSelector,
+  rawPolylinesSelector,
 } from 'components/BackgroundMap/BackgroundMapSelectors';
 
 describe('BackgroundMap/BackgroundMapSelectors', () => {
@@ -81,9 +81,9 @@ describe('BackgroundMap/BackgroundMapSelectors', () => {
       });
     });
 
-    describe('polylinesSelector', () => {
+    describe('rawPolylinesSelector', () => {
       it('should select nothing', () => {
-        expect(polylinesSelector({
+        expect(rawPolylinesSelector({
           ...state,
           routing: { routeId: null },
         }))
@@ -91,7 +91,7 @@ describe('BackgroundMap/BackgroundMapSelectors', () => {
       });
 
       it('should select the stops for the current route', () => {
-        expect(polylinesSelector(state))
+        expect(rawPolylinesSelector(state))
           .toEqual(['polyline1', 'polyline2']);
       });
     });
