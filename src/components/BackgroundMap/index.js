@@ -11,6 +11,8 @@ import {
   PropTypes as LeafletPropTypes,
 } from 'react-leaflet';
 
+import { setMapBounds } from 'actions/map';
+
 import {
   CoordinatePointType,
   VehicleStatusType,
@@ -36,6 +38,10 @@ class BackgroundMap extends Component {
     stops: PropTypes.arrayOf(StopType),
     polylines: PropTypes.arrayOf(LeafletPropTypes.latlng),
   };
+
+  onMoveend = (e) => {
+    console.log(this.refs.map.leafletElement.getBounds());
+  }
 
   renderVehicles() {
     return this.props.vehicles.map((vehicle, i) => {
@@ -81,10 +87,12 @@ class BackgroundMap extends Component {
 
     return (
       <ReactLeafletMap
+        ref="map"
         center={[30.267153, -97.743061]}
         zoom={13}
         id="map"
         className={styles.map}
+        onLeafletMoveend={this.onMoveend}
       >
         <TileLayer
           url={url}
