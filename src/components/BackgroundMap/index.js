@@ -10,11 +10,18 @@ import {
   CircleMarker,
 } from 'react-leaflet';
 
-import { CoordinatePointType, VehicleStatusType } from 'constants/OBAPropTypes';
+import {
+  CoordinatePointType,
+  VehicleStatusType,
+  StopType,
+} from 'constants/OBAPropTypes';
 
-import { vehiclesArraySelector } from './BackgroundMapSelectors';
+import { vehiclesArraySelector, stopsSelector } from './BackgroundMapSelectors';
+import { stopsInMapSelector } from 'selectors/oba';
+
 import UserMarker from './UserMarker';
 import VehicleMarker from './VehicleMarker';
+import StopMarker from './StopMarker';
 
 import styles from './styles.scss';
 
@@ -23,6 +30,7 @@ class BackgroundMap extends Component {
   static propTypes = {
     userLocation: CoordinatePointType,
     vehicles: PropTypes.arrayOf(VehicleStatusType),
+    stops: PropTypes.arrayOf(StopType),
   };
 
 
@@ -38,6 +46,15 @@ class BackgroundMap extends Component {
         />
       );
     });
+  }
+
+  renderStops() {
+    return this.props.stops.map((stop, i) => (
+      <StopMarker
+        position={[stop.lat, stop.lon]}
+        key={i}
+      />
+    ));
   }
 
   render() {
@@ -59,6 +76,7 @@ class BackgroundMap extends Component {
         {this.props.userLocation &&
           <UserMarker position={[this.props.userLocation.lat, this.props.userLocation.lon]} />
         }
+        {this.renderStops()}
         {this.renderVehicles()}
       </ReactLeafletMap>
     );
@@ -69,6 +87,7 @@ class BackgroundMap extends Component {
 const mapStateToProps = createStructuredSelector({
   userLocation: (state) => state.ui.userLocation,
   vehicles: vehiclesArraySelector,
+  stops: stopsInMapSelector,
 });
 
 export default connect(mapStateToProps)(BackgroundMap);
