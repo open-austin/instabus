@@ -1,9 +1,12 @@
-import { Marker } from 'react-leaflet';
 import { marker, DivIcon } from 'leaflet';
+
+import AnimatedMarker from './AnimatedMarker';
 
 import styles from './styles.scss';
 
-export default class UserMarker extends Marker {
+
+export default class UserMarker extends AnimatedMarker {
+
   componentWillMount() {
     this.leafletElement = marker(this.props.position, {
       ...this.props,
@@ -14,4 +17,5 @@ export default class UserMarker extends Marker {
       }),
     });
   }
+
 }
