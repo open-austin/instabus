@@ -42,7 +42,6 @@ class Nearby extends Component {
   }
 }
 
-
 const mapStateToProps = createStructuredSelector({
   nearbyTripsLoading: (state) => state.ui.loading.nearbyTripsLoading,
   nearbyStops: stopsInMapSelector,
