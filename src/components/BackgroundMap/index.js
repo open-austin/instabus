@@ -12,6 +12,8 @@ import {
 
 import { CoordinatePointType } from 'constants/OBAPropTypes';
 
+import UserMarker from './UserMarker';
+
 import styles from './styles.scss';
 
 class BackgroundMap extends Component {
@@ -36,14 +38,8 @@ class BackgroundMap extends Component {
           url={url}
           attribution={attribution}
         />
-        {this.props.userLocation && <CircleMarker
-          center={[this.props.userLocation.lat, this.props.userLocation.lon]}
-          radius={8}
-          weight={3}
-          fillOpacity={1}
-          fillColor='rgb(0,172,238)'
-          strokeOpacity={1}
-          strokeColor='rgb(255,255,255)' />
+        {this.props.userLocation &&
+          <UserMarker position={[this.props.userLocation.lat, this.props.userLocation.lon]} />
         }
       </ReactLeafletMap>
     );
