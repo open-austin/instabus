@@ -20,7 +20,7 @@ import {
   EncodedPolylineType,
 } from 'constants/OBAPropTypes';
 
-import { vehiclesArraySelector, stopsSelector, polylinesSelector } from './BackgroundMapSelectors';
+import { vehiclesSelector, stopsSelector, polylinesSelector } from './BackgroundMapSelectors';
 import { stopsInMapSelector } from 'selectors/oba';
 
 import UserMarker from './UserMarker';
@@ -37,21 +37,26 @@ class BackgroundMap extends Component {
     vehicles: PropTypes.arrayOf(VehicleStatusType),
     stops: PropTypes.arrayOf(StopType),
     polylines: PropTypes.arrayOf(LeafletPropTypes.latlng),
+    setMapBounds: PropTypes.func,
   };
 
-  onMoveend = (e) => {
-    console.log(this.refs.map.leafletElement.getBounds());
+  componentDidMount() {
+    this.props.setMapBounds(this.refs.map.leafletElement.getBounds());
+  }
+
+  onMoveend = () => {
+    this.props.setMapBounds(this.refs.map.leafletElement.getBounds());
   }
 
   renderVehicles() {
-    return this.props.vehicles.map((vehicle, i) => {
+    return this.props.vehicles.map((vehicle) => {
       if (!vehicle.location) {
         return null;
       }
       return (
         <VehicleMarker
           position={[vehicle.location.lat, vehicle.location.lon]}
-          key={i}
+          key={vehicle.vehicleId}
         />
       );
     });
@@ -110,11 +115,15 @@ class BackgroundMap extends Component {
 
 }
 
+const mapDispatchToProps = {
+  setMapBounds,
+};
+
 const mapStateToProps = createStructuredSelector({
   userLocation: (state) => state.ui.userLocation,
-  vehicles: vehiclesArraySelector,
+  vehicles: vehiclesSelector,
   stops: stopsInMapSelector,
   polylines: polylinesSelector,
 });
 
-export default connect(mapStateToProps)(BackgroundMap);
+export default connect(mapStateToProps, mapDispatchToProps)(BackgroundMap);

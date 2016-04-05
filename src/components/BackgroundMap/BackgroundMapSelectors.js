@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 import polyline from 'polyline';
+import {
+  latLng,
+} from 'leaflet';
 
 import { stopGroupsForCurrentRouteSelector } from 'selectors/oba';
 
@@ -13,13 +16,21 @@ export const vehiclesSelector = createSelector(
   (state) => state.routing.routeId,
   vehiclesArraySelector,
   (state) => state.oba.references.trips,
-  (routeId, vehicles, trips) => {
+  (state) => state.ui.map.bounds,
+  (routeId, vehicles, trips, bounds) => {
+    if (!bounds) return [];
     if (routeId) {
       return vehicles.filter(
         (vehicle) => vehicle.tripId && trips[vehicle.tripId].routeId === routeId
       );
     }
-    return vehicles;
+    return vehicles.filter(
+      (vehicle) => {
+        if (!vehicle.location) return false;
+        const p = latLng(vehicle.location.lat, vehicle.location.lon);
+        return bounds.contains(p);
+      }
+    );
   }
 );
 
