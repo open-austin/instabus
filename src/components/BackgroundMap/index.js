@@ -10,9 +10,11 @@ import {
   CircleMarker,
 } from 'react-leaflet';
 
-import { CoordinatePointType } from 'constants/OBAPropTypes';
+import { CoordinatePointType, VehicleStatusType } from 'constants/OBAPropTypes';
 
+import { vehiclesArraySelector } from './BackgroundMapSelectors';
 import UserMarker from './UserMarker';
+import VehicleMarker from './VehicleMarker';
 
 import styles from './styles.scss';
 
@@ -20,7 +22,23 @@ class BackgroundMap extends Component {
 
   static propTypes = {
     userLocation: CoordinatePointType,
+    vehicles: PropTypes.arrayOf(VehicleStatusType),
   };
+
+
+  renderVehicles() {
+    return this.props.vehicles.map((vehicle, i) => {
+      if (!vehicle.location) {
+        return null;
+      }
+      return (
+        <VehicleMarker
+          position={[vehicle.location.lat, vehicle.location.lon]}
+          key={i}
+        />
+      );
+    });
+  }
 
   render() {
     const retinaParam = window.devicePixelRatio && window.devicePixelRatio > 1 ? '@2x' : null;
@@ -41,6 +59,7 @@ class BackgroundMap extends Component {
         {this.props.userLocation &&
           <UserMarker position={[this.props.userLocation.lat, this.props.userLocation.lon]} />
         }
+        {this.renderVehicles()}
       </ReactLeafletMap>
     );
   }
@@ -49,6 +68,7 @@ class BackgroundMap extends Component {
 
 const mapStateToProps = createStructuredSelector({
   userLocation: (state) => state.ui.userLocation,
+  vehicles: vehiclesArraySelector,
 });
 
 export default connect(mapStateToProps)(BackgroundMap);

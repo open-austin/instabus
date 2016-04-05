@@ -8,11 +8,15 @@
   bottom: 0;
 }
 
-.user {
+.marker {
   height: 24px;
   width: 24px;
   border-radius: 50%;
   position: relative;
+}
+
+.user, .vehicle {
+  composes: marker;
 }
 
 @keyframes userPulse {
@@ -28,16 +32,26 @@
   }
 }
 
-.userPulse {
+.pulse {
   height: 24px;
   width: 24px;
   border-radius: 50%;
   background: rgba(21, 122, 252, 0.6);
-  border: 1px solid $locationBlue;
+  border-width: 1px;
+  border-type: solid;
+  border-color: $locationBlue;
   animation: userPulse 1.5s infinite;
 }
 
-.userDot {
+.userPulse {
+  composes: pulse;
+}
+.vehiclePulse {
+  composes: pulse;
+  border-color: #7fd08f;
+}
+
+.dot {
   position: absolute;
   top: 6px;
   left: 6px;
@@ -47,4 +61,12 @@
   border-radius: 50%;
   background: $locationBlue;
   box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+.userDot {
+  composes: dot;
+}
+.vehicleDot {
+  composes: dot;
+  background: #7fd08f;
 }
