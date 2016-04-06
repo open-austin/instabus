@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import FastClick from 'fastclick';
 
 import DevTools from 'redux/DevTools';
 import configureStore from 'redux/configureStore';
@@ -8,6 +9,8 @@ import configureStore from 'redux/configureStore';
 import { setupRouter } from 'actions/routing';
 
 import App from 'components/App';
+
+FastClick.attach(document.body);
 
 const store = window.store = configureStore();
 

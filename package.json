@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
-    "dev": "webpack-dev-server --progress --port 3333 --history-api-fallback",
+    "dev": "webpack-dev-server --progress --port 3333 --host 0.0.0.0 --history-api-fallback",
     "test": "NODE_PATH=./src mocha src/test/setup.js \"src/**/test.*.js\" --compilers js:babel-register",
     "build": "rm -rf dist/* && ls -Falth && NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack.production.config.js --progress",
     "deploy": "npm run build && node deploy.js"
@@ -56,6 +56,7 @@
   "dependencies": {
     "babel-register": "^6.6.5",
     "expect": "^1.14.0",
+    "fastclick": "^1.0.6",
     "fetch-jsonp": "^1.0.0",
     "history": "^2.0.1",
     "leaflet": "^0.7.7",

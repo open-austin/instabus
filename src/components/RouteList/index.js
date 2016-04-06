@@ -19,8 +19,8 @@ class RouteList extends Component {
 
   static TAB_NAME = ROUTE_LIST_TAB.name;
 
-  componentWillMount() {
-    this.props.getRoutesForAgency();
+  componentDidMount() {
+    setTimeout(() => this.props.getRoutesForAgency(), 100);
   }
 
   renderRoute(route, i) {
