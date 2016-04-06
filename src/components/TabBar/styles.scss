@@ -10,28 +10,16 @@
   max-width: 354px;
   line-height: 0;
   font-size: 0;
-}
-
-.wideNav {
-  @extend .nav;
-  display: none;
-  top: 10px;
   right: 10px;
-  width: 300px;
-  @media (min-width: $desktop) {
-    display: block;
-  }
-}
-
-.mobileNav {
-  @extend .nav;
-  bottom: 10px;
-  right: 10px;
-  @media (min-width: $iphone) {
+  @media (min-width: $iphone) and (max-width: $desktop - 1px) {
     right: calc(50% - 177px);
   }
+  @media (max-width: $desktop - 1px) {
+    bottom: 10px;
+  }
   @media (min-width: $desktop) {
-    display: none;
+    top: 10px;
+    width: 300px;
   }
 }
 
@@ -43,9 +31,32 @@
   font-size: 11px;
   line-height: 100%;
   text-align: center;
+  padding: 2px 0 0;
+  @media (min-width: $desktop) {
+    width: 25%;
+  }
 }
 
 .active {
   @extend .item;
   color: $locationBlue;
+}
+
+.item:last-of-type {
+  @media (min-width: $desktop) {
+    display: none;
+  }
+}
+
+.iconWrap {
+  height: 32px;
+  width: 100%;
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

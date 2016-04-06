@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { GlobalHistory } from 'libs/routing';
 import { RouteType } from 'constants/OBAPropTypes';
 
-import styles from './styles.scss';
+import SaveButton from './SaveButton';
+import StopsButton from './StopsButton';
 
+import styles from './styles.scss';
 
 class RouteItem extends Component {
   static propTypes = {
@@ -30,6 +32,10 @@ class RouteItem extends Component {
         <div className={styles.info}>
           <div className={styles.name}>{route.longName}</div>
           <div className={styles.trips}>{vehicleCount} buses running</div>
+        </div>
+        <div className={styles.btns}>
+          <SaveButton saved={false} />
+          <StopsButton />
         </div>
       </div>
     );
