@@ -101,7 +101,6 @@ class BackgroundMap extends Component {
       >
         <TileLayer
           url={url}
-          attribution={attribution}
         />
         {this.props.userLocation &&
           <UserMarker position={[this.props.userLocation.lat, this.props.userLocation.lon]} />

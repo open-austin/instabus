@@ -18,6 +18,16 @@ export const SAVED_TAB = {
   text: 'Saved',
 };
 
+export const RECENT_TAB = {
+  name: 'recent',
+  text: 'Recent',
+};
+
+export const LEGEND_TAB = {
+  name: 'legend',
+  text: 'Legend',
+};
+
 export const NOT_FOUND_TAB = {
   name: '404',
   text: 'Not found',
