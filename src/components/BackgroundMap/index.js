@@ -11,6 +11,8 @@ import {
   PropTypes as LeafletPropTypes,
 } from 'react-leaflet';
 
+import { setMapBounds } from 'actions/map';
+
 import {
   CoordinatePointType,
   VehicleStatusType,
@@ -18,7 +20,7 @@ import {
   EncodedPolylineType,
 } from 'constants/OBAPropTypes';
 
-import { vehiclesArraySelector, stopsSelector, polylinesSelector } from './BackgroundMapSelectors';
+import { vehiclesSelector, stopsSelector, polylinesSelector } from './BackgroundMapSelectors';
 import { stopsInMapSelector } from 'selectors/oba';
 
 import UserMarker from './UserMarker';
@@ -35,17 +37,26 @@ class BackgroundMap extends Component {
     vehicles: PropTypes.arrayOf(VehicleStatusType),
     stops: PropTypes.arrayOf(StopType),
     polylines: PropTypes.arrayOf(LeafletPropTypes.latlng),
+    setMapBounds: PropTypes.func,
   };
 
+  componentDidMount() {
+    this.props.setMapBounds(this.refs.map.leafletElement.getBounds());
+  }
+
+  onMoveend = () => {
+    this.props.setMapBounds(this.refs.map.leafletElement.getBounds());
+  }
+
   renderVehicles() {
-    return this.props.vehicles.map((vehicle, i) => {
+    return this.props.vehicles.map((vehicle) => {
       if (!vehicle.location) {
         return null;
       }
       return (
         <VehicleMarker
           position={[vehicle.location.lat, vehicle.location.lon]}
-          key={i}
+          key={vehicle.vehicleId}
         />
       );
     });
@@ -81,14 +92,15 @@ class BackgroundMap extends Component {
 
     return (
       <ReactLeafletMap
+        ref="map"
         center={[30.267153, -97.743061]}
         zoom={13}
         id="map"
         className={styles.map}
+        onLeafletMoveend={this.onMoveend}
       >
         <TileLayer
           url={url}
-          attribution={attribution}
         />
         {this.props.userLocation &&
           <UserMarker position={[this.props.userLocation.lat, this.props.userLocation.lon]} />
@@ -102,11 +114,15 @@ class BackgroundMap extends Component {
 
 }
 
+const mapDispatchToProps = {
+  setMapBounds,
+};
+
 const mapStateToProps = createStructuredSelector({
   userLocation: (state) => state.ui.userLocation,
-  vehicles: vehiclesArraySelector,
+  vehicles: vehiclesSelector,
   stops: stopsInMapSelector,
   polylines: polylinesSelector,
 });
 
-export default connect(mapStateToProps)(BackgroundMap);
+export default connect(mapStateToProps, mapDispatchToProps)(BackgroundMap);

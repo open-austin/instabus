@@ -9,7 +9,6 @@ import CurrentTab from 'components/CurrentTab';
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
 
-
 class App extends Component {
   static propTypes = {
     globalError: PropTypes.string,
@@ -41,15 +40,13 @@ class App extends Component {
     return (
       <div className={styles.container}>
         <BackgroundMap />
-        <div className={styles.wideNav} />
+        <TabBar />
         <div className={styles.context}>
           {this.renderGlobalError()}
-          <TabBar />
           <CurrentTab />
         </div>
         <div className={styles.zoom} />
         <div className={styles.key} />
-        <div className={styles.mobileNav} />
       </div>
     );
   }

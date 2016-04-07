@@ -15,6 +15,7 @@ export default {
       lon: null,
       latSpan: 0.03500879999999995 / 10,
       lonSpan: 0.0889021999999926 / 10,
+      bounds: null,
     },
     loading: {
       routesForAgencyLoading: false,
