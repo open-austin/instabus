@@ -106,7 +106,6 @@ class BackgroundMap extends Component {
           <UserMarker position={[this.props.userLocation.lat, this.props.userLocation.lon]} />
         }
         {this.renderStops()}
-        {this.renderVehicles()}
         {this.renderPolylines()}
       </ReactLeafletMap>
     );

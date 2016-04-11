@@ -11,9 +11,17 @@ html {
   box-sizing: inherit;
 }
 
+*:focus {
+  outline: 0;
+}
+
 :root {
   font-family: Arial;
   font-size: 14px;
+  user-select: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .container {

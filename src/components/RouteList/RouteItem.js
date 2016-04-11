@@ -27,11 +27,17 @@ class RouteItem extends Component {
   render() {
     const { route, vehicleCount } = this.props;
     return (
-      <div key={route.id} className={styles.item} onClick={this.showStops}>
-        <div className={styles.id}>{route.shortName}</div>
-        <div className={styles.info}>
-          <div className={styles.name}>{route.longName}</div>
-          <div className={styles.trips}>{vehicleCount} buses running</div>
+      <div key={route.id} className={styles.itemWrap}>
+        <div className={styles.item} onClick={this.showStops}>
+          <div className={styles.id}>{route.shortName}</div>
+          <div className={styles.info}>
+            <div className={styles.name}>{route.longName}</div>
+            <div className={styles.trips}>{vehicleCount} buses running</div>
+          </div>
+          <div className={styles.caret}>
+            <div className={styles.caretTop} />
+            <div className={styles.caretBottom} />
+          </div>
         </div>
         <div className={styles.btns}>
           <SaveButton saved={false} />

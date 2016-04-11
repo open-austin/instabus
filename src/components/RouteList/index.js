@@ -29,14 +29,20 @@ class RouteList extends Component {
     );
   }
 
-  render() {
-    const items = this.props.routes.map(this.renderRoute);
+  renderRoutes = () => {
+    if (this.props.routesForAgencyLoading) {
+      return (
+        <Spinner />
+      );
+    }
 
+    return this.props.routes.map(this.renderRoute);
+  }
+
+  render() {
     return (
       <div>
-        <h1>Route List</h1>
-        {this.props.routesForAgencyLoading && <Spinner />}
-        {items}
+        { this.renderRoutes() }
       </div>
     );
   }

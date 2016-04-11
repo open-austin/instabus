@@ -34,7 +34,6 @@ class CurrentTab extends Component {
   render() {
     return (
       <div>
-        <div>Current Tab: {this.props.tab}</div>
         {this.renderTab()}
       </div>
     );
