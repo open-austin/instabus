@@ -5,6 +5,7 @@ import styles from 'styles/base.scss';
 import BackgroundMap from 'components/BackgroundMap';
 import TabBar from 'components/TabBar';
 import CurrentTab from 'components/CurrentTab';
+import ZoomControl from 'components/ZoomControl';
 
 import { watchUserLocation, stopWatchingUserLocation } from 'actions/location';
 import { watchVehicles, stopWatchingVehicles } from 'actions/oba/vehicles';
@@ -41,11 +42,9 @@ class App extends Component {
       <div className={styles.container}>
         <BackgroundMap />
         <TabBar />
-        <div className={styles.context}>
-          {this.renderGlobalError()}
-          <CurrentTab />
-        </div>
-        <div className={styles.zoom} />
+        {this.renderGlobalError()}
+        <CurrentTab />
+        <ZoomControl />
         <div className={styles.key} />
       </div>
     );

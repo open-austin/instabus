@@ -4,6 +4,8 @@ import InitialState from 'constants/InitialState';
 import {
   SET_USER_LOCATION,
   SET_MAP_BOUNDS,
+  INCREMENT_MAP_ZOOM,
+  DECREMENT_MAP_ZOOM,
 } from 'constants/ActionTypes';
 
 
@@ -36,10 +38,22 @@ function bounds(state = InitialState.ui.map.bounds, action = {}) {
   return state;
 }
 
+function zoom(state = InitialState.ui.map.zoom, action = {}) {
+  switch (action.type) {
+    case INCREMENT_MAP_ZOOM:
+      return state + 1;
+    case DECREMENT_MAP_ZOOM:
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   lat,
   lon,
   latSpan,
   lonSpan,
   bounds,
+  zoom,
 });

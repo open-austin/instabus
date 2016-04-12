@@ -5,6 +5,7 @@ import { GlobalHistory } from 'libs/routing';
 import { RouteType, StopGroupType } from 'constants/OBAPropTypes';
 import { setCurrentStopGroup } from 'actions/ui';
 
+import styles from './styles.scss';
 
 export default class StopGroupSwitchItem extends Component {
   static propTypes = {
@@ -26,16 +27,36 @@ export default class StopGroupSwitchItem extends Component {
   render() {
     const { stopGroup, checked } = this.props;
     const inputId = `stop-group-switch-${stopGroup.id}`;
+    const longName = stopGroup.name.name;
+    let stopDirection;
+    if (longName.indexOf('NB') > -1) {
+      stopDirection = 'Northbound';
+    }
+    else if (longName.indexOf('SB') > -1) {
+      stopDirection = 'Southbound';
+    }
+    else if (longName.indexOf('EB') > -1) {
+      stopDirection = 'Eastbound';
+    } 
+    else if (longName.indexOf('WB') > -1) {
+      stopDirection = 'Westbound';
+    }
+    else {
+      stopDirection = longName;
+    }
     return (
-      <div>
-        <label htmlFor={inputId}>{stopGroup.name.name}</label>
+      <label htmlFor={inputId} className={styles.label}>
+        <div className={styles.labelText}>
+          {stopDirection}
+        </div>
         <input
+          className={styles.input}
           id={inputId}
           type="radio"
           checked={checked}
           onChange={this.setCurrentStopGroup}
         />
-      </div>
+      </label>
     );
   }
 }

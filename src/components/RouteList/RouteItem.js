@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { GlobalHistory } from 'libs/routing';
 import { RouteType } from 'constants/OBAPropTypes';
 
+import classNames from 'classnames';
+import { mobile } from 'libs/mobile';
+
 import SaveButton from './SaveButton';
 import StopsButton from './StopsButton';
 
@@ -24,11 +27,40 @@ class RouteItem extends Component {
     };
   }
 
+  state = {
+    pressed: false,
+  }
+
+  onPress = () => {
+    this.setState({
+      pressed: true,
+    });
+  }
+
+  onClick = (e) => {
+    e.stopPropagation();
+  }
+
+  offPress = () => {
+    this.setState({
+      pressed: false,
+    });
+  }
+
   render() {
     const { route, vehicleCount } = this.props;
+    const itemStyle = classNames(styles.item, {
+      [`${styles.hover}`]: !mobile,
+      [`${styles.pressed}`]: (mobile && this.state.pressed),
+    });
     return (
       <div key={route.id} className={styles.itemWrap}>
-        <div className={styles.item} onClick={this.showStops}>
+        <div
+          className={itemStyle}
+          onClick={this.showStops}
+          onTouchStart={this.onPress}
+          onTouchEnd={this.offPress}
+        >
           <div className={styles.id}>{route.shortName}</div>
           <div className={styles.info}>
             <div className={styles.name}>{route.longName}</div>

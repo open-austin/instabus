@@ -38,6 +38,7 @@ class BackgroundMap extends Component {
     stops: PropTypes.arrayOf(StopType),
     polylines: PropTypes.arrayOf(LeafletPropTypes.latlng),
     setMapBounds: PropTypes.func,
+    zoom: PropTypes.number,
   };
 
   componentDidMount() {
@@ -94,7 +95,7 @@ class BackgroundMap extends Component {
       <ReactLeafletMap
         ref="map"
         center={[30.267153, -97.743061]}
-        zoom={13}
+        zoom={this.props.zoom}
         id="map"
         className={styles.map}
         onLeafletMoveend={this.onMoveend}
@@ -122,6 +123,7 @@ const mapStateToProps = createStructuredSelector({
   vehicles: vehiclesSelector,
   stops: stopsInMapSelector,
   polylines: polylinesSelector,
+  zoom: (state) => state.ui.map.zoom,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BackgroundMap);

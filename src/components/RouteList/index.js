@@ -7,6 +7,7 @@ import { ROUTE_LIST_TAB } from 'constants/TabNames';
 import { getRoutesForAgency } from 'actions/oba/routes';
 import { sortedRoutesSelector } from 'selectors/oba';
 
+import ContextMenu from 'components/ContextMenu';
 import Spinner from 'components/Spinner';
 import RouteItem from 'components/RouteList/RouteItem';
 
@@ -41,9 +42,9 @@ class RouteList extends Component {
 
   render() {
     return (
-      <div>
+      <ContextMenu>
         { this.renderRoutes() }
-      </div>
+      </ContextMenu>
     );
   }
 }

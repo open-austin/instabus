@@ -1,0 +1,12 @@
+@import 'globals';
+
+.list {
+  display: none;
+  @media (min-width: $desktop) {
+    display: block;
+  }
+}
+
+.list.show {
+  display: block;
+}

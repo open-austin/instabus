@@ -83,7 +83,7 @@
   border-bottom-left-radius: 1px;
 }
 
-.item:hover .caretLine {
+.item.hover:hover .caretLine, .item.pressed .caretLine {
   background: #ABABAB;
 }
 

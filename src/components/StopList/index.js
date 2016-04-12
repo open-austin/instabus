@@ -2,12 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import classNames from 'classnames';
+
 import { STOP_LIST_TAB } from 'constants/TabNames';
 import { getStopsForRoute } from 'actions/oba/stops';
 
+import ContextMenu from 'components/ContextMenu';
 import Spinner from 'components/Spinner';
 import StopGroup from 'components/StopList/StopGroup';
 import StopGroupSwitch from 'components/StopList/StopGroupSwitch';
+
+import styles from './styles.scss';
 
 class StopList extends Component {
   static propTypes = {
@@ -17,6 +22,8 @@ class StopList extends Component {
     stopsForRouteLoading: PropTypes.bool.isRequired,
 
     getStopsForRoute: PropTypes.func.isRequired,
+
+    showStops: PropTypes.bool.isRequired,
   };
 
   static TAB_NAME = STOP_LIST_TAB.name;
@@ -35,21 +42,37 @@ class StopList extends Component {
     this.props.getStopsForRoute(this.props.routeId);
   }
 
-  render() {
-    const { stopsForRouteLoading } = this.props;
+  renderStopList = () => {
+    if (this.props.stopsForRouteLoading) {
+      return <Spinner />;
+    }
 
     return (
       <div>
-        <h1>Stop List</h1>
-        {stopsForRouteLoading && <Spinner />}
         <StopGroupSwitch />
         <StopGroup />
+      </div>
+    );
+  }
+
+  render() {
+    const listStyle = classNames(styles.list, {
+      [`${styles.show}`]: this.props.showStops,
+    });
+    return (
+      <div>
+        <ContextMenu>
+          <div className={listStyle}>
+            { this.renderStopList() }
+          </div>
+        </ContextMenu>
       </div>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  showStops: (state) => true,
   routeId: (state) => state.routing.routeId,
   stopGroupId: (state) => state.routing.stopGroupId,
   stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,

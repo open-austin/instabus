@@ -7,6 +7,7 @@ import { stopGroupsForCurrentRouteSelector } from 'selectors/oba';
 
 import StopGroupSwitchItem from './StopGroupSwitchItem';
 
+import styles from './styles.scss';
 
 class StopGroupSwitch extends Component {
   static propTypes = {
@@ -18,6 +19,10 @@ class StopGroupSwitch extends Component {
   render() {
     const { stopGroups, currentStopGroupId, routeId } = this.props;
 
+    if (!stopGroups || stopGroups.length <= 1) {
+      return null;
+    }
+
     const groupToggles = stopGroups.map((stopGroup, i) => (
       <StopGroupSwitchItem
         key={i}
@@ -27,8 +32,19 @@ class StopGroupSwitch extends Component {
       />
     ));
 
+    console.log(currentStopGroupId);
+
+    const sliderTranslate = {
+      transform: `translateX(${(currentStopGroupId == '0') ? '0' : '100%'})`,
+    };
+
     return (
-      <div>{groupToggles}</div>
+      <div className={styles.sliderWrap}>
+        <div className={styles.toggles}>
+          {groupToggles}
+        </div>
+        <div className={styles.slider} style={sliderTranslate} />
+      </div>
     );
   }
 }
