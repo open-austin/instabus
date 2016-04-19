@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { GlobalHistory } from 'libs/routing';
 
+import classNames from 'classnames';
+import { mobile } from 'libs/mobile';
+
 import { RouteType, StopGroupType } from 'constants/OBAPropTypes';
 import { setCurrentStopGroup } from 'actions/ui';
 
@@ -24,6 +27,22 @@ export default class StopGroupSwitchItem extends Component {
     };
   }
 
+  state = {
+    pressed: false,
+  }
+
+  onPress = () => {
+    this.setState({
+      pressed: true,
+    });
+  }
+
+  offPress = () => {
+    this.setState({
+      pressed: false,
+    });
+  }
+
   render() {
     const { stopGroup, checked } = this.props;
     const inputId = `stop-group-switch-${stopGroup.id}`;
@@ -37,15 +56,25 @@ export default class StopGroupSwitchItem extends Component {
     }
     else if (longName.indexOf('EB') > -1) {
       stopDirection = 'Eastbound';
-    } 
+    }
     else if (longName.indexOf('WB') > -1) {
       stopDirection = 'Westbound';
     }
     else {
       stopDirection = longName;
     }
+    const labelStyle = classNames(styles.label, {
+      [`${styles.hover}`]: !mobile,
+      [`${styles.pressed}`]: (mobile && this.state.pressed),
+      [`${styles.checked}`]: checked,
+    });
     return (
-      <label htmlFor={inputId} className={styles.label}>
+      <label
+        htmlFor={inputId}
+        className={labelStyle}
+        onTouchStart={this.onPress}
+        onTouchEnd={this.offPress}
+      >
         <div className={styles.labelText}>
           {stopDirection}
         </div>

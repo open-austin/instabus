@@ -40,7 +40,6 @@ class App extends Component {
   render() {
     return (
       <div className={styles.container}>
-        <BackgroundMap />
         <TabBar />
         {this.renderGlobalError()}
         <CurrentTab />

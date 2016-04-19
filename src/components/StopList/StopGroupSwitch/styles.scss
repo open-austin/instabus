@@ -32,12 +32,20 @@
   height: 100%;
   line-height: 28px;
   text-align: center;
-  color: $routeBtnText;
   cursor: pointer;
+}
+
+.checked {
+  pointer-events: none;
 }
 
 .labelText {
   pointer-events: none;
+  color: $routeBtnText;
+}
+
+.hover:hover .labelText, .pressed .labelText {
+  color: $routeBtnBorder;
 }
 
 .input {

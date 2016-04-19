@@ -9,6 +9,8 @@ import { stopsInMapSelector, arrivalsInMapSelector } from 'selectors/oba';
 
 import { NEARBY_TAB } from 'constants/TabNames';
 
+import ContextMenu from 'components/ContextMenu'
+
 class Nearby extends Component {
   static propTypes = {
     getNearbyTrips: PropTypes.func.isRequired,
@@ -32,12 +34,12 @@ class Nearby extends Component {
 
   render() {
     return (
-      <div>
+      <ContextMenu>
         <h1>Nearby Trips</h1>
         <div>Loading: {JSON.stringify(this.props.nearbyTripsLoading)}</div>
         <div>Nearby stops count: {this.props.nearbyStops.length}</div>
         <div>Nearby arrivals count: {JSON.stringify(this.props.nearbyArrivals.length)}</div>
-      </div>
+      </ContextMenu>
     );
   }
 }

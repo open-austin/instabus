@@ -10,6 +10,10 @@ export default class ContextMenu extends Component {
     children: PropTypes.any,
   };
 
+  state = {
+    pressed: false,
+  }
+
   componentDidMount() {
     if (iOS) {
       this.resizeTimeout = null;
@@ -39,6 +43,12 @@ export default class ContextMenu extends Component {
     }
   }
 
+  onPress = () => {
+    this.setState({
+      pressed: true,
+    });
+  }
+
   onScroll = () => {
     clearTimeout(this.scrollTimeout);
     this.scrollTimeout = setTimeout(this.adjustScrollTop, 100);
@@ -49,7 +59,14 @@ export default class ContextMenu extends Component {
     this.resizeTimeout = setTimeout(this.updateDimensions, 100);
   }
 
+  offPress = () => {
+    this.setState({
+      pressed: false,
+    });
+  }
+
   adjustScrollTop = () => {
+    if (this.state.pressed) return;
     const scrollTop = this.refs.context.scrollTop;
     if (scrollTop <= 0) {
       this.refs.context.scrollTop = 1;
@@ -66,10 +83,15 @@ export default class ContextMenu extends Component {
 
   render() {
     const contextStyle = classNames(styles.context, {
-      [`${styles.iOS}`]: !iOS,
+      [`${styles.iOS}`]: iOS,
     });
     return (
-      <div className={contextStyle} ref="context">
+      <div
+        onTouchStart={this.onPress}
+        onTouchEnd={this.offPress}
+        className={contextStyle}
+        ref="context"
+      >
         {this.props.children}
       </div>
     );

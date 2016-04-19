@@ -16,6 +16,9 @@
   @media (min-width: $iphone) {
     right: calc(50% - 177px);
   }
+  @media (max-width: $desktop - 1px) and (min-height: 500px) {
+    max-height: 400px;
+  }
   @media (min-width: $desktop) {
     right: 10px;
     top: 70px;

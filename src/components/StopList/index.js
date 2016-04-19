@@ -72,7 +72,7 @@ class StopList extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  showStops: (state) => true,
+  showStops: (state) => false,
   routeId: (state) => state.routing.routeId,
   stopGroupId: (state) => state.routing.stopGroupId,
   stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,

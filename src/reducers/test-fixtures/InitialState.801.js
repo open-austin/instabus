@@ -21,6 +21,8 @@ export default {
       lon: 96,
       latSpan: 0.39840300000000184,
       lonSpan: 0.4220969999999937,
+      bounds: null,
+      zoom: 13,
     },
     recent: [
       { type: 'route', id: '1_801' },
