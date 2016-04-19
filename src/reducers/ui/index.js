@@ -14,10 +14,7 @@ import {
 
 function route(state = InitialState.ui.route, action = {}) {
   if (action.type === SET_PATHNAME) {
-    return {
-      ...Router.lookup(action.payload),
-      hash: location.hash,
-    };
+    return Router.lookup(action.payload);
   }
   return state;
 }

@@ -4,7 +4,6 @@ export default {
     route: {
       name: 'routes',
       options: {},
-      hash: '',
     },
     userLocation: null,
     loading: {
