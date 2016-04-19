@@ -1,0 +1,25 @@
+@import 'globals';
+
+.btn {
+  width: 50%;
+  height: 100%;
+  color: $grayText;
+  font-size: 16px;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.active {
+  color: $blue;
+  @media (min-width: $desktop) {
+    pointer-events: none;
+  }
+}
+
+.minimized {
+  @media (max-width: $desktop - 1px) {
+    color: $grayText;
+  }
+}

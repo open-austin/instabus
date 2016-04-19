@@ -1,0 +1,39 @@
+@import 'globals';
+
+.context {
+  @extend .whiteBox;
+  position: fixed;
+  bottom: 70px;
+  right: 10px;
+  width: calc(100% - 20px);
+  max-width: 354px;
+  height: auto;
+  max-height: calc(100% - 80px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 4px;
+  -webkit-overflow-scrolling: touch;
+  @media (min-width: $iphone) {
+    right: calc(50% - 177px);
+  }
+  @media (max-width: $desktop - 1px) and (min-height: 500px) {
+    max-height: 400px;
+  }
+  @media (min-width: $desktop) {
+    right: 10px;
+    top: 70px;
+    width: 300px;
+    bottom: auto;
+    max-height: calc(100% - 200px);
+  }
+}
+
+.iOS {
+  padding: 1px 0;
+}
+
+.minimized {
+  @media (max-width: $desktop - 1px) {
+    display: none;
+  }
+}

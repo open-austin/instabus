@@ -5,11 +5,19 @@ import createLogger from 'redux-logger';
 import rootReducer from 'reducers';
 import DevTools from 'redux/DevTools';
 
-const finalCreateStore = compose(
-  applyMiddleware(thunk),
-  applyMiddleware(createLogger()),
-  DevTools.instrument(),
-)(createStore);
+let finalCreateStore;
+if (process.env.NODE_ENV !== 'production') {
+  finalCreateStore = compose(
+    applyMiddleware(thunk),
+    applyMiddleware(createLogger()),
+    DevTools.instrument(),
+  )(createStore);
+}
+else {
+  finalCreateStore = compose(
+    applyMiddleware(thunk),
+  )(createStore);
+}
 
 export default function configureStore() {
   const InitialState = {};

@@ -1,0 +1,24 @@
+@import 'globals';
+
+.nav {
+  @extend .whiteBox;
+  position: fixed;
+  height: 50px;
+  border-radius: 4px;
+  overflow: hidden;
+  width: calc(100% - 20px);
+  max-width: 354px;
+  line-height: 0;
+  font-size: 0;
+  right: 10px;
+  @media (min-width: $iphone) and (max-width: $desktop - 1px) {
+    right: calc(50% - 177px);
+  }
+  @media (max-width: $desktop - 1px) {
+    bottom: 10px;
+  }
+  @media (min-width: $desktop) {
+    top: 10px;
+    width: 300px;
+  }
+}

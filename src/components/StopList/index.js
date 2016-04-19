@@ -1,62 +1,60 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
-import { STOP_LIST_TAB } from 'constants/TabNames';
-import { getStopsForRoute } from 'actions/oba/stops';
+import ContextMenu from 'components/ContextMenu';
+import { stopGroupSelector } from 'selectors/oba';
 
-import Spinner from 'components/Spinner';
-import StopGroup from 'components/StopList/StopGroup';
-import StopGroupSwitch from 'components/StopList/StopGroupSwitch';
+import { getStops } from 'actions/oba';
 
-class StopList extends Component {
+import styles from './styles.scss';
+
+class RouteList extends Component {
   static propTypes = {
-    children: PropTypes.node,
-    routeId: PropTypes.string.isRequired,
-
-    stopsForRouteLoading: PropTypes.bool.isRequired,
-
-    getStopsForRoute: PropTypes.func.isRequired,
-  };
-
-  static TAB_NAME = STOP_LIST_TAB.name;
-
-  componentWillMount() {
-    this.load();
+    route: PropTypes.object,
+    stops: PropTypes.arrayOf(PropTypes.object),
+    stopsLoading: PropTypes.bool,
+    modal: PropTypes.bool,
+    getStops: PropTypes.func,
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.routeId !== nextProps.routeId) {
-      this.load();
+  componentDidMount() {
+    if (!this.props.stops) this.props.getStops(this.props.route.options.routeId);
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  _renderStops = () => {
+    const { stopsLoading, stops } = this.props;
+
+    if (stopsLoading) {
+      return (
+        <div className={styles.loading} />
+      );
     }
-  }
 
-  load() {
-    this.props.getStopsForRoute(this.props.routeId);
+    return null;
   }
 
   render() {
-    const { stopsForRouteLoading } = this.props;
-
     return (
-      <div>
-        <h1>Stop List</h1>
-        {stopsForRouteLoading && <Spinner />}
-        <StopGroupSwitch />
-        <StopGroup />
-      </div>
+      <ContextMenu minimized={!this.props.modal}>
+        { this._renderStops() }
+      </ContextMenu>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  routeId: (state) => state.routing.routeId,
-  stopGroupId: (state) => state.routing.stopGroupId,
-  stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,
-});
-
 const mapDispatchToProps = {
-  getStopsForRoute,
+  getStops,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StopList);
+const mapStateToProps = (state) => ({
+  stops: stopGroupSelector(state),
+  route: state.ui.route,
+  stopsLoading: state.ui.loading.stops,
+  modal: state.ui.modal.stops,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RouteList);

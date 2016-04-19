@@ -1,36 +1,59 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 
-import { keyForLocation } from 'libs/oba';
+import {
+  ROUTE,
+} from 'constants';
 
 export const sortedRoutesSelector = createSelector(
-  (state) => state.oba.references.routes,
+  (state) => state.data.routes,
   (routes) => _.sortBy(routes, (o) => parseInt(o.shortName, 10))
 );
 
-export const currentRouteSelector = createSelector(
-  (state) => state.oba.references.routes,
-  (state) => state.routing.routeId,
-  (allRoutes, currentRoute) => allRoutes[currentRoute]
+export const stopGroupSelector = createSelector(
+  (state) => state.ui.route.options.routeId,
+  (state) => state.data.stops,
+  (routeId, stops) => stops[routeId],
 );
 
-export const stopGroupsForCurrentRouteSelector = createSelector(
-  (state) => state.oba.stopGroups,
-  (state) => state.routing.routeId,
-  (stopGroups, routeId) => _.sortBy(stopGroups[routeId], 'id') || [],
+export const vehiclesSelector = createSelector(
+  (state) => state.data.vehicles,
+  (state) => state.ui.route,
+  (vehicles, route) => {
+    if (route.name === ROUTE) {
+      const vehicle = vehicles[route.options.routeId];
+      return vehicle ? _.map(vehicles[route.options.routeId].trips, v => v) : [];
+    }
+
+    let allBuses = [];
+    _.forEach(vehicles, (vehicle) => {
+      allBuses = allBuses.concat(_.map(vehicle.trips, trip => trip));
+    });
+    return allBuses;
+  }
 );
 
-export const stopsInMapSelector = createSelector(
-  (state) => keyForLocation(state.ui.map),
-  (state) => state.oba.stopsForLocation,
-  (locationKey, stopsForLocation) => _.sortBy(stopsForLocation[locationKey], 'id')
+export const polylineSelector = createSelector(
+  (state) => state.data.stops,
+  (state) => state.ui.route,
+  (stops, route) => {
+    if (route.name === ROUTE && stops[route.options.routeId]) {
+      const polyline = stops[route.options.routeId][0].polyline;
+      return polyline;
+    }
+
+    return null;
+  }
 );
 
-export const arrivalsInMapSelector = createSelector(
-  stopsInMapSelector,
-  (state) => state.oba.arrivalsAndDepartures,
-  (stops, arrivalsAndDepartures) => stops.reduce((prev, stop) => [
-    ...prev,
-    ...(arrivalsAndDepartures[stop.id] || []),
-  ], [])
+export const stopsSelector = createSelector(
+  (state) => state.data.stops,
+  (state) => state.ui.route,
+  (stops, route) => {
+    if (route.name === ROUTE && stops[route.options.routeId]) {
+      return stops[route.options.routeId][0].stops;
+    }
+
+    return null;
+  }
 );

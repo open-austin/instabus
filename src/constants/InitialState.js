@@ -1,55 +1,26 @@
 export default {
-  routing: {
-    tab: null,
-    routeId: null,
-    stopGroupId: null,
-    stopId: null,
-  },
   ui: {
-    currentAgency: '1',
-    userLocation: null,
-    userLocationError: null,
     globalError: null,
-    map: {
-      lat: null,
-      lon: null,
-      latSpan: 0.03500879999999995 / 10,
-      lonSpan: 0.0889021999999926 / 10,
-      bounds: null,
+    route: {
+      name: 'routes',
+      options: {},
+      hash: '',
     },
+    userLocation: null,
     loading: {
-      routesForAgencyLoading: false,
-      nearbyTripsLoading: false,
-      stopsForRouteLoading: false,
-      vehiclesLoading: false,
+      routes: false,
+      vehicles: false,
+      stops: false,
     },
-    recent: [
-      { type: 'route', id: '1_801' },
-      { type: 'stop', id: '1_2606' },
-    ],
+    modal: {
+      routes: false,
+      favorites: false,
+      stops: false,
+    },
   },
-  oba: {
+  data: {
+    routes: {},
+    stops: {},
     vehicles: {},
-    stopsForLocation: {},
-    arrivalsAndDepartures: {},
-    stopGroups: {},
-    references: {
-      agencies: {
-        1: {
-          disclaimer: '',
-          id: '1',
-          lang: 'en',
-          name: 'Capital Metro',
-          phone: '512-474-1200',
-          privateService: false,
-          timezone: 'America/Chicago',
-          url: 'http://www.capmetro.org/',
-        },
-      },
-      routes: {},
-      stops: {},
-      trips: {},
-      situations: {},
-    },
   },
 };

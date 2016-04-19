@@ -1,54 +1,52 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
-import { RouteType } from 'constants/OBAPropTypes';
-import { ROUTE_LIST_TAB } from 'constants/TabNames';
-import { getRoutesForAgency } from 'actions/oba/routes';
+import ContextMenu from 'components/ContextMenu';
+import RouteItem from './RouteItem';
 import { sortedRoutesSelector } from 'selectors/oba';
 
-import Spinner from 'components/Spinner';
-import RouteItem from 'components/RouteList/RouteItem';
+import styles from './styles.scss';
 
 class RouteList extends Component {
   static propTypes = {
-    routes: PropTypes.arrayOf(RouteType).isRequired,
-    getRoutesForAgency: PropTypes.func.isRequired,
-    routesForAgencyLoading: PropTypes.bool.isRequired,
-  };
-
-  static TAB_NAME = ROUTE_LIST_TAB.name;
-
-  componentDidMount() {
-    setTimeout(() => this.props.getRoutesForAgency(), 100);
+    routes: PropTypes.arrayOf(PropTypes.object),
+    routesLoading: PropTypes.bool,
+    modal: PropTypes.bool,
   }
 
-  renderRoute(route, i) {
-    return (
-      <RouteItem route={route} key={i} />
-    );
+  componentDidUpdate() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  _renderRoutes = () => {
+    const { routesLoading, routes } = this.props;
+
+    if (routesLoading) {
+      return (
+        <div className={styles.loading} />
+      );
+    }
+
+    return routes.map(route => <RouteItem key={route.id} route={route} />);
   }
 
   render() {
-    const items = this.props.routes.map(this.renderRoute);
-
     return (
-      <div>
-        <h1>Route List</h1>
-        {this.props.routesForAgencyLoading && <Spinner />}
-        {items}
-      </div>
+      <ContextMenu minimized={!this.props.modal}>
+        { this._renderRoutes() }
+      </ContextMenu>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  routes: sortedRoutesSelector,
-  routesForAgencyLoading: (state) => state.ui.loading.routesForAgencyLoading,
+const mapStateToProps = (state) => ({
+  routes: sortedRoutesSelector(state),
+  routesLoading: state.ui.loading.routes,
+  modal: state.ui.modal.routes,
 });
 
-const mapDispatchToProps = {
-  getRoutesForAgency,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RouteList);
+export default connect(mapStateToProps)(RouteList);
