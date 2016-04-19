@@ -8,6 +8,7 @@ import styles from './styles.scss';
 export default class ContextMenu extends Component {
   static propTypes = {
     children: PropTypes.any,
+    minimized: PropTypes.bool,
   };
 
   state = {
@@ -84,6 +85,7 @@ export default class ContextMenu extends Component {
   render() {
     const contextStyle = classNames(styles.context, {
       [`${styles.iOS}`]: iOS,
+      [`${styles.minimized}`]: this.props.minimized,
     });
     return (
       <div

@@ -1,8 +1,5 @@
-import { watchPosition, stopWatching } from 'libs/location';
-
 import {
   SET_USER_LOCATION,
-  SET_USER_LOCATION_ERROR,
 } from 'constants/ActionTypes';
 
 export function setUserLocation(payload) {
@@ -12,23 +9,24 @@ export function setUserLocation(payload) {
   };
 }
 
-export function setUserLocationError(payload) {
-  return {
-    type: SET_USER_LOCATION_ERROR,
-    payload,
-  };
-}
-
 export function watchUserLocation() {
   return (dispatch) => {
-    return watchPosition()
-      .then((location) => {
+    navigator.geolocation.watchPosition(
+      (position) => {
+        const location = {
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        };
         dispatch(setUserLocation(location));
-      })
-      .catch((err) => dispatch(setUserLocationError(err.message)));
+      },
+      () => {
+        dispatch(setUserLocation(null));
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 60000,
+        maximumAge: 0,
+      }
+    );
   };
-}
-
-export function stopWatchingUserLocation() {
-  return () => stopWatching();
 }

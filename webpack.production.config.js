@@ -42,6 +42,11 @@ module.exports = {
     }),
   ],
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"',
+      },
+    }),
     new HtmlWebpackPlugin({
       template: __dirname + '/src/index.tmpl.html',
     }),

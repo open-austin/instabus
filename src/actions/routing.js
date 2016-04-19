@@ -9,10 +9,7 @@ export function setPathname(payload) {
 }
 
 export function setupRouter(store) {
-  // FIXME: Remove listener on app will unmount
   GlobalHistory.listen((location) => {
     store.dispatch(setPathname(location.pathname));
   });
-
-  store.dispatch(setPathname(location.pathname));
 }

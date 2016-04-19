@@ -28,6 +28,12 @@
   }
 }
 
-.context.iOS {
+.iOS {
   padding: 1px 0;
+}
+
+.minimized {
+  @media (max-width: $desktop - 1px) {
+    display: none;
+  }
 }

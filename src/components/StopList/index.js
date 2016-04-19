@@ -1,85 +1,60 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-import classNames from 'classnames';
-
-import { STOP_LIST_TAB } from 'constants/TabNames';
-import { getStopsForRoute } from 'actions/oba/stops';
 
 import ContextMenu from 'components/ContextMenu';
-import Spinner from 'components/Spinner';
-import StopGroup from 'components/StopList/StopGroup';
-import StopGroupSwitch from 'components/StopList/StopGroupSwitch';
+import { stopGroupSelector } from 'selectors/oba';
+
+import { getStops } from 'actions/oba';
 
 import styles from './styles.scss';
 
-class StopList extends Component {
+class RouteList extends Component {
   static propTypes = {
-    children: PropTypes.node,
-    routeId: PropTypes.string.isRequired,
-
-    stopsForRouteLoading: PropTypes.bool.isRequired,
-
-    getStopsForRoute: PropTypes.func.isRequired,
-
-    showStops: PropTypes.bool.isRequired,
-  };
-
-  static TAB_NAME = STOP_LIST_TAB.name;
-
-  componentWillMount() {
-    this.load();
+    route: PropTypes.object,
+    stops: PropTypes.arrayOf(PropTypes.object),
+    stopsLoading: PropTypes.bool,
+    modal: PropTypes.bool,
+    getStops: PropTypes.func,
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.routeId !== nextProps.routeId) {
-      this.load();
-    }
+  componentDidMount() {
+    if (!this.props.stops) this.props.getStops(this.props.route.options.routeId);
   }
 
-  load() {
-    this.props.getStopsForRoute(this.props.routeId);
+  componentWillUnmount() {
+
   }
 
-  renderStopList = () => {
-    if (this.props.stopsForRouteLoading) {
-      return <Spinner />;
+  _renderStops = () => {
+    const { stopsLoading, stops } = this.props;
+
+    if (stopsLoading) {
+      return (
+        <div className={styles.loading} />
+      );
     }
 
-    return (
-      <div>
-        <StopGroupSwitch />
-        <StopGroup />
-      </div>
-    );
+    return null;
   }
 
   render() {
-    const listStyle = classNames(styles.list, {
-      [`${styles.show}`]: this.props.showStops,
-    });
     return (
-      <div>
-        <ContextMenu>
-          <div className={listStyle}>
-            { this.renderStopList() }
-          </div>
-        </ContextMenu>
-      </div>
+      <ContextMenu minimized={!this.props.modal}>
+        { this._renderStops() }
+      </ContextMenu>
     );
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  showStops: (state) => false,
-  routeId: (state) => state.routing.routeId,
-  stopGroupId: (state) => state.routing.stopGroupId,
-  stopsForRouteLoading: (state) => state.ui.loading.stopsForRouteLoading,
-});
-
 const mapDispatchToProps = {
-  getStopsForRoute,
+  getStops,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StopList);
+const mapStateToProps = (state) => ({
+  stops: stopGroupSelector(state),
+  route: state.ui.route,
+  stopsLoading: state.ui.loading.stops,
+  modal: state.ui.modal.stops,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RouteList);
