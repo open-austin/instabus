@@ -14,6 +14,7 @@ class MapLayer extends Component {
     stops: PropTypes.arrayOf(PropTypes.object),
     userLocation: PropTypes.object,
     watchUserLocation: PropTypes.func,
+    getVehicles: PropTypes.func,
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class MapLayer extends Component {
   }
 
   componentWillUnmount() {
-
+    
   }
 
   render() {

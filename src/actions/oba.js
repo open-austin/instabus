@@ -155,7 +155,6 @@ export function getRoutes() {
       // .catch((err) => handleError(dispatch, err))
       .then(() => {
         dispatch(setRoutesLoading(false));
-        dispatch(watchVehicles());
       });
   };
 }
