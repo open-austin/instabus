@@ -34,8 +34,12 @@ class MapboxWrapper {
       zoomControl: false,
     };
     this.map = L.mapbox.map(mapDiv, 'mapbox.streets', mapInit);
-    this.canvasLayer = L.featureGroup().addTo(this.map);
+    const panes = this.map.getPanes();
+    panes.overlayPane.style.zIndex = 99;
+    panes.overlayPane.style.pointerEvents = 'none';
+    panes.markerPane.style.zIndex = 98;
     this.polylineLayer = L.featureGroup().addTo(this.map);
+    this.canvasLayer = L.featureGroup().addTo(this.map);
     this.stopsLayer = L.featureGroup().addTo(this.map);
     this.pixelRatio = window.devicePixelRatio || 1;
     const busInitSize = 28;
@@ -63,6 +67,7 @@ class MapboxWrapper {
     if (!this.userMarker && location) {
       const locationArray = [location.lat, location.lon];
       this.userMarker = L.marker(locationArray).addTo(this.map);
+      this.userMarker.setZIndexOffset(9999);
       this.userMarker.setIcon(L.divIcon(UserMarker));
     } 
     else if (location && location !== this.userLocation) {
@@ -94,6 +99,7 @@ class MapboxWrapper {
       const options = {
         color: '#157AFC',
         opacity: 0.5,
+        className: 'polyline',
       };
       L.polyline(points, options).addTo(this.polylineLayer);
     }
@@ -104,7 +110,6 @@ class MapboxWrapper {
   }
 
   setVehicles = (vehicles) => {
-    this.canvasLayer.bringToFront();
     let v = [];
     if (this.vehicles) {
       const oldPositions = _.keyBy(this.vehicles, 'id');
