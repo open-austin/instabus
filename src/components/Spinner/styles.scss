@@ -1,0 +1,16 @@
+@import 'globals';
+
+@keyframes spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  margin: 18px auto;
+  width: 18px;
+  height: 18px;
+  border: solid 2px $blue;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: spinner 400ms linear infinite;
+}
