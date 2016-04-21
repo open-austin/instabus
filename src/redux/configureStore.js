@@ -2,11 +2,13 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 
+import { mobile } from 'libs/mobile';
+
 import rootReducer from 'reducers';
 import DevTools from 'redux/DevTools';
 
 let finalCreateStore;
-if (process.env.NODE_ENV !== 'production') {
+if (!mobile && process.env.NODE_ENV !== 'production') {
   finalCreateStore = compose(
     applyMiddleware(thunk),
     applyMiddleware(createLogger()),
