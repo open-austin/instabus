@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import ContextMenu from 'components/ContextMenu';
+import Spinner from 'components/Spinner';
 import RouteItem from './RouteItem';
 import { sortedRoutesSelector } from 'selectors/oba';
 
@@ -26,8 +27,11 @@ class RouteList extends Component {
     const { routesLoading, routes } = this.props;
 
     if (routesLoading) {
+      console.log('loading');
       return (
-        <div className={styles.loading} />
+        <div className={styles.loading}>
+          <Spinner />
+        </div>
       );
     }
 

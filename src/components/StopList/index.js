@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import ContextMenu from 'components/ContextMenu';
+import Spinner from 'components/Spinner';
 import { stopGroupSelector } from 'selectors/oba';
 
 import { getStops } from 'actions/oba';
@@ -30,7 +31,9 @@ class RouteList extends Component {
 
     if (stopsLoading) {
       return (
-        <div className={styles.loading} />
+        <div className={styles.loading}>
+          <Spinner />
+        </div>
       );
     }
 

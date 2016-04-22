@@ -3,6 +3,7 @@ import polyline from 'polyline';
 import canvasOverlay from './CanvasOverlay';
 import UserMarker from './UserMarker';
 import StopMarker from './StopMarker';
+import { mobile } from 'libs/mobile';
 
 class MapboxWrapper {
 
@@ -25,6 +26,8 @@ class MapboxWrapper {
 
   canvasLayer = undefined;
 
+  boundsLayer = undefined;
+
   constructor(mapDiv) {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw';
     const mapInit = {
@@ -38,9 +41,10 @@ class MapboxWrapper {
     panes.overlayPane.style.zIndex = 99;
     panes.overlayPane.style.pointerEvents = 'none';
     panes.markerPane.style.zIndex = 98;
-    this.polylineLayer = L.featureGroup().addTo(this.map);
+    this.boundsLayer = L.featureGroup().addTo(this.map);
+    this.polylineLayer = L.featureGroup().addTo(this.boundsLayer);
     this.canvasLayer = L.featureGroup().addTo(this.map);
-    this.stopsLayer = L.featureGroup().addTo(this.map);
+    this.stopsLayer = L.featureGroup().addTo(this.boundsLayer);
     this.pixelRatio = window.devicePixelRatio || 1;
     const busInitSize = 28;
     this.canvasInitSize = busInitSize + 8;
@@ -66,7 +70,7 @@ class MapboxWrapper {
   setUserLocation = (location) => {
     if (!this.userMarker && location) {
       const locationArray = [location.lat, location.lon];
-      this.userMarker = L.marker(locationArray).addTo(this.map);
+      this.userMarker = L.marker(locationArray).addTo(this.boundsLayer);
       this.userMarker.setZIndexOffset(9999);
       this.userMarker.setIcon(L.divIcon(UserMarker));
     } 
@@ -84,6 +88,11 @@ class MapboxWrapper {
         const locationArray = [stop.coords.lat, stop.coords.lon];
         const stopMarker = L.marker(locationArray).addTo(this.stopsLayer);
         stopMarker.setIcon(L.divIcon(StopMarker));
+      });
+      this.map.fitBounds(this.boundsLayer.getBounds(), {
+        animate: !mobile,
+        paddingTopLeft: [10, 10],
+        paddingBottomRight: [10, 10],
       });
     }
     else if (!stops && this.stops) {

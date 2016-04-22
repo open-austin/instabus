@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import FastClick from 'fastclick';
 
+import { mobile } from 'libs/mobile';
+
 import DevTools from 'redux/DevTools';
 import configureStore from 'redux/configureStore';
 
@@ -17,7 +19,7 @@ const store = window.store = configureStore();
 setupRouter(store);
 
 const renderDevTools = () => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (!mobile && process.env.NODE_ENV !== 'production') {
     return <DevTools />;
   }
 
