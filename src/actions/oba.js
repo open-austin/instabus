@@ -53,6 +53,26 @@ export function setStopsLoading(payload) {
   };
 }
 
+function routeDirection(name) {
+  let stopDirection;
+  if (name.indexOf('NB') > -1) {
+    stopDirection = 'Northbound';
+  }
+  else if (name.indexOf('SB') > -1) {
+    stopDirection = 'Southbound';
+  }
+  else if (name.indexOf('EB') > -1) {
+    stopDirection = 'Eastbound';
+  }
+  else if (name.indexOf('WB') > -1) {
+    stopDirection = 'Westbound';
+  }
+  else {
+    stopDirection = name;
+  }
+  return stopDirection;
+}
+
 export function getStops(routeId) {
   return (dispatch) => {
     dispatch(setStopsLoading(true));
@@ -62,6 +82,7 @@ export function getStops(routeId) {
         const groups = json.data.entry.stopGroupings[0].stopGroups.map((group) => {
           return {
             name: group.name.name,
+            direction: routeDirection(group.name.name),
             polyline: _.maxBy(group.polylines, 'length').points,
             stops: group.stopIds.map((stopId) => {
               return {

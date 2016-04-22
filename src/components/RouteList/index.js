@@ -27,7 +27,6 @@ class RouteList extends Component {
     const { routesLoading, routes } = this.props;
 
     if (routesLoading) {
-      console.log('loading');
       return (
         <div className={styles.loading}>
           <Spinner />

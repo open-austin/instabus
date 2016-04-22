@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 
 import styles from 'styles/base.scss';
 
+import {
+  ALL_ROUTES,
+  ROUTE,
+  DIRECTION,
+  FAVORITES,
+} from 'constants';
+
 import MapLayer from 'components/Map';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
@@ -36,9 +43,11 @@ class App extends Component {
   _renderContext = () => {
     const name = this.props.route.name;
     switch (name) {
-      case 'routes':
+      case ALL_ROUTES:
         return <RouteList />;
-      case 'route':
+      case ROUTE:
+        return <StopList />;
+      case DIRECTION:
         return <StopList />;
       default:
         return null;

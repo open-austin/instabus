@@ -83,6 +83,7 @@ class MapboxWrapper {
 
   setStops = (stops) => {
     if (stops && stops !== this.stops) {
+      this.stopsLayer.clearLayers();
       this.stops = stops;
       this.stops.forEach((stop) => {
         const locationArray = [stop.coords.lat, stop.coords.lon];
@@ -103,6 +104,7 @@ class MapboxWrapper {
 
   setPolyline = (poly) => {
     if (poly && poly !== this.polyline) {
+      this.polylineLayer.clearLayers();
       this.polyline = poly;
       const points = polyline.decode(poly);
       const options = {

@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 
 import {
   ROUTE,
+  DIRECTION,
 } from 'constants';
 
 export const sortedRoutesSelector = createSelector(
@@ -20,7 +21,8 @@ export const vehiclesSelector = createSelector(
   (state) => state.data.vehicles,
   (state) => state.ui.route,
   (vehicles, route) => {
-    if (route.name === ROUTE) {
+    const showStops = (route.name === ROUTE) || (route.name === DIRECTION);
+    if (showStops) {
       const vehicle = vehicles[route.options.routeId];
       return vehicle ? _.map(vehicles[route.options.routeId].trips, v => v) : [];
     }
@@ -37,7 +39,8 @@ export const polylineSelector = createSelector(
   (state) => state.data.stops,
   (state) => state.ui.route,
   (stops, route) => {
-    if (route.name === ROUTE && stops[route.options.routeId]) {
+    const showStops = (route.name === ROUTE) || (route.name === DIRECTION);
+    if (showStops && stops[route.options.routeId]) {
       const polyline = stops[route.options.routeId][0].polyline;
       return polyline;
     }
@@ -50,7 +53,8 @@ export const stopsSelector = createSelector(
   (state) => state.data.stops,
   (state) => state.ui.route,
   (stops, route) => {
-    if (route.name === ROUTE && stops[route.options.routeId]) {
+    const showStops = (route.name === ROUTE) || (route.name === DIRECTION);
+    if (showStops && stops[route.options.routeId]) {
       return stops[route.options.routeId][0].stops;
     }
 
