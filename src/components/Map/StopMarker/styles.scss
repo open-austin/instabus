@@ -5,4 +5,20 @@
   width: 12px;
   border-radius: 50%;
   background: $blue;
+  position: relative;
+}
+
+.popup {
+  top: -60px;
+  left: -90px;
+  position: absolute;
+  height: 70px;
+  width: 180px;
+  background: #fff;
+  display: none;
+  z-index: 9999;
+}
+
+.stop:hover .popup {
+  display: block;
 }

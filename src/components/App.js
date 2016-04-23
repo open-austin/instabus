@@ -30,8 +30,6 @@ class App extends Component {
       this.props.getVehicles();
       this.watchVehicles = setInterval(this.props.getVehicles, 10000);
     });
-    // this.props.getVehicles();
-    // this.watchVehicles = setInterval(this.props.getVehicles, 10000);
   }
 
   componentWillUnmount() {

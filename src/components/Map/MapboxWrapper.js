@@ -1,3 +1,5 @@
+/* global L */
+
 import _ from 'lodash';
 import polyline from 'polyline';
 import canvasOverlay from './CanvasOverlay';
@@ -14,6 +16,7 @@ class MapboxWrapper {
 
   vehicles = undefined;
   vehiclesOverlay = undefined;
+  canvasLayer = undefined;
 
   transitionStartTime = undefined;
   transitionTime = 500;
@@ -22,29 +25,34 @@ class MapboxWrapper {
   polylineLayer = undefined;
 
   stops = undefined;
+  stopMarkers = new Map()
   stopsLayer = undefined;
-
-  canvasLayer = undefined;
 
   boundsLayer = undefined;
 
-  constructor(mapDiv) {
+  constructor(mapDiv, onMouseOverStop, onMouseOutStop) {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw';
     const mapInit = {
       center: [30.291708, -97.746557],
       zoom: 13,
       attributionControl: false,
       zoomControl: false,
+      scrollWheelZoom: false,
     };
     this.map = L.mapbox.map(mapDiv, 'mapbox.streets', mapInit);
+    this.map.on('contextmenu', () => {
+      this.map.zoomOut();
+    });
+    this.onMouseOverStop = onMouseOverStop;
+    this.onMouseOutStop = onMouseOutStop;
     const panes = this.map.getPanes();
     panes.overlayPane.style.zIndex = 99;
     panes.overlayPane.style.pointerEvents = 'none';
     panes.markerPane.style.zIndex = 98;
     this.boundsLayer = L.featureGroup().addTo(this.map);
     this.polylineLayer = L.featureGroup().addTo(this.boundsLayer);
-    this.canvasLayer = L.featureGroup().addTo(this.map);
     this.stopsLayer = L.featureGroup().addTo(this.boundsLayer);
+    this.canvasLayer = L.featureGroup().addTo(this.map);
     this.pixelRatio = window.devicePixelRatio || 1;
     const busInitSize = 28;
     this.canvasInitSize = busInitSize + 8;
@@ -73,12 +81,17 @@ class MapboxWrapper {
       this.userMarker = L.marker(locationArray).addTo(this.boundsLayer);
       this.userMarker.setZIndexOffset(9999);
       this.userMarker.setIcon(L.divIcon(UserMarker));
-    } 
+    }
     else if (location && location !== this.userLocation) {
       const locationArray = [location.lat, location.lon];
       this.userMarker.setLatLng(L.latLng(locationArray));
     }
     this.userLocation = location;
+  }
+
+  setStopsAndPolyline = (stops, poly) => {
+    this.setPolyline(poly);
+    this.setStops(stops);
   }
 
   setStops = (stops) => {
@@ -87,13 +100,15 @@ class MapboxWrapper {
       this.stops = stops;
       this.stops.forEach((stop) => {
         const locationArray = [stop.coords.lat, stop.coords.lon];
-        const stopMarker = L.marker(locationArray).addTo(this.stopsLayer);
+        const stopMarker = L.marker(locationArray, { title: stop.name }).addTo(this.stopsLayer);
         stopMarker.setIcon(L.divIcon(StopMarker));
+        stopMarker.on('mouseover', this.onMouseOverStop);
+        stopMarker.on('mouseout', this.onMouseOutStop);
       });
       this.map.fitBounds(this.boundsLayer.getBounds(), {
         animate: !mobile,
-        paddingTopLeft: [10, 10],
-        paddingBottomRight: [10, 10],
+        paddingTopLeft: [0, 0],
+        paddingBottomRight: [0, 0],
       });
     }
     else if (!stops && this.stops) {
@@ -124,29 +139,25 @@ class MapboxWrapper {
     let v = [];
     if (this.vehicles) {
       const oldPositions = _.keyBy(this.vehicles, 'id');
-      v = vehicles.map((vehicle) => {
-        return {
-          id: vehicle.id,
-          route: vehicle.route.replace('1_', ''),
-          lastPosition: oldPositions[vehicle.id] ? oldPositions[vehicle.id].currentPosition : vehicle.coords,
-          currentPosition: oldPositions[vehicle.id] ? oldPositions[vehicle.id].currentPosition : vehicle.coords,
-          nextPosition: vehicle.coords,
-        };
-      });
+      v = vehicles.map((vehicle) => ({
+        id: vehicle.id,
+        route: vehicle.route.replace('1_', ''),
+        lastPosition: oldPositions[vehicle.id] ? oldPositions[vehicle.id].currentPosition : vehicle.coords,
+        currentPosition: oldPositions[vehicle.id] ? oldPositions[vehicle.id].currentPosition : vehicle.coords,
+        nextPosition: vehicle.coords,
+      }));
       this.vehicles = v;
       this.transitionStartTime = Date.now();
       requestAnimationFrame(this.translateVehicles);
     }
     else {
-      v = vehicles.map((vehicle) => {
-        return {
-          id: vehicle.id,
-          route: vehicle.route.replace('1_', ''),
-          lastPosition: vehicle.coords,
-          currentPosition: vehicle.coords,
-          nextPosition: vehicle.coords,
-        };
-      });
+      v = vehicles.map((vehicle) => ({
+        id: vehicle.id,
+        route: vehicle.route.replace('1_', ''),
+        lastPosition: vehicle.coords,
+        currentPosition: vehicle.coords,
+        nextPosition: vehicle.coords,
+      }));
       this.vehicles = v;
       this.vehiclesOverlay = canvasOverlay()
         .drawing(this.drawOnCanvas)
@@ -195,7 +206,7 @@ class MapboxWrapper {
     requestAnimationFrame(this.translateVehicles);
   }
 
-  drawOnCanvas = (canvasOverlay, params) => {
+  drawOnCanvas = (overlay, params) => {
     const ctx = params.canvas.getContext('2d');
     ctx.scale(this.pixelRatio, this.pixelRatio);
     ctx.clearRect(0, 0, params.canvas.width, params.canvas.height);
@@ -204,7 +215,7 @@ class MapboxWrapper {
     for (let i = 0; i < this.vehicles.length; i++) {
       const v = this.vehicles[i];
       if (v.currentPosition && params.bounds.contains([v.currentPosition.lat, v.currentPosition.lon])) {
-        const dot = canvasOverlay._map.latLngToContainerPoint([v.currentPosition.lat, v.currentPosition.lon]);
+        const dot = overlay._map.latLngToContainerPoint([v.currentPosition.lat, v.currentPosition.lon]);
         const x = dot.x - this.canvasInitSize / 2;
         const y = dot.y - this.canvasInitSize / 2;
         ctx.drawImage(this.oCanvas, x, y, this.canvasInitSize, this.canvasInitSize);

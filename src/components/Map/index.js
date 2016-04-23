@@ -19,14 +19,13 @@ class MapLayer extends Component {
 
   componentDidMount() {
     this.props.watchUserLocation();
-    this.map = new MapboxWrapper('map');
+    this.map = new MapboxWrapper('map', this._onMouseOverStop, this._onMouseOffStop);
   }
 
   componentWillReceiveProps(props) {
     const { userLocation, vehicles, polyline, stops } = props;
     this.map.setUserLocation(userLocation);
-    this.map.setPolyline(polyline);
-    this.map.setStops(stops);
+    this.map.setStopsAndPolyline(stops, polyline);
     this.map.setVehicles(vehicles);
   }
 
@@ -35,7 +34,15 @@ class MapLayer extends Component {
   }
 
   componentWillUnmount() {
-    
+
+  }
+
+  _onMouseOverStop = (e) => {
+    console.log(e);
+  }
+
+  _onMouseOffStop = (e) => {
+    console.log(e);
   }
 
   render() {

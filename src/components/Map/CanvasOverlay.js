@@ -61,11 +61,14 @@ L.CanvasOverlay = L.Class.extend({
         map._panes.overlayPane.appendChild(this._canvas);
 
         map.on('moveend', this._reset, this);
-        map.on('resize',  this._resize, this);
+        map.on('resize', this._resize, this);
+        map.on('move', this._reset, this);
 
         if (map.options.zoomAnimation && L.Browser.any3d) {
             map.on('zoomanim', this._animateZoom, this);
         }
+
+        map.on('zoomend', this._reset, this);
 
         this._reset();
     },
@@ -75,6 +78,8 @@ L.CanvasOverlay = L.Class.extend({
  
         map.off('moveend', this._reset, this);
         map.off('resize', this._resize, this);
+        map.off('move', this._reset, this);
+        map.off('zoomend', this._reset, this);
 
         if (map.options.zoomAnimation) {
             map.off('zoomanim', this._animateZoom, this);

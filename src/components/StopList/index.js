@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { GlobalHistory, Router } from 'libs/routing';
 import {
+  ROUTE,
   DIRECTION,
 } from 'constants';
 
@@ -17,7 +18,7 @@ import styles from './styles.scss';
 class RouteList extends Component {
   static propTypes = {
     route: PropTypes.object,
-    stops: PropTypes.arrayOf(PropTypes.object),
+    stopGroups: PropTypes.arrayOf(PropTypes.object),
     stopsLoading: PropTypes.bool,
     modal: PropTypes.bool,
     getStops: PropTypes.func,
@@ -43,25 +44,41 @@ class RouteList extends Component {
 
   _setDirection = () => {
     const id = this.props.route.options.routeId;
-    const direction = this.props.stops[0].direction.toLowerCase();
+    const direction = this.props.stopGroups[0].direction;
     GlobalHistory.replace(Router.generate(DIRECTION, { routeId: id, routeDirection: direction }));
   }
 
   _setUpRoute = () => {
-    if (!this.props.stops) {
+    if (!this.props.stopGroups) {
       this.props.getStops(this.props.route.options.routeId).then(() => {
-        if (this.props.stops.length > 1) {
+        if (this.props.stopGroups.length > 1) {
           this._setDirection();
         }
       });
     }
-    else if (this.props.stops.length > 1 && !this.props.route.options.direction) {
+    else if (this.props.stopGroups.length > 1 && !this.props.route.options.direction) {
       this._setDirection();
     }
   }
 
+  _renderStop = (stop) => <div key={stop.id}>{stop.name}</div>;
+
   _renderStops = () => {
-    const { stopsLoading, stops } = this.props;
+    const { stopGroups, route } = this.props;
+    if (!stopGroups) return null;
+    let stopGroup;
+    if (stopGroups.length > 1 && route.name === DIRECTION) {
+      stopGroup = stopGroups.filter(group => group.direction === route.options.routeDirection)[0].stops;
+    }
+    else if (stopGroups.length === 1 && route.name === ROUTE) {
+      stopGroup = stopGroups[0].stops;
+    }
+    if (!stopGroup) return null;
+    return stopGroup.map(this._renderStop);
+  }
+
+  _renderStopGroups = () => {
+    const { stopsLoading } = this.props;
 
     if (stopsLoading) {
       return (
@@ -71,13 +88,17 @@ class RouteList extends Component {
       );
     }
 
-    return null;
+    return (
+      <div className={styles.list}>
+        { this._renderStops() }
+      </div>
+    );
   }
 
   render() {
     return (
       <ContextMenu minimized={!this.props.modal}>
-        { this._renderStops() }
+        { this._renderStopGroups() }
       </ContextMenu>
     );
   }
@@ -88,7 +109,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  stops: stopGroupSelector(state),
+  stopGroups: stopGroupSelector(state),
   route: state.ui.route,
   stopsLoading: state.ui.loading.stops,
   modal: state.ui.modal.stops,

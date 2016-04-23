@@ -56,16 +56,22 @@ export function setStopsLoading(payload) {
 function routeDirection(name) {
   let stopDirection;
   if (name.indexOf('NB') > -1) {
-    stopDirection = 'Northbound';
+    stopDirection = 'northbound';
   }
   else if (name.indexOf('SB') > -1) {
-    stopDirection = 'Southbound';
+    stopDirection = 'southbound';
   }
   else if (name.indexOf('EB') > -1) {
-    stopDirection = 'Eastbound';
+    stopDirection = 'eastbound';
   }
   else if (name.indexOf('WB') > -1) {
-    stopDirection = 'Westbound';
+    stopDirection = 'westbound';
+  }
+  else if (name.indexOf('IB') > -1) {
+    stopDirection = 'inbound';
+  }
+  else if (name.indexOf('OB') > -1) {
+    stopDirection = 'outbound';
   }
   else {
     stopDirection = name;
@@ -86,6 +92,7 @@ export function getStops(routeId) {
             polyline: _.maxBy(group.polylines, 'length').points,
             stops: group.stopIds.map((stopId) => {
               return {
+                id: stopId,
                 name: stops[stopId].name,
                 coords: {
                   lat: stops[stopId].lat,
