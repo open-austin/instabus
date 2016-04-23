@@ -14,6 +14,7 @@ import MapLayer from 'components/Map';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
 import NavBar from 'components/NavBar';
+import VehiclesLoading from 'components/VehiclesLoading';
 
 import { getRoutes, getVehicles } from 'actions/oba';
 
@@ -56,6 +57,7 @@ class App extends Component {
     return (
       <div className={styles.container}>
         <MapLayer />
+        <VehiclesLoading />
         <NavBar />
         { this._renderContext() }
       </div>
