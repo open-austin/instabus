@@ -9,6 +9,7 @@ import {
 
 import ContextMenu from 'components/ContextMenu';
 import Spinner from 'components/Spinner';
+import StopGroupSwitcher from './StopGroupSwitcher';
 import { stopGroupSelector } from 'selectors/oba';
 
 import { getStops } from 'actions/oba';
@@ -18,7 +19,7 @@ import styles from './styles.scss';
 class RouteList extends Component {
   static propTypes = {
     route: PropTypes.object,
-    stopGroups: PropTypes.arrayOf(PropTypes.object),
+    stopGroups: PropTypes.object,
     stopsLoading: PropTypes.bool,
     modal: PropTypes.bool,
     getStops: PropTypes.func,
@@ -44,43 +45,42 @@ class RouteList extends Component {
 
   _setDirection = () => {
     const id = this.props.route.options.routeId;
-    const direction = this.props.stopGroups[0].direction;
+    const direction = this.props.stopGroups.directions[0];
     GlobalHistory.replace(Router.generate(DIRECTION, { routeId: id, routeDirection: direction }));
   }
 
   _setUpRoute = () => {
     if (!this.props.stopGroups) {
       this.props.getStops(this.props.route.options.routeId).then(() => {
-        if (this.props.stopGroups.length > 1) {
+        if (this.props.stopGroups.directions.length > 1 && !this.props.route.options.routeDirection) {
           this._setDirection();
         }
       });
     }
-    else if (this.props.stopGroups.length > 1 && !this.props.route.options.direction) {
+    else if (this.props.stopGroups.directions.length > 1 && !this.props.route.options.routeDirection) {
       this._setDirection();
     }
   }
 
-  _renderStop = (stop) => <div key={stop.id}>{stop.name}</div>;
+  _renderStop = (stop) => <div className={styles.stopRow} key={stop.id}>{stop.name}</div>;
 
   _renderStops = () => {
     const { stopGroups, route } = this.props;
-    if (!stopGroups) return null;
     let stopGroup;
-    if (stopGroups.length > 1 && route.name === DIRECTION) {
-      stopGroup = stopGroups.filter(group => group.direction === route.options.routeDirection)[0].stops;
+    if (stopGroups.directions.length > 1 && route.name === DIRECTION) {
+      stopGroup = stopGroups.groups[route.options.routeDirection].stops;
     }
-    else if (stopGroups.length === 1 && route.name === ROUTE) {
-      stopGroup = stopGroups[0].stops;
+    else if (stopGroups.directions.length === 1 && route.name === ROUTE) {
+      stopGroup = stopGroups.groups[stopGroups.directions[0]].stops;
     }
     if (!stopGroup) return null;
     return stopGroup.map(this._renderStop);
   }
 
-  _renderStopGroups = () => {
-    const { stopsLoading } = this.props;
+  _renderStopGroup = () => {
+    const { stopsLoading, stopGroups, route } = this.props;
 
-    if (stopsLoading) {
+    if (stopsLoading || !stopGroups) {
       return (
         <div className={styles.loading}>
           <Spinner />
@@ -95,10 +95,38 @@ class RouteList extends Component {
     );
   }
 
+  _renderSwitcher = () => {
+    const { stopsLoading, stopGroups, route } = this.props;
+
+    if (stopsLoading || !stopGroups || !route.options.routeDirection) return null;
+
+    return (
+      <StopGroupSwitcher
+        directions={stopGroups.directions}
+        route={route}
+      />
+    );
+  }
+
+  _renderRouteInfo = () => {
+    const { stopsLoading, stopGroups } = this.props;
+
+    if (stopsLoading || !stopGroups) return null;
+
+    return (
+      <div className={styles.info}>
+        <div className={styles.routeNumber}>{stopGroups.route.shortName}</div>
+        <div className={styles.routeName}>{stopGroups.route.longName}</div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <ContextMenu minimized={!this.props.modal}>
-        { this._renderStopGroups() }
+        { this._renderSwitcher() }
+        { this._renderRouteInfo() }
+        { this._renderStopGroup() }
       </ContextMenu>
     );
   }

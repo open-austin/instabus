@@ -16,7 +16,7 @@ import StopList from 'components/StopList';
 import NavBar from 'components/NavBar';
 import VehiclesLoading from 'components/VehiclesLoading';
 
-import { getRoutes, getVehicles } from 'actions/oba';
+import { getRoutes, getVehicles, initialVehiclesLoaded } from 'actions/oba';
 
 class App extends Component {
   static propTypes = {
@@ -24,13 +24,14 @@ class App extends Component {
     route: PropTypes.object,
     getRoutes: PropTypes.func,
     getVehicles: PropTypes.func,
+    initialVehiclesLoaded: PropTypes.func,
   }
 
   componentDidMount() {
-    this.props.getRoutes().then(() => {
-      this.props.getVehicles();
-      this.watchVehicles = setInterval(this.props.getVehicles, 10000);
+    this.props.getVehicles().then(() => {
+      this.props.initialVehiclesLoaded();
     });
+    this.watchVehicles = setInterval(this.props.getVehicles, 3000);
   }
 
   componentWillUnmount() {
@@ -68,6 +69,7 @@ class App extends Component {
 const mapDispatchToProps = {
   getRoutes,
   getVehicles,
+  initialVehiclesLoaded,
 };
 
 const mapStateToProps = (state) => ({

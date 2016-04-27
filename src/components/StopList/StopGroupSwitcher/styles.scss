@@ -1,0 +1,49 @@
+@import 'globals';
+
+.sliderWrap {
+  width: calc(100% - 20px);
+  height: 30px;
+  margin: 10px 10px 0;
+  position: relative;
+}
+
+.toggles {
+  height: 30px;
+  width: 100%;
+  border-radius: 15px;
+  border: 1px $routeBtnBorder solid;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border: 1px $routeBtnIconStroke solid;
+  width: 50%;
+  border-radius: 15px;
+  transition: transform ease-in 0.2s;
+  pointer-events: none;
+}
+
+.label {
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  line-height: 28px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.labelText {
+  pointer-events: none;
+  color: $routeBtnText;
+}
+
+.hover:hover .labelText, .pressed .labelText {
+  color: $routeBtnBorder;
+}
+
+.input {
+  display: none;
+}

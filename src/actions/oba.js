@@ -9,6 +9,7 @@ import {
   SET_VEHICLES,
   SET_STOPS,
   SET_STOPS_LOADING,
+  INITIAL_VEHICLES_LOADED,
 } from 'constants/ActionTypes';
 
 export function setRoutes(payload) {
@@ -22,6 +23,12 @@ export function setRoutesLoading(payload) {
   return {
     type: SET_ROUTES_LOADING,
     payload,
+  };
+}
+
+export function initialVehiclesLoaded() {
+  return {
+    type: INITIAL_VEHICLES_LOADED,
   };
 }
 
@@ -74,7 +81,7 @@ function routeDirection(name) {
     stopDirection = 'outbound';
   }
   else {
-    stopDirection = name;
+    stopDirection = _(name).toLower().replace(/[0-9]/g, '').trim().replace(' ', '-');
   }
   return stopDirection;
 }
@@ -84,26 +91,44 @@ export function getStops(routeId) {
     dispatch(setStopsLoading(true));
     return oba(`stops-for-route/${routeId}`)
       .then(json => {
+        const route = _.find(json.data.references.routes, { id: json.data.entry.routeId });
         const stops = _.keyBy((json.data.references.stops), 'id');
-        const groups = json.data.entry.stopGroupings[0].stopGroups.map((group) => {
-          return {
-            name: group.name.name,
-            direction: routeDirection(group.name.name),
-            polyline: _.maxBy(group.polylines, 'length').points,
-            stops: group.stopIds.map((stopId) => {
-              return {
-                id: stopId,
-                name: stops[stopId].name,
-                coords: {
-                  lat: stops[stopId].lat,
-                  lon: stops[stopId].lon,
-                },
-              };
-            }),
-          };
-        });
+        const directions = [];
+        const groups = _(json.data.entry.stopGroupings[0].stopGroups)
+          .map((group) => {
+            const direction = routeDirection(group.name.name);
+            directions.push(direction);
+            return {
+              name: group.name.name,
+              direction,
+              polyline: _.maxBy(group.polylines, 'length').points,
+              stops: group.stopIds.map((stopId) => {
+                const stopName = stops[stopId].name;
+                const lowerName = _.toLower(stopName);
+                const spaced = _.replace(lowerName, '/', ' / ');
+                const words = _.words(spaced, /[^, ]+/g);
+                const upperFirst = _.map(words, _.upperFirst);
+                const joined = _.join(upperFirst, ' ');
+                const unspaced = _.replace(joined, ' / ', '/');
+                return {
+                  id: stopId,
+                  name: unspaced,
+                  coords: {
+                    lat: stops[stopId].lat,
+                    lon: stops[stopId].lon,
+                  },
+                };
+              }),
+            };
+          })
+          .keyBy('direction')
+          .value();
         dispatch(setStops({
-          [`${routeId}`]: groups,
+          [`${routeId}`]: {
+            route,
+            directions,
+            groups,
+          },
         }));
       })
       // .catch((err) => handleError(dispatch, err))
@@ -113,72 +138,72 @@ export function getStops(routeId) {
   };
 }
 
+function vehicleDirection(name) {
+  let stopDirection;
+  if (name.indexOf('NB') > -1) {
+    stopDirection = 'northbound';
+  }
+  else if (name.indexOf('SB') > -1) {
+    stopDirection = 'southbound';
+  }
+  else if (name.indexOf('EB') > -1) {
+    stopDirection = 'eastbound';
+  }
+  else if (name.indexOf('WB') > -1) {
+    stopDirection = 'westbound';
+  }
+  else if (name.indexOf('IB') > -1) {
+    stopDirection = 'inbound';
+  }
+  else if (name.indexOf('OB') > -1) {
+    stopDirection = 'outbound';
+  }
+  else {
+    stopDirection = null;
+  }
+  return stopDirection;
+}
+
 export function getVehicles() {
   return (dispatch, getState) => {
     dispatch(setVehiclesLoading(true));
-    const routes = getState().data.routes;
-    let promises = [];
-    for (const route in routes) {
-      const promise = new Promise((resolve, reject) => {
-        oba(`trips-for-route/${route}`)
-          .then(json => {
-            const tripsForRoute = {
-              routeId: route,
-              trips: json.data.list.map(trip => trip.tripId),
-            };
-            resolve(tripsForRoute);
-          });
-      });
-      promises.push(promise);
-    }
-    const allVehicles = new Promise((resolve, reject) => {
-      oba('vehicles-for-agency/1')
-        .then(json => {
-          const vehicles = _.keyBy((json.data.list), 'tripId');
-          resolve(vehicles);
-        });
-    });
-    promises.push(allVehicles);
-    Promise.all(promises).then((values) => {
-      const vehiclePositions = values.pop();
-      let buses = values.map((route) => {
-        const trips = route.trips.filter((trip) => {
-          return vehiclePositions[trip] !== undefined;
-        }).map((trip) => {
-          return {
-            id: vehiclePositions[trip].vehicleId,
-            coords: vehiclePositions[trip].location,
-            route: route.routeId,
-          };
-        });
-        return {
-          id: route.routeId,
-          trips,
+    const currentAgency = getState().ui.currentAgency;
+    return oba(`vehicles-for-agency/${currentAgency}`)
+      .then(json => {
+        const routes = _(json.data.references.routes).keyBy('id').value();
+        const trips = _(json.data.references.trips).keyBy('id').value();
+        const allVehicles = _(json.data.list)
+          .filter(vehicle => vehicle.tripStatus)
+          .map(vehicle => ({
+            ...vehicle,
+            route: {
+              id: trips[vehicle.tripId].routeId,
+              shortName: routes[trips[vehicle.tripId].routeId].shortName,
+              direction: vehicleDirection(trips[vehicle.tripId].tripHeadsign),
+            },
+          }))
+          .value();
+        const vehiclesByRoute = _(allVehicles)
+          .groupBy('route.id')
+          .value();
+        const vehicles = {
+          allVehicles,
+          vehiclesByRoute,
         };
+        dispatch(setVehicles(vehicles));
+        dispatch(setVehiclesLoading(false));
       });
-      buses = _.keyBy((buses), 'id');
-      dispatch(setVehicles(buses));
-      dispatch(setVehiclesLoading(false));
-    });
-  };
-}
-
-export function watchVehicles() {
-  return (dispatch) => {
-    dispatch(getVehicles());
-    setInterval(() => {
-      dispatch(getVehicles());
-    }, 20000);
   };
 }
 
 export function getRoutes() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(setRoutesLoading(true));
-    return oba('routes-for-agency/1')
+    const currentAgency = getState().ui.currentAgency;
+    return oba(`routes-for-agency/${currentAgency}`)
       .then(json => {
-        const routesById = _.keyBy((json.data.list), 'id');
-        dispatch(setRoutes(routesById));
+        const routes = _.sortBy(json.data.list, route => parseInt(route.shortName, 10));
+        dispatch(setRoutes(routes));
       })
       // .catch((err) => handleError(dispatch, err))
       .then(() => {

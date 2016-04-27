@@ -15,14 +15,16 @@
         width: 100vw;
         background: #fff;
       }
-      .leaflet-control-zoom, .leaflet-control-attribution {
+      .leaflet-control-zoom, .leaflet-control-attribution, .mapbox-logo, .leaflet-popup-tip-container {
         display: none;
       }
-      .mapbox-logo {
-        display: none;
+      .leaflet-popup-content {
+        padding: 0 !important;
       }
-      .leaflet-overlay-pane svg {
-        z-index: -1 !important;
+      .leaflet-popup-content-wrapper {
+        pointer-events: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
       }
     </style>
   </head>

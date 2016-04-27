@@ -1,11 +1,13 @@
 export default {
   ui: {
     globalError: null,
+    currentAgency: 1,
     route: {
       name: 'routes',
       options: {},
     },
     userLocation: null,
+    initialVehiclesLoaded: false,
     loading: {
       routes: false,
       vehicles: false,
@@ -18,8 +20,11 @@ export default {
     },
   },
   data: {
-    routes: {},
-    stops: {},
-    vehicles: {},
+    routes: [],
+    stopGroups: {},
+    vehicles: {
+      allVehicles: [],
+      vehiclesByRoute: {},
+    },
   },
 };

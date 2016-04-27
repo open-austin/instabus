@@ -19,7 +19,7 @@ class MapLayer extends Component {
 
   componentDidMount() {
     this.props.watchUserLocation();
-    this.map = new MapboxWrapper('map', this._onMouseOverStop, this._onMouseOffStop);
+    this.map = new MapboxWrapper('map');
   }
 
   componentWillReceiveProps(props) {
@@ -35,14 +35,6 @@ class MapLayer extends Component {
 
   componentWillUnmount() {
 
-  }
-
-  _onMouseOverStop = (e) => {
-    console.log(e);
-  }
-
-  _onMouseOffStop = (e) => {
-    console.log(e);
   }
 
   render() {

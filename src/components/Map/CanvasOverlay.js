@@ -58,7 +58,14 @@ L.CanvasOverlay = L.Class.extend({
         L.DomUtil.addClass(this._canvas, 'leaflet-zoom-' + (animated ? 'animated' : 'hide'));
 
 
-        map._panes.overlayPane.appendChild(this._canvas);
+        map._panes.markerPane.appendChild(this._canvas);
+        this._canvas.style.pointerEvents = 'none';
+        this._canvas.style.zIndex = 10000;
+        this._canvas.style.position = 'fixed';
+        this._canvas.style.top = 0;
+        this._canvas.style.bottom = 0;
+        this._canvas.style.left = 0;
+        this._canvas.style.right = 0;
 
         map.on('moveend', this._reset, this);
         map.on('resize', this._resize, this);
@@ -74,7 +81,7 @@ L.CanvasOverlay = L.Class.extend({
     },
 
     onRemove: function (map) {
-        map.getPanes().overlayPane.removeChild(this._canvas);
+        map.getPanes().markerPane.removeChild(this._canvas);
  
         map.off('moveend', this._reset, this);
         map.off('resize', this._resize, this);
