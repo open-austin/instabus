@@ -52,7 +52,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  routes: state.data.routes,
+  routes: state.data.routes.orderedRoutes,
   routesLoading: state.ui.loading.routes,
   modal: state.ui.modal.routes,
 });

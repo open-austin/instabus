@@ -6,10 +6,13 @@ import UserMarker from './UserMarker';
 import StopMarker from './StopMarker';
 import stopPopup from './StopPopup';
 import { mobile } from 'libs/mobile';
+import rbush from 'rbush';
 
 class MapboxWrapper {
 
   map = undefined;
+
+  tree = rbush();
 
   userLocation = undefined;
   userMarker = undefined;
@@ -43,6 +46,12 @@ class MapboxWrapper {
     this.map.on('contextmenu', () => {
       this.map.zoomOut();
     });
+    this.map.on('mousemove', (e) => {
+      const { containerPoint } = e;
+      const { x, y } = containerPoint;
+      const result = this.tree.search([ x, y, x, y]);
+      console.log(result);
+    });
     const panes = this.map.getPanes();
     panes.overlayPane.style.pointerEvents = 'none';
     this.boundsLayer = L.featureGroup().addTo(this.map);
@@ -51,7 +60,9 @@ class MapboxWrapper {
     this.canvasLayer = L.featureGroup().addTo(this.map);
     this.pixelRatio = window.devicePixelRatio || 1;
     const busInitSize = 28;
+    this.busInitRadius = busInitSize / 2;
     this.canvasInitSize = busInitSize + 20;
+    this.canvasInitRadius = this.canvasInitSize / 2;
     const canvasSize = this.canvasInitSize * this.pixelRatio;
     const busSize = busInitSize * this.pixelRatio;
     const radius = busSize / 2;
@@ -317,17 +328,19 @@ class MapboxWrapper {
   }
 
   drawOnCanvas = (overlay, params) => {
+    this.tree.clear();
     const ctx = params.canvas.getContext('2d');
     ctx.scale(this.pixelRatio, this.pixelRatio);
     ctx.clearRect(0, 0, params.canvas.width, params.canvas.height);
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
     for (let i = 0; i < this.vehicles.length; i++) {
+      const boundings = [];
       const v = this.vehicles[i];
       if (v.currentPosition && params.bounds.contains([v.currentPosition.lat, v.currentPosition.lon])) {
         const dot = overlay._map.latLngToContainerPoint([v.currentPosition.lat, v.currentPosition.lon]);
-        const x = dot.x - this.canvasInitSize / 2;
-        const y = dot.y - this.canvasInitSize / 2;
+        const x = dot.x - this.canvasInitRadius;
+        const y = dot.y - this.canvasInitRadius;
         switch (v.direction) {
           case 'eastbound':
             ctx.drawImage(this.eastCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
@@ -348,7 +361,9 @@ class MapboxWrapper {
         const textX = dot.x;
         const textY = dot.y + 5;
         ctx.fillText(v.route, textX, textY);
+        boundings.push([dot.x - this.busInitRadius, dot.y - this.busInitRadius, dot.x + this.busInitRadius, dot.y + this.busInitRadius, { id: v.id }]);
       }
+      this.tree.load(boundings);
     }
   };
 

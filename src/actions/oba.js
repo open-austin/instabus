@@ -211,7 +211,12 @@ export function getRoutes() {
     const currentAgency = getState().ui.currentAgency;
     return oba(`routes-for-agency/${currentAgency}`)
       .then(json => {
-        const routes = _.sortBy(json.data.list, route => parseInt(route.shortName, 10));
+        const orderedRoutes = _.sortBy(json.data.list, route => parseInt(route.shortName, 10));
+        const routesById = _.keyBy(orderedRoutes, 'id');
+        const routes = {
+          orderedRoutes,
+          routesById,
+        };
         dispatch(setRoutes(routes));
       })
       // .catch((err) => handleError(dispatch, err))

@@ -20,7 +20,10 @@ export default {
     },
   },
   data: {
-    routes: [],
+    routes: {
+      orderedRoutes: [],
+      routesById: {},
+    },
     stopGroups: {},
     vehicles: {
       allVehicles: [],
