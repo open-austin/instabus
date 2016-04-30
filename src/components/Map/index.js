@@ -25,8 +25,7 @@ class MapLayer extends Component {
   componentWillReceiveProps(props) {
     const { userLocation, vehicles, polyline, stops } = props;
     this.map.setUserLocation(userLocation);
-    this.map.setPolyline(polyline);
-    this.map.setStops(stops);
+    this.map.setStopsAndPolyline(stops, polyline);
     this.map.setVehicles(vehicles);
   }
 
@@ -35,7 +34,7 @@ class MapLayer extends Component {
   }
 
   componentWillUnmount() {
-    
+
   }
 
   render() {

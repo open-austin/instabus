@@ -10,5 +10,6 @@ export const Router = uniloc(
     routes: 'GET /',
     favorites: 'GET /favorites',
     route: 'GET /route/:routeId',
+    direction: 'GET /route/:routeId/:routeDirection',
   },
 );

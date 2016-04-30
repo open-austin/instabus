@@ -1,0 +1,37 @@
+.wrap {
+  position: absolute;
+  height: 26px;
+  width: 128px;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  top: calc(50% - 15px);
+  left: calc(50% - 64px);
+  border-radius: 4px;
+  font-size: 0;
+  line-height: 0;
+}
+
+@keyframes spinner {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  display: inline-block;
+  margin: 6px;
+  width: 14px;
+  height: 14px;
+  border: solid 2px #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: spinner 400ms linear infinite;
+}
+
+.text {
+  vertical-align: top;
+  font-size: 14px;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+}

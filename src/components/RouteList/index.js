@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ContextMenu from 'components/ContextMenu';
 import Spinner from 'components/Spinner';
 import RouteItem from './RouteItem';
-import { sortedRoutesSelector } from 'selectors/oba';
+import { getRoutes } from 'actions/oba';
 
 import styles from './styles.scss';
 
@@ -13,10 +13,11 @@ class RouteList extends Component {
     routes: PropTypes.arrayOf(PropTypes.object),
     routesLoading: PropTypes.bool,
     modal: PropTypes.bool,
+    getRoutes: PropTypes.func,
   }
 
-  componentDidUpdate() {
-
+  componentDidMount() {
+    if (!this.props.routes.length) this.props.getRoutes();
   }
 
   componentWillUnmount() {
@@ -27,7 +28,6 @@ class RouteList extends Component {
     const { routesLoading, routes } = this.props;
 
     if (routesLoading) {
-      console.log('loading');
       return (
         <div className={styles.loading}>
           <Spinner />
@@ -47,10 +47,14 @@ class RouteList extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  getRoutes,
+};
+
 const mapStateToProps = (state) => ({
-  routes: sortedRoutesSelector(state),
+  routes: state.data.routes.orderedRoutes,
   routesLoading: state.ui.loading.routes,
   modal: state.ui.modal.routes,
 });
 
-export default connect(mapStateToProps)(RouteList);
+export default connect(mapStateToProps, mapDispatchToProps)(RouteList);

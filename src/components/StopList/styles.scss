@@ -1,0 +1,22 @@
+.info {
+  text-align: center;
+  padding: 25px 0 25px;
+}
+
+.routeNumber {
+  font-size: 24px;
+}
+
+.routeName {
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.stopRow {
+  height: 60px;
+  width: 100%;
+  border-top: 1px #e0e0e0 solid;
+  cursor: default;
+  line-height: 59px;
+  padding-left: 20px;
+}

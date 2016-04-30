@@ -3,42 +3,39 @@ import { createSelector } from 'reselect';
 
 import {
   ROUTE,
+  DIRECTION,
 } from 'constants';
-
-export const sortedRoutesSelector = createSelector(
-  (state) => state.data.routes,
-  (routes) => _.sortBy(routes, (o) => parseInt(o.shortName, 10))
-);
 
 export const stopGroupSelector = createSelector(
   (state) => state.ui.route.options.routeId,
-  (state) => state.data.stops,
-  (routeId, stops) => stops[routeId],
+  (state) => state.data.stopGroups,
+  (routeId, stopGroups) => stopGroups[routeId],
 );
 
 export const vehiclesSelector = createSelector(
   (state) => state.data.vehicles,
   (state) => state.ui.route,
   (vehicles, route) => {
-    if (route.name === ROUTE) {
-      const vehicle = vehicles[route.options.routeId];
-      return vehicle ? _.map(vehicles[route.options.routeId].trips, v => v) : [];
+    const showStops = (route.name === ROUTE) || (route.name === DIRECTION);
+    if (showStops) {
+      return vehicles.vehiclesByRoute[route.options.routeId] || [];
     }
 
-    let allBuses = [];
-    _.forEach(vehicles, (vehicle) => {
-      allBuses = allBuses.concat(_.map(vehicle.trips, trip => trip));
-    });
-    return allBuses;
+    return vehicles.allVehicles;
   }
 );
 
 export const polylineSelector = createSelector(
-  (state) => state.data.stops,
+  (state) => state.data.stopGroups,
   (state) => state.ui.route,
-  (stops, route) => {
-    if (route.name === ROUTE && stops[route.options.routeId]) {
-      const polyline = stops[route.options.routeId][0].polyline;
+  (stopGroups, route) => {
+    if (route.name === ROUTE && stopGroups[route.options.routeId]) {
+      const direction = stopGroups[route.options.routeId].directions[0];
+      const polyline = stopGroups[route.options.routeId].groups[direction].polyline;
+      return polyline;
+    }
+    else if (route.name === DIRECTION && stopGroups[route.options.routeId]) {
+      const polyline = stopGroups[route.options.routeId].groups[route.options.routeDirection].polyline;
       return polyline;
     }
 
@@ -47,11 +44,17 @@ export const polylineSelector = createSelector(
 );
 
 export const stopsSelector = createSelector(
-  (state) => state.data.stops,
+  (state) => state.data.stopGroups,
   (state) => state.ui.route,
-  (stops, route) => {
-    if (route.name === ROUTE && stops[route.options.routeId]) {
-      return stops[route.options.routeId][0].stops;
+  (stopGroups, route) => {
+    if (route.name === ROUTE && stopGroups[route.options.routeId]) {
+      const direction = stopGroups[route.options.routeId].directions[0];
+      const polyline = stopGroups[route.options.routeId].groups[direction].stops;
+      return polyline;
+    }
+    else if (route.name === DIRECTION && stopGroups[route.options.routeId]) {
+      const polyline = stopGroups[route.options.routeId].groups[route.options.routeDirection].stops;
+      return polyline;
     }
 
     return null;

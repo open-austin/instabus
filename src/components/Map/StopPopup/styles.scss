@@ -1,0 +1,39 @@
+@import 'globals';
+
+.wrap {
+
+}
+
+.popup {
+  transform: translateX(50%);
+  display: flex;
+  align-items: center;
+}
+
+.arrowWrap {
+  position: relative;
+  height: 14px;
+  padding: 1px 0;
+  width: 6px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.arrow {
+  width: 0; 
+  height: 0; 
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid #fff;
+}
+
+.text {
+  @extend .whiteBox;
+  position: relative;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 4px;
+  line-height: 28px;
+  color: #000;
+  z-index: 1;
+}

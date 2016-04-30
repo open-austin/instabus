@@ -3,12 +3,20 @@ import { connect } from 'react-redux';
 
 import styles from 'styles/base.scss';
 
+import {
+  ALL_ROUTES,
+  ROUTE,
+  DIRECTION,
+  FAVORITES,
+} from 'constants';
+
 import MapLayer from 'components/Map';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
 import NavBar from 'components/NavBar';
+import VehiclesLoading from 'components/VehiclesLoading';
 
-import { getRoutes, getVehicles } from 'actions/oba';
+import { getRoutes, getVehicles, initialVehiclesLoaded } from 'actions/oba';
 
 class App extends Component {
   static propTypes = {
@@ -16,15 +24,14 @@ class App extends Component {
     route: PropTypes.object,
     getRoutes: PropTypes.func,
     getVehicles: PropTypes.func,
+    initialVehiclesLoaded: PropTypes.func,
   }
 
   componentDidMount() {
-    this.props.getRoutes().then(() => {
-      this.props.getVehicles();
-      this.watchVehicles = setInterval(this.props.getVehicles, 10000);
+    this.props.getVehicles().then(() => {
+      this.props.initialVehiclesLoaded();
     });
-    // this.props.getVehicles();
-    // this.watchVehicles = setInterval(this.props.getVehicles, 10000);
+    this.watchVehicles = setInterval(this.props.getVehicles, 3000);
   }
 
   componentWillUnmount() {
@@ -36,9 +43,11 @@ class App extends Component {
   _renderContext = () => {
     const name = this.props.route.name;
     switch (name) {
-      case 'routes':
+      case ALL_ROUTES:
         return <RouteList />;
-      case 'route':
+      case ROUTE:
+        return <StopList />;
+      case DIRECTION:
         return <StopList />;
       default:
         return null;
@@ -49,6 +58,7 @@ class App extends Component {
     return (
       <div className={styles.container}>
         <MapLayer />
+        <VehiclesLoading />
         <NavBar />
         { this._renderContext() }
       </div>
@@ -59,6 +69,7 @@ class App extends Component {
 const mapDispatchToProps = {
   getRoutes,
   getVehicles,
+  initialVehiclesLoaded,
 };
 
 const mapStateToProps = (state) => ({

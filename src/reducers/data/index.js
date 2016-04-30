@@ -22,7 +22,7 @@ function vehicles(state = InitialState.data.vehicles, action = {}) {
   return state;
 }
 
-function stops(state = InitialState.data.stops, action = {}) {
+function stopGroups(state = InitialState.data.stopGroups, action = {}) {
   if (action.type === SET_STOPS) {
     return {
       ...state,
@@ -35,5 +35,5 @@ function stops(state = InitialState.data.stops, action = {}) {
 export default combineReducers({
   routes,
   vehicles,
-  stops,
+  stopGroups,
 });
