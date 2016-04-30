@@ -87,6 +87,16 @@ function routeDirection(name) {
   return stopDirection;
 }
 
+function stopName(name) {
+  const lowerName = _.toLower(name);
+  const spaced = _.replace(lowerName, '/', ' / ');
+  const words = _.words(spaced, /[^, ]+/g);
+  const upperFirst = _.map(words, _.upperFirst);
+  const joined = _.join(upperFirst, ' ');
+  const unspaced = _.replace(joined, ' / ', '/');
+  return unspaced;
+}
+
 export function getStops(routeId) {
   return (dispatch) => {
     dispatch(setStopsLoading(true));
@@ -108,16 +118,10 @@ export function getStops(routeId) {
                 points: polyline.decode(longestPolyline),
               },
               stops: group.stopIds.map((stopId) => {
-                const stopName = stops[stopId].name;
-                const lowerName = _.toLower(stopName);
-                const spaced = _.replace(lowerName, '/', ' / ');
-                const words = _.words(spaced, /[^, ]+/g);
-                const upperFirst = _.map(words, _.upperFirst);
-                const joined = _.join(upperFirst, ' ');
-                const unspaced = _.replace(joined, ' / ', '/');
+                const name = stopName(stops[stopId].name);
                 return {
                   id: stopId,
-                  name: unspaced,
+                  name,
                   coords: {
                     lat: stops[stopId].lat,
                     lon: stops[stopId].lon,
