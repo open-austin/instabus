@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 
 import { GlobalHistory, Router } from 'libs/routing';
 
+import SaveButton from './SaveButton';
+import StopsButton from './StopsButton';
+
 import {
   ROUTE,
 } from 'constants';
@@ -48,6 +51,10 @@ export default class RouteItem extends Component {
             <div className={styles.caretBottom} />
           </div>
         </a>
+        <div className={styles.btns}>
+          <SaveButton />
+          <StopsButton />
+        </div>
       </div>
     );
   }

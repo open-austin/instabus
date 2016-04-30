@@ -1,7 +1,6 @@
 /* global L */
 
 import _ from 'lodash';
-import polyline from 'polyline';
 import canvasOverlay from './CanvasOverlay';
 import UserMarker from './UserMarker';
 import StopMarker from './StopMarker';
@@ -225,19 +224,18 @@ class MapboxWrapper {
     }
   }
 
-  setPolyline = (poly) => {
-    if (poly && poly !== this.polyline) {
+  setPolyline = (polyline) => {
+    if (polyline && (!this.polyline || polyline.encoded !== this.polyline.encoded)) {
       this.polylineLayer.clearLayers();
-      this.polyline = poly;
-      const points = polyline.decode(poly);
+      this.polyline = polyline;
       const options = {
         color: '#157AFC',
         opacity: 0.5,
         className: 'polyline',
       };
-      L.polyline(points, options).addTo(this.polylineLayer);
+      L.polyline(this.polyline.points, options).addTo(this.polylineLayer);
     }
-    else if (!poly && this.polyline) {
+    else if (!polyline && this.polyline) {
       this.polyline = undefined;
       this.polylineLayer.clearLayers();
     }

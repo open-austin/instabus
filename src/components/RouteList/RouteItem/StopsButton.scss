@@ -1,0 +1,32 @@
+@import 'globals';
+
+.stops {
+  @extend .routeBtn;
+  margin-left: 10px;
+  border-color: $routeBtnBorder;
+  @media (min-width: $desktop) {
+    display: none;
+  }
+}
+
+.stops.hover:hover, .stops.pressed {
+  border-color: $routeBtnText;
+}
+
+.icon {
+  margin-top: 12px;
+  height: 18px;
+  width: 18px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid $routeBtnIconStroke;
+  fill: none;
+}
+
+.label {
+  margin-left: 13px;
+  font-size: 14px;
+  line-height: 42px;
+  display: inline-block;
+  vertical-align: top;
+}

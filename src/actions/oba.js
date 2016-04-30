@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import polyline from 'polyline';
 
 import oba from 'libs/oba';
 
@@ -98,10 +99,14 @@ export function getStops(routeId) {
           .map((group) => {
             const direction = routeDirection(group.name.name);
             directions.push(direction);
+            const longestPolyline = _.maxBy(group.polylines, 'length').points;
             return {
               name: group.name.name,
               direction,
-              polyline: _.maxBy(group.polylines, 'length').points,
+              polyline: {
+                encoded: longestPolyline,
+                points: polyline.decode(longestPolyline),
+              },
               stops: group.stopIds.map((stopId) => {
                 const stopName = stops[stopId].name;
                 const lowerName = _.toLower(stopName);
