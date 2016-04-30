@@ -3,7 +3,7 @@ import InitialState from 'constants/InitialState';
 
 import {
   SET_ROUTES_MODAL,
-  SET_FAVORITES_MODAL,
+  SET_SAVED_MODAL,
   SET_STOPS_MODAL,
 } from 'constants/ActionTypes';
 
@@ -14,8 +14,8 @@ function routesModal(state = InitialState.ui.modal.routes, action = {}) {
   return state;
 }
 
-function favoritesModal(state = InitialState.ui.modal.favorites, action = {}) {
-  if (action.type === SET_FAVORITES_MODAL) {
+function savedModal(state = InitialState.ui.modal.saved, action = {}) {
+  if (action.type === SET_SAVED_MODAL) {
     return action.payload;
   }
   return state;
@@ -30,6 +30,6 @@ function stopsModal(state = InitialState.ui.modal.stops, action = {}) {
 
 export default combineReducers({
   routes: routesModal,
-  favorites: favoritesModal,
+  saved: savedModal,
   stops: stopsModal,
 });

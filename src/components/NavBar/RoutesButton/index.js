@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import {
-  ALL_ROUTES,
-} from 'constants';
+  ALL_ROUTES_PATH,
+} from 'constants/Paths';
 
 import { GlobalHistory, Router } from 'libs/routing';
 import { setRoutesModal } from 'actions/ui';
@@ -19,19 +19,19 @@ class RoutesButton extends Component {
   }
 
   _toggle = () => {
-    if (this.props.route.name === ALL_ROUTES) {
+    if (this.props.route.name === ALL_ROUTES_PATH) {
       this.props.setRoutesModal(!this.props.modal);
     }
     else {
       this.props.setRoutesModal(true);
-      GlobalHistory.push(Router.generate(ALL_ROUTES, {}));
+      GlobalHistory.push(Router.generate(ALL_ROUTES_PATH, {}));
     }
   }
 
   render() {
     const { name } = this.props.route;
     const btn = classNames(styles.btn, {
-      [`${styles.active}`]: name === ALL_ROUTES,
+      [`${styles.active}`]: name === ALL_ROUTES_PATH,
       [`${styles.minimized}`]: !this.props.modal,
     });
     return (

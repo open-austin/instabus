@@ -8,6 +8,8 @@ import {
   SET_STOPS,
 } from 'constants/ActionTypes';
 
+import saved from './saved';
+
 function routes(state = InitialState.data.routes, action = {}) {
   if (action.type === SET_ROUTES) {
     return action.payload;
@@ -36,4 +38,5 @@ export default combineReducers({
   routes,
   vehicles,
   stopGroups,
+  saved,
 });

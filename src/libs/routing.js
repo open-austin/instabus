@@ -8,7 +8,7 @@ export const GlobalHistory = createHashHistory({
 export const Router = uniloc(
   {
     routes: 'GET /',
-    favorites: 'GET /favorites',
+    saved: 'GET /saved',
     route: 'GET /route/:routeId',
     direction: 'GET /route/:routeId/:routeDirection',
   },
