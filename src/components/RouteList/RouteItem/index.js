@@ -52,7 +52,7 @@ export default class RouteItem extends Component {
           </div>
         </a>
         <div className={styles.btns}>
-          <SaveButton />
+          <SaveButton routeId={this.props.route.id} />
           <StopsButton />
         </div>
       </div>

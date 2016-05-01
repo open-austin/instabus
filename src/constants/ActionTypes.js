@@ -14,7 +14,6 @@ export const SET_STOPS = 'SET_STOPS';
 export const SET_STOPS_LOADING = 'SET_STOPS_LOADING';
 
 export const SET_SAVED_ROUTES = 'SET_SAVED_ROUTES';
-export const SAVE_ROUTE = 'SAVE_ROUTE';
 
 export const SET_ROUTES_MODAL = 'SET_ROUTES_MODAL';
 export const SET_SAVED_MODAL = 'SET_SAVED_MODAL';

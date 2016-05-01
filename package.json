@@ -69,13 +69,13 @@
     "react-addons-css-transition-group": "^15.0.1",
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.0",
-    "redux": "^3.3.1",
+    "redux": "^3.5.2",
     "redux-devtools": "^3.1.1",
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
-    "reselect": "^2.1.0",
+    "reselect": "^2.5.1",
     "uniloc": "^0.3.0"
   }
 }

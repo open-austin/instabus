@@ -30,7 +30,7 @@ export default {
       vehiclesByRoute: {},
     },
     saved: {
-      savedRoutes: ['1_801', '1_4'],
+      savedRoutes: [],
     },
   },
 };

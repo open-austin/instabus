@@ -18,6 +18,7 @@ import Saved from 'components/Saved';
 import VehiclesLoading from 'components/VehiclesLoading';
 
 import { getRoutes, getVehicles, initialVehiclesLoaded } from 'actions/oba';
+import { restoreSavedRoutes } from 'actions/saved';
 
 
 class App extends Component {
@@ -27,13 +28,16 @@ class App extends Component {
     getRoutes: PropTypes.func,
     getVehicles: PropTypes.func,
     initialVehiclesLoaded: PropTypes.func,
+    restoreSavedRoutes: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
+    this.props.restoreSavedRoutes();
+
     this.props.getVehicles().then(() => {
       this.props.initialVehiclesLoaded();
     });
-    this.watchVehicles = setInterval(this.props.getVehicles, 3000);
+    this.watchVehicles = setInterval(this.props.getVehicles, 30000);
   }
 
   componentWillUnmount() {
@@ -78,6 +82,7 @@ const mapDispatchToProps = {
   getRoutes,
   getVehicles,
   initialVehiclesLoaded,
+  restoreSavedRoutes,
 };
 
 const mapStateToProps = (state) => ({
