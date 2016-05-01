@@ -3,35 +3,35 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 import {
-  FAVORITES,
-} from 'constants';
+  SAVED_PATH,
+} from 'constants/Paths';
 
-import { setFavoritesModal } from 'actions/ui';
+import { setSavedModal } from 'actions/ui';
 import { GlobalHistory, Router } from 'libs/routing';
 
 import styles from './styles.scss';
 
-class FavoritesButton extends Component {
+class SavedButton extends Component {
   static propTypes = {
     route: PropTypes.object,
     modal: PropTypes.bool,
-    setFavoritesModal: PropTypes.func,
+    setSavedModal: PropTypes.func,
   }
 
   _toggle = () => {
-    if (this.props.route.name === FAVORITES) {
-      this.props.setFavoritesModal(!this.props.modal);
+    if (this.props.route.name === SAVED_PATH) {
+      this.props.setSavedModal(!this.props.modal);
     }
     else {
-      this.props.setFavoritesModal(true);
-      GlobalHistory.push(Router.generate(FAVORITES));
+      this.props.setSavedModal(true);
+      GlobalHistory.push(Router.generate(SAVED_PATH));
     }
   }
 
   render() {
     const { name } = this.props.route;
     const btn = classNames(styles.btn, {
-      [`${styles.active}`]: name === FAVORITES,
+      [`${styles.active}`]: name === SAVED_PATH,
       [`${styles.minimized}`]: !this.props.modal,
     });
     return (
@@ -39,19 +39,19 @@ class FavoritesButton extends Component {
         className={btn}
         onClick={this._toggle}
       >
-        Favorites
+        Saved
       </div>
     );
   }
 }
 
 const mapDispatchToProps = {
-  setFavoritesModal,
+  setSavedModal,
 };
 
 const mapStateToProps = (state) => ({
   route: state.ui.route,
-  modal: state.ui.modal.favorites,
+  modal: state.ui.modal.savedRoutes,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FavoritesButton);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedButton);

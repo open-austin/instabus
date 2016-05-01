@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import { GlobalHistory, Router } from 'libs/routing';
 import {
-  ROUTE,
-  DIRECTION,
-} from 'constants';
+  ROUTE_PATH,
+  DIRECTION_PATH,
+} from 'constants/Paths';
 
 import ContextMenu from 'components/ContextMenu';
 import Spinner from 'components/Spinner';
@@ -46,7 +46,7 @@ class RouteList extends Component {
   _setDirection = () => {
     const id = this.props.route.options.routeId;
     const direction = this.props.stopGroups.directions[0];
-    GlobalHistory.replace(Router.generate(DIRECTION, { routeId: id, routeDirection: direction }));
+    GlobalHistory.replace(Router.generate(DIRECTION_PATH, { routeId: id, routeDirection: direction }));
   }
 
   _setUpRoute = () => {
@@ -67,10 +67,10 @@ class RouteList extends Component {
   _renderStops = () => {
     const { stopGroups, route } = this.props;
     let stopGroup;
-    if (stopGroups.directions.length > 1 && route.name === DIRECTION) {
+    if (stopGroups.directions.length > 1 && route.name === DIRECTION_PATH) {
       stopGroup = stopGroups.groups[route.options.routeDirection].stops;
     }
-    else if (stopGroups.directions.length === 1 && route.name === ROUTE) {
+    else if (stopGroups.directions.length === 1 && route.name === ROUTE_PATH) {
       stopGroup = stopGroups.groups[stopGroups.directions[0]].stops;
     }
     if (!stopGroup) return null;

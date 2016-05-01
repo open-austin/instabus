@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 import { GlobalHistory, Router } from 'libs/routing';
 import {
-  DIRECTION,
-} from 'constants';
+  DIRECTION_PATH,
+} from 'constants/Paths';
 
 import styles from './styles.scss';
 
@@ -20,7 +20,7 @@ export default class StopGroupSwitcher extends Component {
     const { route, directions } = this.props;
     const { routeId, routeDirection } = route.options;
     const direction = _.find(directions, d => d !== routeDirection);
-    GlobalHistory.push(Router.generate(DIRECTION, { routeId, routeDirection: direction }));
+    GlobalHistory.push(Router.generate(DIRECTION_PATH, { routeId, routeDirection: direction }));
   }
 
   render() {
