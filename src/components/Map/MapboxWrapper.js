@@ -8,6 +8,13 @@ import stopPopup from './StopPopup';
 import { mobile } from 'libs/mobile';
 import rbush from 'rbush';
 
+import {
+  ROUTE,
+  DIRECTION,
+} from 'constants';
+
+import { GlobalHistory, Router } from 'libs/routing';
+
 class MapboxWrapper {
 
   map = undefined;
@@ -46,11 +53,19 @@ class MapboxWrapper {
     this.map.on('contextmenu', () => {
       this.map.zoomOut();
     });
-    this.map.on('mousemove', (e) => {
+    this.map.on('click', (e) => {
       const { containerPoint } = e;
       const { x, y } = containerPoint;
-      const result = this.tree.search([ x, y, x, y]);
-      console.log(result);
+      const vehicles = this.tree.search([x, y, x, y]).map(vehicle => vehicle[4]).reverse();
+      if (vehicles[0]) {
+        const vehicle = vehicles[0];
+        if (vehicle.direction) {
+          GlobalHistory.push(Router.generate(DIRECTION, { routeId: vehicle.routeId, routeDirection: vehicle.direction }));
+        }
+        else {
+          GlobalHistory.push(Router.generate(ROUTE, { routeId: vehicle.routeId }));
+        }
+      }
     });
     const panes = this.map.getPanes();
     panes.overlayPane.style.pointerEvents = 'none';
@@ -183,6 +198,7 @@ class MapboxWrapper {
 
   setStops = (stops) => {
     if (stops && stops !== this.stops) {
+      /*
       if (!mobile) {
         this.stopMarkers.forEach((marker) => {
           marker.off('click');
@@ -190,6 +206,7 @@ class MapboxWrapper {
           marker.off('mouseout');
         });
       }
+      */
       this.stopsLayer.clearLayers();
       this.stops = stops;
       this.stopMarkers = this.stops.map((stop) => {
@@ -200,9 +217,10 @@ class MapboxWrapper {
           offset: L.point(2, 15),
           closeButton: false,
         });
+        /*
         if (!mobile) {
           stopMarker.on('click', (e) => {
-            e.preventDefault();
+            return false;
           });
           stopMarker.on('mouseover', () => {
             stopMarker.openPopup();
@@ -211,6 +229,7 @@ class MapboxWrapper {
             stopMarker.closePopup();
           });
         }
+        */
         return stopMarker;
       });
       setTimeout(() => {
@@ -223,6 +242,7 @@ class MapboxWrapper {
     }
     else if (!stops && this.stops) {
       this.stops = undefined;
+      /*
       if (!mobile) {
         this.stopMarkers.forEach((marker) => {
           marker.off('click');
@@ -230,6 +250,7 @@ class MapboxWrapper {
           marker.off('mouseout');
         });
       }
+      */
       this.stopsLayer.clearLayers();
       this.stopMarkers = [];
     }
@@ -259,6 +280,7 @@ class MapboxWrapper {
       v = vehicles.map((vehicle) => ({
         id: vehicle.vehicleId,
         route: vehicle.route.shortName,
+        routeId: vehicle.route.id,
         direction: vehicle.route.direction,
         lastPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.tripStatus.position,
         currentPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.tripStatus.position,
@@ -272,6 +294,7 @@ class MapboxWrapper {
       v = vehicles.map((vehicle) => ({
         id: vehicle.vehicleId,
         route: vehicle.route.shortName,
+        routeId: vehicle.route.id,
         direction: vehicle.route.direction,
         lastPosition: vehicle.tripStatus.position,
         currentPosition: vehicle.tripStatus.position,
@@ -294,6 +317,7 @@ class MapboxWrapper {
         const v = {
           id: vehicle.id,
           route: vehicle.route,
+          routeId: vehicle.routeId,
           direction: vehicle.direction,
           lastPosition: vehicle.nextPosition,
           currentPosition: vehicle.nextPosition,
@@ -313,6 +337,7 @@ class MapboxWrapper {
       const v = {
         id: vehicle.id,
         route: vehicle.route,
+        routeId: vehicle.routeId,
         direction: vehicle.direction,
         lastPosition: vehicle.lastPosition,
         currentPosition: {
@@ -361,7 +386,11 @@ class MapboxWrapper {
         const textX = dot.x;
         const textY = dot.y + 5;
         ctx.fillText(v.route, textX, textY);
-        boundings.push([dot.x - this.busInitRadius, dot.y - this.busInitRadius, dot.x + this.busInitRadius, dot.y + this.busInitRadius, { id: v.id }]);
+        boundings.push([dot.x - this.busInitRadius, dot.y - this.busInitRadius, dot.x + this.busInitRadius, dot.y + this.busInitRadius, {
+          id: v.id,
+          direction: v.direction,
+          routeId: v.routeId,
+        }]);
       }
       this.tree.load(boundings);
     }

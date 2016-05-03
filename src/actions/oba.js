@@ -192,12 +192,14 @@ export function getVehicles() {
             },
           }))
           .value();
+        const vehiclesById = _.keyBy(allVehicles, 'vehicleId');
         const vehiclesByRoute = _(allVehicles)
           .groupBy('route.id')
           .value();
         const vehicles = {
           allVehicles,
           vehiclesByRoute,
+          vehiclesById,
         };
         dispatch(setVehicles(vehicles));
         dispatch(setVehiclesLoading(false));

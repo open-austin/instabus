@@ -28,6 +28,7 @@ export default {
     vehicles: {
       allVehicles: [],
       vehiclesByRoute: {},
+      vehiclesById: {},
     },
   },
 };

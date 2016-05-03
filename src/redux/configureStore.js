@@ -12,7 +12,7 @@ if (!mobile && process.env.NODE_ENV !== 'production') {
   finalCreateStore = compose(
     applyMiddleware(thunk),
     applyMiddleware(createLogger()),
-    DevTools.instrument(),
+    DevTools.instrument({ maxAge: 30 }),
   )(createStore);
 }
 else {
