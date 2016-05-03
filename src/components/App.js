@@ -4,19 +4,22 @@ import { connect } from 'react-redux';
 import styles from 'styles/base.scss';
 
 import {
-  ALL_ROUTES,
-  ROUTE,
-  DIRECTION,
-  FAVORITES,
-} from 'constants';
+  ALL_ROUTES_PATH,
+  ROUTE_PATH,
+  DIRECTION_PATH,
+  SAVED_PATH,
+} from 'constants/Paths';
 
 import MapLayer from 'components/Map';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
 import NavBar from 'components/NavBar';
+import Saved from 'components/Saved';
 import VehiclesLoading from 'components/VehiclesLoading';
 
 import { getRoutes, getVehicles, initialVehiclesLoaded } from 'actions/oba';
+import { restoreSavedRoutes } from 'actions/saved';
+
 
 class App extends Component {
   static propTypes = {
@@ -25,13 +28,16 @@ class App extends Component {
     getRoutes: PropTypes.func,
     getVehicles: PropTypes.func,
     initialVehiclesLoaded: PropTypes.func,
+    restoreSavedRoutes: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
+    this.props.restoreSavedRoutes();
+
     this.props.getVehicles().then(() => {
       this.props.initialVehiclesLoaded();
     });
-    this.watchVehicles = setInterval(this.props.getVehicles, 3000);
+    this.watchVehicles = setInterval(this.props.getVehicles, 30000);
   }
 
   componentWillUnmount() {
@@ -40,15 +46,21 @@ class App extends Component {
 
   _renderGlobalError = () => <div>{this.props.globalError}</div>;
 
+  _renderGlobalError() {
+    return <div>{this.props.globalError}</div>;
+  }
+
   _renderContext = () => {
     const name = this.props.route.name;
     switch (name) {
-      case ALL_ROUTES:
+      case ALL_ROUTES_PATH:
         return <RouteList />;
-      case ROUTE:
+      case ROUTE_PATH:
         return <StopList />;
-      case DIRECTION:
+      case DIRECTION_PATH:
         return <StopList />;
+      case SAVED_PATH:
+        return <Saved />;
       default:
         return null;
     }
@@ -70,6 +82,7 @@ const mapDispatchToProps = {
   getRoutes,
   getVehicles,
   initialVehiclesLoaded,
+  restoreSavedRoutes,
 };
 
 const mapStateToProps = (state) => ({

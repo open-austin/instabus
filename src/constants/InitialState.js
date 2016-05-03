@@ -15,7 +15,7 @@ export default {
     },
     modal: {
       routes: false,
-      favorites: false,
+      saved: false,
       stops: false,
     },
   },
@@ -29,6 +29,9 @@ export default {
       allVehicles: [],
       vehiclesByRoute: {},
       vehiclesById: {},
+    },
+    saved: {
+      savedRoutes: [],
     },
   },
 };

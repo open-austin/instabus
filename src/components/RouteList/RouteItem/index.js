@@ -6,8 +6,8 @@ import SaveButton from './SaveButton';
 import StopsButton from './StopsButton';
 
 import {
-  ROUTE,
-} from 'constants';
+  ROUTE_PATH,
+} from 'constants/Paths';
 
 import styles from './styles.scss';
 
@@ -26,7 +26,7 @@ export default class RouteItem extends Component {
 
   _selectRoute = (e) => {
     e.preventDefault();
-    GlobalHistory.push(Router.generate(ROUTE, { routeId: this.props.route.id }));
+    GlobalHistory.push(Router.generate(ROUTE_PATH, { routeId: this.props.route.id }));
     return false;
   }
 
@@ -52,7 +52,7 @@ export default class RouteItem extends Component {
           </div>
         </a>
         <div className={styles.btns}>
-          <SaveButton />
+          <SaveButton routeId={this.props.route.id} />
           <StopsButton />
         </div>
       </div>
