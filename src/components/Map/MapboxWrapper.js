@@ -9,9 +9,9 @@ import { mobile } from 'libs/mobile';
 import rbush from 'rbush';
 
 import {
-  ROUTE,
-  DIRECTION,
-} from 'constants';
+  ROUTE_PATH,
+  DIRECTION_PATH,
+} from 'constants/Paths';
 
 import { GlobalHistory, Router } from 'libs/routing';
 
@@ -31,14 +31,9 @@ class MapboxWrapper {
   transitionStartTime = undefined;
   transitionTime = 400;
 
-  polyline = undefined;
-  polylineLayer = undefined;
+  shapes = [];
 
-  stops = undefined;
-  stopMarkers = [];
-  stopsLayer = undefined;
-
-  boundsLayer = undefined;
+  stops = [];
 
   constructor(mapDiv) {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw';
@@ -49,7 +44,8 @@ class MapboxWrapper {
       zoomControl: false,
       scrollWheelZoom: false,
     };
-    this.map = L.mapbox.map(mapDiv, 'mapbox.streets', mapInit);
+    this.map = L.mapbox.map(mapDiv).setView(mapInit.center, mapInit.zoom);
+    L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v9').addTo(this.map);
     this.map.on('contextmenu', () => {
       this.map.zoomOut();
     });
@@ -60,21 +56,18 @@ class MapboxWrapper {
       if (vehicles[0]) {
         const vehicle = vehicles[0];
         if (vehicle.direction) {
-          GlobalHistory.push(Router.generate(DIRECTION, { routeId: vehicle.routeId, routeDirection: vehicle.direction }));
+          GlobalHistory.push(Router.generate(DIRECTION_PATH, { routeId: vehicle.routeId, routeDirection: vehicle.direction }));
         }
         else {
-          GlobalHistory.push(Router.generate(ROUTE, { routeId: vehicle.routeId }));
+          GlobalHistory.push(Router.generate(ROUTE_PATH, { routeId: vehicle.routeId }));
         }
       }
     });
     const panes = this.map.getPanes();
     panes.overlayPane.style.pointerEvents = 'none';
-    this.boundsLayer = L.featureGroup().addTo(this.map);
-    this.polylineLayer = L.featureGroup().addTo(this.boundsLayer);
-    this.stopsLayer = L.featureGroup().addTo(this.boundsLayer);
     this.canvasLayer = L.featureGroup().addTo(this.map);
     this.pixelRatio = window.devicePixelRatio || 1;
-    const busInitSize = 28;
+    const busInitSize = 23;
     this.busInitRadius = busInitSize / 2;
     this.canvasInitSize = busInitSize + 20;
     this.canvasInitRadius = this.canvasInitSize / 2;
@@ -86,7 +79,7 @@ class MapboxWrapper {
     this.oCanvas.width = canvasSize;
     this.oCanvas.height = canvasSize;
     const oCtx = this.oCanvas.getContext('2d');
-    oCtx.fillStyle = '#fff';
+    oCtx.fillStyle = '#004A97';
     oCtx.beginPath();
     oCtx.arc(offset, offset, radius, 0, Math.PI * 2);
     oCtx.moveTo(offset - 14, offset - radius + 8);
@@ -166,7 +159,7 @@ class MapboxWrapper {
     this.regularCanvas.width = canvasSize;
     this.regularCanvas.height = canvasSize;
     const rCtx = this.regularCanvas.getContext('2d');
-    rCtx.fillStyle = '#fff';
+    rCtx.fillStyle = '#004A97';
     rCtx.beginPath();
     rCtx.arc(offset, offset, radius, 0, Math.PI * 2);
     rCtx.shadowColor = 'rgba(0,0,0,0.4)';
@@ -180,7 +173,7 @@ class MapboxWrapper {
   setUserLocation = (location) => {
     if (!this.userMarker && location) {
       const locationArray = [location.lat, location.lon];
-      this.userMarker = L.marker(locationArray).addTo(this.boundsLayer);
+      this.userMarker = L.marker(locationArray).addTo(this.map);
       this.userMarker.setZIndexOffset(9999);
       this.userMarker.setIcon(L.divIcon(UserMarker));
     }
@@ -191,85 +184,21 @@ class MapboxWrapper {
     this.userLocation = location;
   }
 
-  setStopsAndPolyline = (stops, poly) => {
-    this.setPolyline(poly);
-    this.setStops(stops);
+  setMap = (data) => {
+    this.setVehicles(data.vehicles);
+    this.setStops(data.stops);
+    this.setShapes(data.shapes);
   }
 
   setStops = (stops) => {
-    if (stops && stops !== this.stops) {
-      /*
-      if (!mobile) {
-        this.stopMarkers.forEach((marker) => {
-          marker.off('click');
-          marker.off('mouseover');
-          marker.off('mouseout');
-        });
-      }
-      */
-      this.stopsLayer.clearLayers();
+    if (this.stops !== stops) {
       this.stops = stops;
-      this.stopMarkers = this.stops.map((stop) => {
-        const locationArray = [stop.coords.lat, stop.coords.lon];
-        const stopMarker = L.marker(locationArray).addTo(this.stopsLayer);
-        stopMarker.setIcon(L.divIcon(StopMarker));
-        stopMarker.bindPopup(stopPopup(stop.name), {
-          offset: L.point(2, 15),
-          closeButton: false,
-        });
-        /*
-        if (!mobile) {
-          stopMarker.on('click', (e) => {
-            return false;
-          });
-          stopMarker.on('mouseover', () => {
-            stopMarker.openPopup();
-          });
-          stopMarker.on('mouseout', () => {
-            stopMarker.closePopup();
-          });
-        }
-        */
-        return stopMarker;
-      });
-      setTimeout(() => {
-        this.map.fitBounds(this.boundsLayer.getBounds(), {
-          animate: !mobile,
-          paddingTopLeft: [0, 0],
-          paddingBottomRight: [0, 0],
-        });
-      }, 250);
-    }
-    else if (!stops && this.stops) {
-      this.stops = undefined;
-      /*
-      if (!mobile) {
-        this.stopMarkers.forEach((marker) => {
-          marker.off('click');
-          marker.off('mouseover');
-          marker.off('mouseout');
-        });
-      }
-      */
-      this.stopsLayer.clearLayers();
-      this.stopMarkers = [];
     }
   }
 
-  setPolyline = (polyline) => {
-    if (polyline && (!this.polyline || polyline.encoded !== this.polyline.encoded)) {
-      this.polylineLayer.clearLayers();
-      this.polyline = polyline;
-      const options = {
-        color: '#157AFC',
-        opacity: 0.5,
-        className: 'polyline',
-      };
-      L.polyline(this.polyline.points, options).addTo(this.polylineLayer);
-    }
-    else if (!polyline && this.polyline) {
-      this.polyline = undefined;
-      this.polylineLayer.clearLayers();
+  setShapes = (shapes) => {
+    if (this.shapes !== shapes) {
+      this.shapes = shapes;
     }
   }
 
@@ -357,11 +286,50 @@ class MapboxWrapper {
     const ctx = params.canvas.getContext('2d');
     ctx.scale(this.pixelRatio, this.pixelRatio);
     ctx.clearRect(0, 0, params.canvas.width, params.canvas.height);
-    ctx.font = '12px Arial';
+    ctx.font = '9px Arial';
     ctx.textAlign = 'center';
-    for (let i = 0; i < this.vehicles.length; i++) {
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = (params.zoom > 15) ? 4 : 2;
+    const lineOffset = (params.zoom > 15) ? 2 : 1;
+    ctx.globalAlpha = 0.4;
+    ctx.strokeStyle = '#157AFC';
+    ctx.beginPath();
+    this.shapes.forEach((shape) => {
+      shape.points.forEach((point, i) => {
+        const dot = overlay._map.latLngToContainerPoint([point[0], point[1]]);
+        const x = dot.x - lineOffset;
+        const y = dot.y - lineOffset;
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        }
+        else if (!params.bounds.contains([point[0], point[1]])) {
+          ctx.moveTo(x, y);
+        }
+        else {
+          ctx.lineTo(x, y);
+        }
+      });
+    });
+    ctx.stroke();
+    ctx.closePath();
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = 1;
+    if (params.zoom > 14) {
+      ctx.fillStyle = '#157AFC';
+      this.stops.forEach((s) => {
+        if (!params.bounds.contains([s.lat, s.lon])) return;
+        ctx.beginPath();
+        const dot = overlay._map.latLngToContainerPoint([s.lat, s.lon]);
+        const x = dot.x - 2;
+        const y = dot.y - 2;
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+      });
+    }
+    this.vehicles.forEach((v) => {
       const boundings = [];
-      const v = this.vehicles[i];
       if (v.currentPosition && params.bounds.contains([v.currentPosition.lat, v.currentPosition.lon])) {
         const dot = overlay._map.latLngToContainerPoint([v.currentPosition.lat, v.currentPosition.lon]);
         const x = dot.x - this.canvasInitRadius;
@@ -382,9 +350,9 @@ class MapboxWrapper {
           default:
             ctx.drawImage(this.regularCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
         }
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = '#fff';
         const textX = dot.x;
-        const textY = dot.y + 5;
+        const textY = dot.y + 3.5;
         ctx.fillText(v.route, textX, textY);
         boundings.push([dot.x - this.busInitRadius, dot.y - this.busInitRadius, dot.x + this.busInitRadius, dot.y + this.busInitRadius, {
           id: v.id,
@@ -393,7 +361,7 @@ class MapboxWrapper {
         }]);
       }
       this.tree.load(boundings);
-    }
+    });
   };
 
 }

@@ -2,34 +2,52 @@ import { combineReducers } from 'redux';
 import InitialState from 'constants/InitialState';
 
 import {
+  SET_ACTIVE_LOADING,
   SET_ROUTES_LOADING,
-  SET_VEHICLES_LOADING,
-  SET_STOPS_LOADING,
+  SET_ROUTE_LOADING,
+  SET_STOP_LOADING,
+  SET_STOP_FOR_LOADING,
 } from 'constants/ActionTypes';
 
-function routesLoading(state = InitialState.ui.loading.routes, action = {}) {
+function active(state = InitialState.ui.loading.active, action = {}) {
+  if (action.type === SET_ACTIVE_LOADING) {
+    return action.payload;
+  }
+  return state;
+}
+
+function routes(state = InitialState.ui.loading.routes, action = {}) {
   if (action.type === SET_ROUTES_LOADING) {
     return action.payload;
   }
   return state;
 }
 
-function vehiclesLoading(state = InitialState.ui.loading.vehicles, action = {}) {
-  if (action.type === SET_VEHICLES_LOADING) {
+function route(state = InitialState.ui.loading.route, action = {}) {
+  if (action.type === SET_ROUTE_LOADING) {
     return action.payload;
   }
   return state;
 }
 
-function stopsLoading(state = InitialState.ui.loading.stops, action = {}) {
-  if (action.type === SET_STOPS_LOADING) {
+function stop(state = InitialState.ui.loading.stop, action = {}) {
+  if (action.type === SET_STOP_LOADING) {
+    return action.payload;
+  }
+  return state;
+}
+
+function stopFor(state = InitialState.ui.loading.stopFor, action = {}) {
+  if (action.type === SET_STOP_FOR_LOADING) {
     return action.payload;
   }
   return state;
 }
 
 export default combineReducers({
-  routes: routesLoading,
-  vehicles: vehiclesLoading,
-  stops: stopsLoading,
+  active,
+  routes,
+  route,
+  stop,
+  stopFor,
 });

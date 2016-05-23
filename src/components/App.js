@@ -13,11 +13,11 @@ import {
 import MapLayer from 'components/Map';
 import RouteList from 'components/RouteList';
 import StopList from 'components/StopList';
-import NavBar from 'components/NavBar';
+import TopBar from 'components/TopBar';
 import Saved from 'components/Saved';
 import VehiclesLoading from 'components/VehiclesLoading';
 
-import { getRoutes, getVehicles, initialVehiclesLoaded } from 'actions/oba';
+import { getActive, initialVehiclesLoaded } from 'actions/oba';
 import { restoreSavedRoutes } from 'actions/saved';
 
 
@@ -25,8 +25,7 @@ class App extends Component {
   static propTypes = {
     globalError: PropTypes.string,
     route: PropTypes.object,
-    getRoutes: PropTypes.func,
-    getVehicles: PropTypes.func,
+    getActive: PropTypes.func,
     initialVehiclesLoaded: PropTypes.func,
     restoreSavedRoutes: PropTypes.func.isRequired,
   }
@@ -34,10 +33,12 @@ class App extends Component {
   componentDidMount() {
     this.props.restoreSavedRoutes();
 
-    this.props.getVehicles().then(() => {
+    // this.props.initialVehiclesLoaded();
+
+    this.props.getActive().then(() => {
       this.props.initialVehiclesLoaded();
+      // this.watchVehicles = setInterval(this.props.getVehicles, 20000);
     });
-    this.watchVehicles = setInterval(this.props.getVehicles, 30000);
   }
 
   componentWillUnmount() {
@@ -71,16 +72,14 @@ class App extends Component {
       <div className={styles.container}>
         <MapLayer />
         <VehiclesLoading />
-        <NavBar />
-        { this._renderContext() }
+        <TopBar />
       </div>
     );
   }
 }
 
 const mapDispatchToProps = {
-  getRoutes,
-  getVehicles,
+  getActive,
   initialVehiclesLoaded,
   restoreSavedRoutes,
 };

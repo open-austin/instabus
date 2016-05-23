@@ -11,5 +11,7 @@ export const Router = uniloc(
     saved: 'GET /saved',
     route: 'GET /route/:routeId',
     direction: 'GET /route/:routeId/:routeDirection',
+    stop: 'GET /stop/:stopId',
+    stopForRoute: 'GET /stop/:stopId/for/:routeId',
   },
 );
