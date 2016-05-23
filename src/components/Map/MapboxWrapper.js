@@ -35,6 +35,8 @@ class MapboxWrapper {
 
   stops = [];
 
+  polylineLayer = undefined;
+
   constructor(mapDiv) {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw';
     const mapInit = {
@@ -65,6 +67,7 @@ class MapboxWrapper {
     });
     const panes = this.map.getPanes();
     panes.overlayPane.style.pointerEvents = 'none';
+    this.polylineLayer = L.featureGroup().addTo(this.map);
     this.canvasLayer = L.featureGroup().addTo(this.map);
     this.pixelRatio = window.devicePixelRatio || 1;
     const busInitSize = 23;
@@ -187,7 +190,8 @@ class MapboxWrapper {
   setMap = (data) => {
     this.setVehicles(data.vehicles);
     this.setStops(data.stops);
-    this.setShapes(data.shapes);
+    // this.setShapes(data.shapes);
+    this.setPolyline(data.shapes);
   }
 
   setStops = (stops) => {
@@ -202,6 +206,21 @@ class MapboxWrapper {
     }
   }
 
+  setPolyline = (shapes) => {
+    if (this.shapes !== shapes) {
+      this.shapes = shapes;
+      this.polylineLayer.clearLayers();
+      const points = shapes.map((shape) => shape.points);
+      const options = {
+        color: '#157AFC',
+        opacity: 0.5,
+        className: 'polyline',
+        weight: 3,
+      };
+      L.multiPolyline(points, options).addTo(this.polylineLayer);
+    }
+  }
+
   setVehicles = (vehicles) => {
     let v = [];
     if (this.vehicles) {
@@ -211,9 +230,9 @@ class MapboxWrapper {
         route: vehicle.route.shortName,
         routeId: vehicle.route.id,
         direction: vehicle.route.direction,
-        lastPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.tripStatus.position,
-        currentPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.tripStatus.position,
-        nextPosition: vehicle.tripStatus.position,
+        lastPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.location,
+        currentPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.location,
+        nextPosition: vehicle.location,
       }));
       this.vehicles = v;
       this.transitionStartTime = Date.now();
@@ -225,9 +244,9 @@ class MapboxWrapper {
         route: vehicle.route.shortName,
         routeId: vehicle.route.id,
         direction: vehicle.route.direction,
-        lastPosition: vehicle.tripStatus.position,
-        currentPosition: vehicle.tripStatus.position,
-        nextPosition: vehicle.tripStatus.position,
+        lastPosition: vehicle.location,
+        currentPosition: vehicle.location,
+        nextPosition: vehicle.location,
       }));
       this.vehicles = v;
       this.vehiclesOverlay = canvasOverlay()
@@ -288,6 +307,7 @@ class MapboxWrapper {
     ctx.clearRect(0, 0, params.canvas.width, params.canvas.height);
     ctx.font = '9px Arial';
     ctx.textAlign = 'center';
+    /*
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.lineWidth = (params.zoom > 15) ? 4 : 2;
@@ -313,6 +333,7 @@ class MapboxWrapper {
     });
     ctx.stroke();
     ctx.closePath();
+    */
     ctx.lineWidth = 1;
     ctx.globalAlpha = 1;
     if (params.zoom > 14) {
