@@ -9,9 +9,11 @@ export default {
     userLocation: null,
     initialVehiclesLoaded: false,
     loading: {
+      active: false,
       routes: false,
-      vehicles: false,
-      stops: false,
+      route: false,
+      stop: false,
+      stopFor: false,
     },
     modal: {
       routes: false,
@@ -20,14 +22,19 @@ export default {
     },
   },
   data: {
-    routes: {
-      orderedRoutes: [],
-      routesById: {},
-    },
-    stopGroups: {},
     vehicles: {
-      allVehicles: [],
-      vehiclesByRoute: {},
+      active: [],
+      id: {},
+      route: {},
+    },
+    stops: {
+      active: [],
+      id: {},
+      route: {},
+    },
+    shapes: {
+      active: [],
+      route: {},
     },
     saved: {
       savedRoutes: [],

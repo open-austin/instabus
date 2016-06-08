@@ -3,19 +3,12 @@ import { combineReducers } from 'redux';
 import InitialState from 'constants/InitialState';
 
 import {
-  SET_ROUTES,
   SET_VEHICLES,
   SET_STOPS,
+  SET_SHAPES,
 } from 'constants/ActionTypes';
 
 import saved from './saved';
-
-function routes(state = InitialState.data.routes, action = {}) {
-  if (action.type === SET_ROUTES) {
-    return action.payload;
-  }
-  return state;
-}
 
 function vehicles(state = InitialState.data.vehicles, action = {}) {
   if (action.type === SET_VEHICLES) {
@@ -24,19 +17,38 @@ function vehicles(state = InitialState.data.vehicles, action = {}) {
   return state;
 }
 
-function stopGroups(state = InitialState.data.stopGroups, action = {}) {
+function stops(state = InitialState.data.stops, action = {}) {
   if (action.type === SET_STOPS) {
     return {
-      ...state,
-      ...action.payload,
+      active: action.payload.active,
+      route: {
+        ...state.route,
+        ...action.payload.route,
+      },
+      id: {
+        ...state.id,
+        ...action.payload.id,
+      },
+    };
+  }
+  return state;
+}
+
+function shapes(state = InitialState.data.shapes, action = {}) {
+  if (action.type === SET_SHAPES) {
+    return {
+      active: action.payload.active,
+      route: {
+        ...state.route,
+        ...action.payload.route,
+      },
     };
   }
   return state;
 }
 
 export default combineReducers({
-  routes,
   vehicles,
-  stopGroups,
-  saved,
+  stops,
+  shapes,
 });

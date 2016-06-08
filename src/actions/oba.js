@@ -4,11 +4,16 @@ import polyline from 'polyline';
 import oba from 'libs/oba';
 
 import {
+  vehiclesForAgency,
+} from 'libs/obaQuery';
+
+import {
   SET_ROUTES,
-  SET_ROUTES_LOADING,
-  SET_VEHICLES_LOADING,
   SET_VEHICLES,
   SET_STOPS,
+  SET_SHAPES,
+  SET_ACTIVE_LOADING,
+  SET_ROUTES_LOADING,
   SET_STOPS_LOADING,
   INITIAL_VEHICLES_LOADED,
 } from 'constants/ActionTypes';
@@ -40,16 +45,23 @@ export function setVehicles(payload) {
   };
 }
 
-export function setVehiclesLoading(payload) {
+export function setStops(payload) {
   return {
-    type: SET_VEHICLES_LOADING,
+    type: SET_STOPS,
     payload,
   };
 }
 
-export function setStops(payload) {
+export function setShapes(payload) {
   return {
-    type: SET_STOPS,
+    type: SET_SHAPES,
+    payload,
+  };
+}
+
+export function setActiveLoading(payload) {
+  return {
+    type: SET_ACTIVE_LOADING,
     payload,
   };
 }
@@ -147,61 +159,16 @@ export function getStops(routeId) {
   };
 }
 
-function vehicleDirection(name) {
-  let stopDirection;
-  if (name.indexOf('NB') > -1) {
-    stopDirection = 'northbound';
-  }
-  else if (name.indexOf('SB') > -1) {
-    stopDirection = 'southbound';
-  }
-  else if (name.indexOf('EB') > -1) {
-    stopDirection = 'eastbound';
-  }
-  else if (name.indexOf('WB') > -1) {
-    stopDirection = 'westbound';
-  }
-  else if (name.indexOf('IB') > -1) {
-    stopDirection = 'inbound';
-  }
-  else if (name.indexOf('OB') > -1) {
-    stopDirection = 'outbound';
-  }
-  else {
-    stopDirection = null;
-  }
-  return stopDirection;
-}
-
-export function getVehicles() {
+export function getActive() {
   return (dispatch, getState) => {
-    dispatch(setVehiclesLoading(true));
+    dispatch(setActiveLoading(true));
     const currentAgency = getState().ui.currentAgency;
-    return oba(`vehicles-for-agency/${currentAgency}`)
-      .then(json => {
-        const routes = _(json.data.references.routes).keyBy('id').value();
-        const trips = _(json.data.references.trips).keyBy('id').value();
-        const allVehicles = _(json.data.list)
-          .filter(vehicle => vehicle.tripStatus)
-          .map(vehicle => ({
-            ...vehicle,
-            route: {
-              id: trips[vehicle.tripId].routeId,
-              shortName: routes[trips[vehicle.tripId].routeId].shortName,
-              direction: vehicleDirection(trips[vehicle.tripId].tripHeadsign),
-            },
-          }))
-          .value();
-        const vehiclesByRoute = _(allVehicles)
-          .groupBy('route.id')
-          .value();
-        const vehicles = {
-          allVehicles,
-          vehiclesByRoute,
-        };
-        dispatch(setVehicles(vehicles));
-        dispatch(setVehiclesLoading(false));
-      });
+    return vehiclesForAgency(currentAgency).then((data) => {
+      dispatch(setStops(data.stops));
+      dispatch(setVehicles(data.vehicles));
+      dispatch(setShapes(data.shapes));
+      dispatch(setActiveLoading(false));
+    });
   };
 }
 

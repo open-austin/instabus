@@ -58,7 +58,7 @@ L.CanvasOverlay = L.Class.extend({
         L.DomUtil.addClass(this._canvas, 'leaflet-zoom-' + (animated ? 'animated' : 'hide'));
 
 
-        map._panes.markerPane.appendChild(this._canvas);
+        map._panes.overlayPane.appendChild(this._canvas);
         this._canvas.style.pointerEvents = 'none';
         this._canvas.style.zIndex = 10000;
         this._canvas.style.position = 'fixed';
