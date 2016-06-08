@@ -6,7 +6,7 @@ import vehiclesResponse from './vehiclesResponse.json';
 
 const lambda = 'https://xlvm3rjs2b.execute-api.us-east-1.amazonaws.com/latest/';
 
-const getVehicles1 = (e) => {
+const getVehicles = (e) => {
   const {
     allVehicles,
     shapes: activeShapes,
@@ -16,8 +16,14 @@ const getVehicles1 = (e) => {
   const vehiclesByRoute = _(allVehicles)
     .groupBy('route.id')
     .value();
+  const routeColors = _(vehiclesByRoute)
+    .mapValues(() => `#${Math.floor(Math.random() * 16777215).toString(16)}`)
+    .value();
   const vehicles = {
-    active: allVehicles,
+    active: allVehicles.map(v => ({
+      ...v,
+      color: routeColors[v.route.id],
+    })),
     route: vehiclesByRoute,
     id: vehiclesById,
   };
@@ -26,7 +32,10 @@ const getVehicles1 = (e) => {
     points: polyline.decode(shape.points),
   }));
   const shapes = {
-    active: decodedShapes,
+    active: decodedShapes.map(s => ({
+      ...s,
+      color: routeColors[s.routeId],
+    })),
     route: {},
   };
   const stops = {
@@ -40,11 +49,12 @@ const getVehicles1 = (e) => {
     vehicles,
     shapes,
     stops,
+    routeColors,
   };
   self.postMessage(message);
 };
 
-const getVehicles = (e) => {
+const getVehicles1 = (e) => {
   fetch(`${lambda}vehicles-for-agency/${e.agencyId}`)
     .then(response => response.json())
     .then((json) => {
@@ -52,7 +62,7 @@ const getVehicles = (e) => {
         allVehicles,
         shapes: activeShapes,
         stops: activeStops,
-      } = vehiclesResponse;
+      } = json;
       const vehiclesById = _.keyBy(allVehicles, 'vehicleId');
       const vehiclesByRoute = _(allVehicles)
         .groupBy('route.id')

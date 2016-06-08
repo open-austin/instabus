@@ -47,7 +47,7 @@ class MapboxWrapper {
       scrollWheelZoom: false,
     };
     this.map = L.mapbox.map(mapDiv).setView(mapInit.center, mapInit.zoom);
-    L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v9').addTo(this.map);
+    L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v9').addTo(this.map); // dark-v9, streets-v9
     this.map.on('contextmenu', () => {
       this.map.zoomOut();
     });
@@ -82,7 +82,7 @@ class MapboxWrapper {
     this.oCanvas.width = canvasSize;
     this.oCanvas.height = canvasSize;
     const oCtx = this.oCanvas.getContext('2d');
-    oCtx.fillStyle = '#004A97';
+    oCtx.fillStyle = '#fff';
     oCtx.beginPath();
     oCtx.arc(offset, offset, radius, 0, Math.PI * 2);
     oCtx.moveTo(offset - 14, offset - radius + 8);
@@ -162,7 +162,7 @@ class MapboxWrapper {
     this.regularCanvas.width = canvasSize;
     this.regularCanvas.height = canvasSize;
     const rCtx = this.regularCanvas.getContext('2d');
-    rCtx.fillStyle = '#004A97';
+    rCtx.fillStyle = '#fff';
     rCtx.beginPath();
     rCtx.arc(offset, offset, radius, 0, Math.PI * 2);
     rCtx.shadowColor = 'rgba(0,0,0,0.4)';
@@ -210,14 +210,15 @@ class MapboxWrapper {
     if (this.shapes !== shapes) {
       this.shapes = shapes;
       this.polylineLayer.clearLayers();
-      const points = shapes.map((shape) => shape.points);
-      const options = {
-        color: '#157AFC',
-        opacity: 0.5,
-        className: 'polyline',
-        weight: 3,
-      };
-      L.multiPolyline(points, options).addTo(this.polylineLayer);
+      shapes.forEach((shape) => {
+        const options = {
+          color: shape.color,
+          opacity: 1,
+          className: 'polyline',
+          weight: 3,
+        };
+        L.polyline(shape.points, options).addTo(this.polylineLayer);
+      });
     }
   }
 
@@ -233,6 +234,7 @@ class MapboxWrapper {
         lastPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.location,
         currentPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.location,
         nextPosition: vehicle.location,
+        color: vehicle.color,
       }));
       this.vehicles = v;
       this.transitionStartTime = Date.now();
@@ -247,6 +249,7 @@ class MapboxWrapper {
         lastPosition: vehicle.location,
         currentPosition: vehicle.location,
         nextPosition: vehicle.location,
+        color: vehicle.color,
       }));
       this.vehicles = v;
       this.vehiclesOverlay = canvasOverlay()
@@ -270,6 +273,7 @@ class MapboxWrapper {
           lastPosition: vehicle.nextPosition,
           currentPosition: vehicle.nextPosition,
           nextPosition: null,
+          color: vehicle.color,
         };
         return v;
       });
@@ -293,6 +297,7 @@ class MapboxWrapper {
           lon,
         },
         nextPosition: vehicle.nextPosition,
+        color: vehicle.color,
       };
       return v;
     });
@@ -337,7 +342,7 @@ class MapboxWrapper {
     ctx.lineWidth = 1;
     ctx.globalAlpha = 1;
     if (params.zoom > 14) {
-      ctx.fillStyle = '#157AFC';
+      ctx.fillStyle = '#BDBDBD';
       this.stops.forEach((s) => {
         if (!params.bounds.contains([s.lat, s.lon])) return;
         ctx.beginPath();
@@ -371,10 +376,18 @@ class MapboxWrapper {
           default:
             ctx.drawImage(this.regularCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
         }
+        // draw color dot
+        ctx.fillStyle = v.color;
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+        // draw route id
         ctx.fillStyle = '#fff';
         const textX = dot.x;
         const textY = dot.y + 3.5;
         ctx.fillText(v.route, textX, textY);
+        // add to collision map
         boundings.push([dot.x - this.busInitRadius, dot.y - this.busInitRadius, dot.x + this.busInitRadius, dot.y + this.busInitRadius, {
           id: v.id,
           direction: v.direction,
