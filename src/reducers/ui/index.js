@@ -10,12 +10,9 @@ import {
   SET_GLOBAL_ERROR,
   SET_PATHNAME,
   SET_USER_LOCATION,
+  SET_ACTIVE_VEHICLES,
   INITIAL_VEHICLES_LOADED,
 } from 'constants/ActionTypes';
-
-function currentAgency(state = InitialState.ui.currentAgency) {
-  return state;
-}
 
 function route(state = InitialState.ui.route, action = {}) {
   if (action.type === SET_PATHNAME) {
@@ -45,11 +42,18 @@ function userLocation(state = InitialState.ui.userLocation, action = {}) {
   return state;
 }
 
+function activeVehicles(state = InitialState.ui.activeVehicles, action = {}) {
+  if (action.type === SET_ACTIVE_VEHICLES) {
+    return action.payload;
+  }
+  return state;
+}
+
 export default combineReducers({
   globalError,
-  currentAgency,
   route,
   userLocation,
+  activeVehicles,
   loading,
   modal,
   initialVehiclesLoaded,

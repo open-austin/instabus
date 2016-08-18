@@ -2,97 +2,68 @@ import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
 import polyline from 'polyline';
 
-import vehiclesResponse from './vehiclesResponse.json';
-
-const lambda = 'https://xlvm3rjs2b.execute-api.us-east-1.amazonaws.com/latest/';
-
-const getVehicles = (e) => {
+const formatVehicles = (e, json) => {
   const {
-    allVehicles,
-    shapes: activeShapes,
-    stops: activeStops,
-  } = vehiclesResponse;
-  const vehiclesById = _.keyBy(allVehicles, 'vehicleId');
-  const vehiclesByRoute = _(allVehicles)
-    .groupBy('route.id')
+    activeVehicles,
+    trips,
+    vehicles: newVehicles,
+    shapes: encodedShapes,
+    stops,
+    stopLists,
+  } = json;
+  const oldVehicles = e.oldVehicles;
+  const vehicles = _(newVehicles)
+    .mapValues(vehicle => {
+      const oldVehicle = oldVehicles && oldVehicles[vehicle.id];
+      const newPosition = {
+        lat: vehicle.lat,
+        lon: vehicle.lon,
+      };
+      let position;
+      if (oldVehicle) {
+        position = {
+          last: oldVehicle.current,
+          current: oldVehicle.current,
+          new: newPosition,
+        };
+      }
+      else {
+        position = {
+          last: newPosition,
+          current: newPosition,
+          new: newPosition,
+        };
+      }
+      return {
+        ...vehicle,
+        ...position,
+      };
+    })
     .value();
-  const routeColors = _(vehiclesByRoute)
-    .mapValues(() => `#${Math.floor(Math.random() * 16777215).toString(16)}`)
+  const shapes = _(encodedShapes)
+    .mapValues(shape => ({
+      id: shape.id,
+      shape: polyline.decode(shape.shape),
+    }))
     .value();
-  const vehicles = {
-    active: allVehicles.map(v => ({
-      ...v,
-      color: routeColors[v.route.id],
-    })),
-    route: vehiclesByRoute,
-    id: vehiclesById,
-  };
-  const decodedShapes = activeShapes.map((shape) => ({
-    ...shape,
-    points: polyline.decode(shape.points),
-  }));
-  const shapes = {
-    active: decodedShapes.map(s => ({
-      ...s,
-      color: routeColors[s.routeId],
-    })),
-    route: {},
-  };
-  const stops = {
-    active: activeStops,
-    route: {},
-    id: {},
-  };
   const message = {
     type: e.type,
     requestId: e.requestId,
+    activeVehicles,
+    trips,
     vehicles,
     shapes,
     stops,
-    routeColors,
+    stopLists,
   };
   self.postMessage(message);
 };
 
-const getVehicles1 = (e) => {
-  fetch(`${lambda}vehicles-for-agency/${e.agencyId}`)
-    .then(response => response.json())
+const getVehicles = (e) => {
+  fetch('https://instabus-4750c.firebaseio.com/vehicles.json')
+    .then(res => res.json())
     .then((json) => {
-      const {
-        allVehicles,
-        shapes: activeShapes,
-        stops: activeStops,
-      } = json;
-      const vehiclesById = _.keyBy(allVehicles, 'vehicleId');
-      const vehiclesByRoute = _(allVehicles)
-        .groupBy('route.id')
-        .value();
-      const vehicles = {
-        active: allVehicles,
-        route: vehiclesByRoute,
-        id: vehiclesById,
-      };
-      const decodedShapes = activeShapes.map((shape) => ({
-        ...shape,
-        points: polyline.decode(shape.points),
-      }));
-      const shapes = {
-        active: decodedShapes,
-        route: {},
-      };
-      const stops = {
-        active: activeStops,
-        route: {},
-        id: {},
-      };
-      const message = {
-        type: e.type,
-        requestId: e.requestId,
-        vehicles,
-        shapes,
-        stops,
-      };
-      self.postMessage(message);
+      formatVehicles(e, json);
     });
 };
 

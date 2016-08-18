@@ -1,0 +1,11 @@
+{
+  "lambda": {
+    "role": "instabus-executor",
+    "name": "instabus",
+    "region": "us-east-1"
+  },
+  "api": {
+    "id": "xlvm3rjs2b",
+    "module": "index"
+  }
+}

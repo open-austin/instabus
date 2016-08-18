@@ -1,0 +1,20 @@
+{
+  "name": "instabus-lambda",
+  "version": "1.0.0",
+  "description": "simplify requests to oba",
+  "main": "index.js",
+  "scripts": {
+    "start": "AWS_PROFILE=instabus claudia create --name instabus --region us-east-1 --api-module index",
+    "deploy": "AWS_PROFILE=instabus claudia update"
+  },
+  "author": "",
+  "license": "Unlicense",
+  "devDependencies": {
+    "claudia": "^1.2.8"
+  },
+  "dependencies": {
+    "claudia-api-builder": "^1.1.0",
+    "lodash": "^4.12.0",
+    "request-promise": "^3.0.0"
+  }
+}

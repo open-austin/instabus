@@ -41,16 +41,43 @@ class MapboxWrapper {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw';
     const mapInit = {
       center: [30.291708, -97.746557],
-      zoom: 13,
+      zoom: 14,
       attributionControl: false,
       zoomControl: false,
       scrollWheelZoom: false,
     };
     this.map = L.mapbox.map(mapDiv).setView(mapInit.center, mapInit.zoom);
-    L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v9').addTo(this.map); // dark-v9, streets-v9
+    L.mapbox.styleLayer('mapbox://styles/mapbox/light-v9').addTo(this.map); // dark-v9, streets-v9
+    this.map.scrollWheelZoom.disable();
     this.map.on('contextmenu', () => {
       this.map.zoomOut();
     });
+    /*
+    const mapDOM = document.getElementById(mapDiv);
+    let totalDeltaX = 0;
+    let totalDeltaY = 0;
+    const onWheel = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      totalDeltaX -= e.deltaX;
+      totalDeltaY -= e.deltaY;
+    };
+    mapDOM.addEventListener('wheel', onWheel);
+    const onFrame = () => {
+      const center = this.map.getCenter();
+      const containterCenter = this.map.latLngToContainerPoint([
+        center.lat,
+        center.lng,
+      ]);
+      const newX = containterCenter.x - totalDeltaX;
+      const newY = containterCenter.y - totalDeltaY;
+      const newCenter = this.map.containerPointToLatLng([newX, newY]);
+      this.map.panTo([newCenter.lat, newCenter.lng]);
+      totalDeltaX = 0;
+      totalDeltaY = 0;
+    };
+    setInterval(onFrame, 100);
+    */
     this.map.on('click', (e) => {
       const { containerPoint } = e;
       const { x, y } = containerPoint;
@@ -58,7 +85,7 @@ class MapboxWrapper {
       if (vehicles[0]) {
         const vehicle = vehicles[0];
         if (vehicle.direction) {
-          GlobalHistory.push(Router.generate(DIRECTION_PATH, { routeId: vehicle.routeId, routeDirection: vehicle.direction }));
+          GlobalHistory.push(Router.generate(ROUTE_PATH, { routeId: `${vehicle.routeId}${vehicle.direction}` }));
         }
         else {
           GlobalHistory.push(Router.generate(ROUTE_PATH, { routeId: vehicle.routeId }));
@@ -82,12 +109,12 @@ class MapboxWrapper {
     this.oCanvas.width = canvasSize;
     this.oCanvas.height = canvasSize;
     const oCtx = this.oCanvas.getContext('2d');
-    oCtx.fillStyle = '#fff';
+    oCtx.fillStyle = '#000';
     oCtx.beginPath();
     oCtx.arc(offset, offset, radius, 0, Math.PI * 2);
-    oCtx.moveTo(offset - 14, offset - radius + 8);
-    oCtx.lineTo(offset, offset - radius - 8);
-    oCtx.lineTo(offset + 14, offset - radius + 8);
+    oCtx.moveTo(offset - (7 * this.pixelRatio), offset - radius + (4 * this.pixelRatio));
+    oCtx.lineTo(offset, offset - radius - (4 * this.pixelRatio));
+    oCtx.lineTo(offset + (7 * this.pixelRatio), offset - radius + (4 * this.pixelRatio));
     oCtx.fill();
     oCtx.closePath();
     // south facing canvas
@@ -162,7 +189,7 @@ class MapboxWrapper {
     this.regularCanvas.width = canvasSize;
     this.regularCanvas.height = canvasSize;
     const rCtx = this.regularCanvas.getContext('2d');
-    rCtx.fillStyle = '#fff';
+    rCtx.fillStyle = '#000';
     rCtx.beginPath();
     rCtx.arc(offset, offset, radius, 0, Math.PI * 2);
     rCtx.shadowColor = 'rgba(0,0,0,0.4)';
@@ -171,6 +198,10 @@ class MapboxWrapper {
     rCtx.shadowOffsetY = 1;
     rCtx.fill();
     rCtx.closePath();
+
+    this.vehiclesOverlay = canvasOverlay()
+        .drawing(this.drawOnCanvas)
+        .addTo(this.canvasLayer);
   }
 
   setUserLocation = (location) => {
@@ -189,7 +220,7 @@ class MapboxWrapper {
 
   setMap = (data) => {
     this.setVehicles(data.vehicles);
-    this.setStops(data.stops);
+    // this.setStops(data.stops);
     // this.setShapes(data.shapes);
     this.setPolyline(data.shapes);
   }
@@ -215,47 +246,16 @@ class MapboxWrapper {
           color: shape.color,
           opacity: 1,
           className: 'polyline',
-          weight: 3,
+          weight: 1,
         };
-        L.polyline(shape.points, options).addTo(this.polylineLayer);
+        L.polyline(shape.shape, options).addTo(this.polylineLayer);
       });
     }
   }
 
   setVehicles = (vehicles) => {
-    let v = [];
-    if (this.vehicles) {
-      const oldPositions = _.keyBy(this.vehicles, 'id');
-      v = vehicles.map((vehicle) => ({
-        id: vehicle.vehicleId,
-        route: vehicle.route.shortName,
-        routeId: vehicle.route.id,
-        direction: vehicle.route.direction,
-        lastPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.location,
-        currentPosition: oldPositions[vehicle.vehicleId] ? oldPositions[vehicle.vehicleId].currentPosition : vehicle.location,
-        nextPosition: vehicle.location,
-        color: vehicle.color,
-      }));
-      this.vehicles = v;
-      this.transitionStartTime = Date.now();
-      requestAnimationFrame(this.translateVehicles);
-    }
-    else {
-      v = vehicles.map((vehicle) => ({
-        id: vehicle.vehicleId,
-        route: vehicle.route.shortName,
-        routeId: vehicle.route.id,
-        direction: vehicle.route.direction,
-        lastPosition: vehicle.location,
-        currentPosition: vehicle.location,
-        nextPosition: vehicle.location,
-        color: vehicle.color,
-      }));
-      this.vehicles = v;
-      this.vehiclesOverlay = canvasOverlay()
-        .drawing(this.drawOnCanvas)
-        .addTo(this.canvasLayer);
-    }
+    this.vehicles = vehicles;
+    this.vehiclesOverlay.redraw();
   }
 
   translateVehicles = () => {
@@ -341,8 +341,9 @@ class MapboxWrapper {
     */
     ctx.lineWidth = 1;
     ctx.globalAlpha = 1;
+    /*
     if (params.zoom > 14) {
-      ctx.fillStyle = '#BDBDBD';
+      ctx.fillStyle = '#004A97';
       this.stops.forEach((s) => {
         if (!params.bounds.contains([s.lat, s.lon])) return;
         ctx.beginPath();
@@ -354,23 +355,25 @@ class MapboxWrapper {
         ctx.closePath();
       });
     }
+    */
+    if (!this.vehicles) return;
     this.vehicles.forEach((v) => {
       const boundings = [];
-      if (v.currentPosition && params.bounds.contains([v.currentPosition.lat, v.currentPosition.lon])) {
-        const dot = overlay._map.latLngToContainerPoint([v.currentPosition.lat, v.currentPosition.lon]);
+      if (v.current && params.bounds.contains([v.current.lat, v.current.lon])) {
+        const dot = overlay._map.latLngToContainerPoint([v.current.lat, v.current.lon]);
         const x = dot.x - this.canvasInitRadius;
         const y = dot.y - this.canvasInitRadius;
         switch (v.direction) {
-          case 'eastbound':
+          case 'e':
             ctx.drawImage(this.eastCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
             break;
-          case 'westbound':
+          case 'w':
             ctx.drawImage(this.westCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
             break;
-          case 'southbound':
+          case 's':
             ctx.drawImage(this.southCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
             break;
-          case 'northbound':
+          case 'n':
             ctx.drawImage(this.northCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
             break;
           default:
@@ -383,10 +386,10 @@ class MapboxWrapper {
         ctx.fill();
         ctx.closePath();
         // draw route id
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = '#000';
         const textX = dot.x;
         const textY = dot.y + 3.5;
-        ctx.fillText(v.route, textX, textY);
+        ctx.fillText(v.routeId, textX, textY);
         // add to collision map
         boundings.push([dot.x - this.busInitRadius, dot.y - this.busInitRadius, dot.x + this.busInitRadius, dot.y + this.busInitRadius, {
           id: v.id,

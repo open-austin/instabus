@@ -17,28 +17,29 @@ import TopBar from 'components/TopBar';
 import Saved from 'components/Saved';
 import VehiclesLoading from 'components/VehiclesLoading';
 
-import { getActive, initialVehiclesLoaded } from 'actions/oba';
-import { restoreSavedRoutes } from 'actions/saved';
+import {
+  getRoutes,
+  getActive,
+  initialVehiclesLoaded,
+} from 'actions/oba';
 
 
 class App extends Component {
   static propTypes = {
     globalError: PropTypes.string,
     route: PropTypes.object,
+    getRoutes: PropTypes.func,
     getActive: PropTypes.func,
     initialVehiclesLoaded: PropTypes.func,
-    restoreSavedRoutes: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    this.props.restoreSavedRoutes();
-
-    // this.props.initialVehiclesLoaded();
-
-    this.props.getActive().then(() => {
-      this.props.initialVehiclesLoaded();
-      // this.watchVehicles = setInterval(this.props.getVehicles, 20000);
-    });
+    this.props.getRoutes()
+      .then(() => this.props.getActive())
+      .then(() => {
+        this.props.initialVehiclesLoaded();
+        this.watchVehicles = setInterval(this.props.getActive, 7500);
+      });
   }
 
   componentWillUnmount() {
@@ -46,10 +47,6 @@ class App extends Component {
   }
 
   _renderGlobalError = () => <div>{this.props.globalError}</div>;
-
-  _renderGlobalError() {
-    return <div>{this.props.globalError}</div>;
-  }
 
   _renderContext = () => {
     const name = this.props.route.name;
@@ -78,15 +75,15 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  getActive,
-  initialVehiclesLoaded,
-  restoreSavedRoutes,
-};
-
 const mapStateToProps = (state) => ({
   globalError: state.ui.globalError,
   route: state.ui.route,
 });
+
+const mapDispatchToProps = {
+  getRoutes,
+  getActive,
+  initialVehiclesLoaded,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
