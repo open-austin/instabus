@@ -15,6 +15,40 @@ import {
 
 import { GlobalHistory, Router } from 'libs/routing';
 
+function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+  if (typeof stroke === 'undefined') {
+    stroke = true;
+  }
+  if (typeof radius === 'undefined') {
+    radius = 5;
+  }
+  if (typeof radius === 'number') {
+    radius = { tl: radius, tr: radius, br: radius, bl: radius };
+  } else {
+    var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+    for (var side in defaultRadius) {
+      radius[side] = radius[side] || defaultRadius[side];
+    }
+  }
+  ctx.beginPath();
+  ctx.moveTo(x + radius.tl, y);
+  ctx.lineTo(x + width - radius.tr, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+  ctx.lineTo(x + width, y + height - radius.br);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+  ctx.lineTo(x + radius.bl, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+  ctx.lineTo(x, y + radius.tl);
+  ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+  ctx.closePath();
+  if (fill) {
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.stroke();
+  }
+}
+
 class MapboxWrapper {
 
   map = undefined;
@@ -41,13 +75,13 @@ class MapboxWrapper {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw';
     const mapInit = {
       center: [30.291708, -97.746557],
-      zoom: 14,
+      zoom: 13,
       attributionControl: false,
       zoomControl: false,
       scrollWheelZoom: false,
     };
     this.map = L.mapbox.map(mapDiv).setView(mapInit.center, mapInit.zoom);
-    L.mapbox.styleLayer('mapbox://styles/mapbox/light-v9').addTo(this.map); // dark-v9, streets-v9
+    L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v8').addTo(this.map); // dark-v9, streets-v9
     this.map.scrollWheelZoom.disable();
     this.map.on('contextmenu', () => {
       this.map.zoomOut();
@@ -310,7 +344,6 @@ class MapboxWrapper {
     const ctx = params.canvas.getContext('2d');
     ctx.scale(this.pixelRatio, this.pixelRatio);
     ctx.clearRect(0, 0, params.canvas.width, params.canvas.height);
-    ctx.font = '9px Arial';
     ctx.textAlign = 'center';
     /*
     ctx.lineCap = 'round';
@@ -361,35 +394,53 @@ class MapboxWrapper {
       const boundings = [];
       if (v.current && params.bounds.contains([v.current.lat, v.current.lon])) {
         const dot = overlay._map.latLngToContainerPoint([v.current.lat, v.current.lon]);
-        const x = dot.x - this.canvasInitRadius;
-        const y = dot.y - this.canvasInitRadius;
-        switch (v.direction) {
-          case 'e':
-            ctx.drawImage(this.eastCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
-            break;
-          case 'w':
-            ctx.drawImage(this.westCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
-            break;
-          case 's':
-            ctx.drawImage(this.southCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
-            break;
-          case 'n':
-            ctx.drawImage(this.northCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
-            break;
-          default:
-            ctx.drawImage(this.regularCanvas, x, y, this.canvasInitSize, this.canvasInitSize);
-        }
-        // draw color dot
         ctx.fillStyle = v.color;
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, 10, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-        // draw route id
-        ctx.fillStyle = '#000';
-        const textX = dot.x;
-        const textY = dot.y + 3.5;
-        ctx.fillText(v.routeId, textX, textY);
+        if (params.zoom < 12) {
+          ctx.beginPath();
+          const x = dot.x - 1;
+          const y = dot.y - 1;
+          ctx.arc(x, y, 2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.closePath();
+        }
+        else if (params.zoom < 15) {
+          ctx.font = '9px Arial';
+          const text = `${v.routeId}${v.direction || ''}`;
+          ctx.save();
+          ctx.shadowColor = 'rgba(0,0,0,0.4)';
+          ctx.shadowBlur = 4;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 1;
+          const width = (text.length * 6) + 2;
+          const offset = width / 2;
+          roundRect(ctx, dot.x - offset, dot.y - 6, width, 12, 3, true, false);
+          ctx.closePath();
+          ctx.restore();
+          ctx.fillStyle = '#fff';
+          const textX = dot.x;
+          const textY = dot.y + 3;
+          ctx.fillText(text, textX, textY);
+        }
+        else {
+          ctx.font = '16px Arial';
+          const text = `${v.routeId}${v.direction || ''}`;
+          // draw color dot
+          ctx.save();
+          ctx.shadowColor = 'rgba(0,0,0,0.4)';
+          ctx.shadowBlur = 4;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 1;
+          const width = (text.length * 10) + 2;
+          const offset = width / 2;
+          roundRect(ctx, dot.x - offset, dot.y - 10, width, 20, 4, true, false);
+          ctx.closePath();
+          ctx.restore();
+          // draw route id
+          ctx.fillStyle = '#fff';
+          const textX = dot.x + 0.5;
+          const textY = dot.y + 6;
+          ctx.fillText(text, textX, textY);
+        }
         // add to collision map
         boundings.push([dot.x - this.busInitRadius, dot.y - this.busInitRadius, dot.x + this.busInitRadius, dot.y + this.busInitRadius, {
           id: v.id,

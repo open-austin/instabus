@@ -10,15 +10,36 @@ import {
 } from 'constants/Paths';
 
 const colors = {
-  n: '#3EC2A1',
-  s: '#34a853',
-  e: '#fbbc05',
-  w: '#ea4335',
+  n: '#004A97',
+  s: '#1261B3',
+  e: '#2073C9',
+  w: '#4D90D6',
   i: '#AC7FC9',
   o: '#F25C8F',
+  rail: '#E2231A',
+  ut: '#CC580A',
+  rapid: '#555555',
+  commuter: '#E2231A',
+  flyer: '#555555',
 };
 
-const assignColor = (direction) => {
+const assignColor = (direction, id) => {
+  const idInt = parseInt(id, 10);
+  if (idInt >= 100 && idInt <= 199) {
+    return colors.flyer;
+  }
+  else if (idInt === 550) {
+    return colors.rail;
+  }
+  else if (idInt >= 600 && idInt <= 699) {
+    return colors.ut;
+  }
+  else if (idInt >= 800 && idInt <= 899) {
+    return colors.rapid;
+  }
+  else if (idInt >= 900 && idInt <= 999) {
+    return colors.commuter;
+  }
   switch (direction) {
     case 'n':
       return colors.n;
@@ -55,7 +76,7 @@ function getActive(activeVehicleIds, vehicles, shapes, trips, routes) {
       return {
         ...vehicle,
         direction,
-        color: assignColor(direction),
+        color: assignColor(direction, vehicle.routeId),
       };
     })
     .value();
@@ -65,7 +86,7 @@ function getActive(activeVehicleIds, vehicles, shapes, trips, routes) {
       const shape = shapes[trip.shapeId];
       return {
         ...shape,
-        color: assignColor(trip.direction),
+        color: assignColor(trip.direction, trips[tripId].routeId),
       };
     })
     .uniqBy('id')
