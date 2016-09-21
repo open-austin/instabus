@@ -75,7 +75,7 @@ class MapboxWrapper {
     L.mapbox.accessToken = 'pk.eyJ1IjoiaGFtZWVkbyIsImEiOiJHMnhTMDFvIn0.tFZs7sYMghY-xovxRPNNnw';
     const mapInit = {
       center: [30.291708, -97.746557],
-      zoom: 13,
+      zoom: 14,
       attributionControl: false,
       zoomControl: false,
       scrollWheelZoom: false,
